@@ -1,0 +1,307 @@
+package tuan1;
+
+import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+
+public class FrameDashBoard extends JFrame {
+
+	private JPanel contentPane;
+	
+	private pnlQLHoaDon pnlHoaDon;
+	private pnlQLNhanVien pnlNhanvien;
+	private pnlQLKhachHang pnlKhachhang;
+	private pnlQlSanPham pnlSanPham;
+	private pnlQLThongKe pnlThongKe;
+	private pnlTroGiup pnlHelp;
+	
+	
+	
+	
+	
+	
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrameDashBoard frame = new FrameDashBoard();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FrameDashBoard() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1250, 800);
+		setUndecorated(true);
+		setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(176, 224, 230));
+		contentPane.setBorder(new LineBorder(new Color(0, 191, 255), 2));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		//chuyển màn hình
+		pnlHoaDon = new pnlQLHoaDon();
+		pnlKhachhang = new pnlQLKhachHang();
+		pnlSanPham = new pnlQlSanPham();
+		pnlNhanvien = new pnlQLNhanVien();
+		pnlThongKe = new pnlQLThongKe();
+		pnlHelp = new pnlTroGiup();
+		
+
+		
+		JPanel pnlMenu = new JPanel();
+		pnlMenu.setBackground(new Color(224, 255, 255));
+		pnlMenu.setBounds(10, 0, 371, 800);
+		contentPane.add(pnlMenu);
+		pnlMenu.setLayout(null);
+
+		JLabel lblIconLogo = new JLabel("");
+		lblIconLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		pnlMenu.add(lblIconLogo);
+		lblIconLogo.setBounds(10, 10, 341, 243);
+		Image img = new ImageIcon(this.getClass().getResource("/Login.png")).getImage();
+		lblIconLogo.setIcon(new ImageIcon(img));
+
+		JPanel pnlQLHoaDon = new JPanel();
+		pnlQLHoaDon.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pnlQLHoaDon.addMouseListener(new PanelbtnMouseAdapter(pnlQLHoaDon));
+		pnlQLHoaDon.setBackground(new Color(230, 230, 250));
+		pnlQLHoaDon.setBounds(0, 263, 371, 75);
+		pnlMenu.add(pnlQLHoaDon);
+		pnlQLHoaDon.setLayout(null);
+
+		// quản lý hóa đơn
+		JLabel lblOrder = new JLabel("Quản lý hóa đơn");
+		lblOrder.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOrder.setFont(new Font("Arial", Font.BOLD, 25));
+		lblOrder.setBounds(120, 10, 241, 60);
+		pnlQLHoaDon.add(lblOrder);
+
+		JLabel lblIconOrder = new JLabel("");
+		lblIconOrder.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconOrder.setBounds(10, 0, 100, 70);
+		pnlQLHoaDon.add(lblIconOrder);
+		Image img_iconHoaDon = new ImageIcon(this.getClass().getResource("/order_icon.png")).getImage();
+		lblIconOrder.setIcon(new ImageIcon(img_iconHoaDon));
+
+		// quản lý khách hàng
+		JPanel pnlQLKhachHang = new JPanel();
+
+		pnlQLKhachHang.addMouseListener(new PanelbtnMouseAdapter(pnlQLKhachHang));
+		pnlQLKhachHang.setBackground(new Color(230, 230, 250));
+		pnlQLKhachHang.setBounds(0, 340, 371, 75);
+		pnlMenu.add(pnlQLKhachHang);
+		pnlQLKhachHang.setLayout(null);
+
+		JLabel lblCustomer = new JLabel("Quản lý khách hàng");
+		lblCustomer.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCustomer.setFont(new Font("Arial", Font.BOLD, 25));
+		lblCustomer.setBounds(117, 10, 244, 60);
+		pnlQLKhachHang.add(lblCustomer);
+
+		JLabel lblIcon_customers = new JLabel("");
+		lblIcon_customers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIcon_customers.setBounds(10, 0, 100, 70);
+		pnlQLKhachHang.add(lblIcon_customers);
+		Image img_iconCustomer = new ImageIcon(this.getClass().getResource("/icon_customers.png")).getImage();
+		lblIcon_customers.setIcon(new ImageIcon(img_iconCustomer));
+
+		// menu employee
+		JPanel pnlQLNhanVien = new JPanel();
+		pnlQLNhanVien.addMouseListener(new PanelbtnMouseAdapter(pnlQLNhanVien));
+		pnlQLNhanVien.setBackground(new Color(230, 230, 250));
+		pnlQLNhanVien.setBounds(0, 417, 371, 75);
+		pnlMenu.add(pnlQLNhanVien);
+		pnlQLNhanVien.setLayout(null);
+
+		JLabel lblEmployee = new JLabel("Quản lý nhân viên");
+		lblEmployee.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmployee.setFont(new Font("Arial", Font.BOLD, 25));
+		lblEmployee.setBounds(117, 10, 244, 60);
+		pnlQLNhanVien.add(lblEmployee);
+
+		JLabel lblIconEmployee = new JLabel("");
+		lblIconEmployee.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconEmployee.setBounds(10, 0, 100, 70);
+		pnlQLNhanVien.add(lblIconEmployee);
+		Image img_iconEmployee = new ImageIcon(this.getClass().getResource("/icon_employee.png")).getImage();
+		lblIconEmployee.setIcon(new ImageIcon(img_iconEmployee));
+
+		// menu product
+		JPanel pnlQLSanPham = new JPanel();
+		pnlQLSanPham.addMouseListener(new PanelbtnMouseAdapter(pnlQLSanPham));
+		pnlQLSanPham.setBackground(new Color(230, 230, 250));
+		pnlQLSanPham.setBounds(0, 494, 371, 75);
+		pnlMenu.add(pnlQLSanPham);
+		pnlQLSanPham.setLayout(null);
+
+		JLabel lblProduct = new JLabel("Quản lý sản phẩm ");
+		lblProduct.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProduct.setFont(new Font("Arial", Font.BOLD, 25));
+		lblProduct.setBounds(117, 10, 244, 60);
+		pnlQLSanPham.add(lblProduct);
+
+		JLabel lblIconProduct = new JLabel("");
+		lblIconProduct.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconProduct.setBounds(10, 0, 100, 70);
+		pnlQLSanPham.add(lblIconProduct);
+		Image img_iconProduct = new ImageIcon(this.getClass().getResource("/icon_book.png")).getImage();
+		lblIconProduct.setIcon(new ImageIcon(img_iconProduct));
+
+		// menu Thongke
+		JPanel pnlQLThongKe = new JPanel();
+		pnlQLThongKe.addMouseListener(new PanelbtnMouseAdapter(pnlQLThongKe));
+		pnlQLThongKe.setBackground(new Color(230, 230, 250));
+		pnlQLThongKe.setBounds(0, 571, 371, 75);
+		pnlMenu.add(pnlQLThongKe);
+		pnlQLThongKe.setLayout(null);
+
+		JLabel lblThongKe = new JLabel("Quản lý thống kê");
+		lblThongKe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblThongKe.setBounds(117, 10, 244, 60);
+		pnlQLThongKe.add(lblThongKe);
+		lblThongKe.setFont(new Font("Arial", Font.BOLD, 25));
+
+		JLabel lblIconThongKe = new JLabel("");
+		lblIconThongKe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconThongKe.setBounds(7, 0, 100, 70);
+		pnlQLThongKe.add(lblIconThongKe);
+		Image img_iconThongke = new ImageIcon(this.getClass().getResource("/icon_thongKe.png")).getImage();
+		lblIconThongKe.setIcon(new ImageIcon(img_iconThongke));
+
+		// menu help
+		JPanel pnlTroGiup = new JPanel();
+		pnlTroGiup.addMouseListener(new PanelbtnMouseAdapter(pnlTroGiup));
+		pnlTroGiup.setLayout(null);
+		pnlTroGiup.setBackground(new Color(230, 230, 250));
+		pnlTroGiup.setBounds(0, 649, 371, 75);
+		pnlMenu.add(pnlTroGiup);
+
+		JLabel lblHelp = new JLabel("Trợ giúp");
+		lblHelp.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHelp.setFont(new Font("Arial", Font.BOLD, 25));
+		lblHelp.setBounds(117, 10, 244, 60);
+		pnlTroGiup.add(lblHelp);
+
+		JLabel lblIconHelp = new JLabel("");
+		lblIconHelp.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconHelp.setBounds(10, 0, 100, 70);
+		pnlTroGiup.add(lblIconHelp);
+		Image img_iconHelp = new ImageIcon(this.getClass().getResource("/icon_help.png")).getImage();
+		lblIconHelp.setIcon(new ImageIcon(img_iconHelp));
+		
+		JLabel lblExit = new JLabel("X");
+		lblExit.setForeground(Color.WHITE);
+		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
+		lblExit.setFont(new Font("Arial", Font.BOLD, 16));
+		lblExit.setBounds(1220, 0, 30, 30);
+		lblExit.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(JOptionPane.showConfirmDialog(null,"ban co chac muon thoat?","canh bao",JOptionPane.YES_NO_OPTION) == 0) {
+					FrameDashBoard.this.dispose();
+				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblExit.setForeground(Color.red);
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				lblExit.setForeground(Color.white);
+			}
+		});
+		contentPane.add(lblExit);
+		
+		JPanel panelMainContent =  new JPanel();
+		panelMainContent.setBounds(391, 20, 849, 739);
+		contentPane.add(panelMainContent);
+		
+		panelMainContent.add(pnlQLHoaDon);
+		panelMainContent.add(pnlQLKhachHang);
+		panelMainContent.add(pnlQLNhanVien);
+		panelMainContent.add(pnlQLSanPham);
+		panelMainContent.add(pnlQLThongKe);
+		panelMainContent.add(pnlTroGiup);
+
+		 
+		
+	}
+	
+	// xử lý sự kiện chuyển màn hình
+	public void menuClicked(JPanel panel) {
+		pnlQLHoaDon.setVisible(false);
+		pnlQLKhachHang.setVisible(false);
+		pnlQLNhanVien.setVisible(false);
+		pnlQLSanPham.setVisible(false);
+		pnlQLThongKe.setVisible(false);
+		pnlTroGiup.setVisible(false);
+		
+		panel.setVisible(true);
+	}
+	
+
+	// xử lý sự kiện nhấp chuột 
+	private class PanelbtnMouseAdapter extends MouseAdapter {
+		JPanel panel;
+
+		public PanelbtnMouseAdapter(JPanel panel) {
+			this.panel = panel;
+		}
+
+		/*Phương thức này được gọi khi con trỏ chuột vào 
+		 đối tượng JPanel mà đối tượng PanelbtnMouseAdapter được gắn vào
+		 * */
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			panel.setBackground(new Color(230, 230, 250));
+		}
+
+		/*Phương thức này được gọi khi con trỏ chuột rời khỏi đối tượng JPanel
+		 * */
+		@Override
+		public void mouseExited(MouseEvent e) {
+//			panel.setBackground(new Color(47, 79, 79));
+		}
+
+		 /*Phương thức này được gọi khi người 
+		  * dùng nhấn chuột lên đối tượng JPanel*/
+		@Override
+		public void mousePressed(MouseEvent e) {
+			panel.setBackground(new Color(60, 179, 113));
+		}
+
+		
+		/*
+		 * Phương thức này được gọi khi người dùng thả chuột sau khi đã nhấn*/
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			panel.setBackground(new Color(230, 230, 250));
+		}
+
+	}
+}

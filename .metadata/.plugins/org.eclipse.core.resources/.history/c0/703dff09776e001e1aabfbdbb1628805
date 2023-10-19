@@ -1,0 +1,22 @@
+package tuan1;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+
+public class pnlNhanVien extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public pnlNhanVien() {
+		setSize(919, 739);
+		setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("this is nhan vien");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblNewLabel.setBounds(169, 167, 485, 293);
+		add(lblNewLabel);
+	}
+
+}

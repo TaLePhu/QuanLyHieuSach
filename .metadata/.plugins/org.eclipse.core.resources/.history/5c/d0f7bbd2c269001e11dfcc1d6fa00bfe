@@ -1,0 +1,22 @@
+package tuan1;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+
+public class pnlQLHoaDon extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public pnlQLHoaDon() {
+		setBounds(0,0, 849, 739);
+		setLayout(null);
+		setVisible(true);
+		
+		JLabel lblNewLabel = new JLabel("this is Hoadon");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(206, 205, 414, 200);
+		add(lblNewLabel);
+	}
+}

@@ -1,0 +1,22 @@
+package tuan1;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+
+public class pnlQLThongKe extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public pnlQLThongKe() {
+		setSize(919, 739);
+		setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("this is thong ke");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 31));
+		lblNewLabel.setBounds(123, 212, 599, 228);
+		add(lblNewLabel);
+	}
+
+}
