@@ -17,7 +17,7 @@ public class pnlHoadon extends JPanel {
 	public pnlHoadon() {
 		setBackground(Color.YELLOW);
 		setForeground(Color.GREEN);
-		setBounds(0,0, 919, 739);
+		setBounds(0,0, 1166, 685);
 		setLayout(null);
 //		setVisible(true);
 		

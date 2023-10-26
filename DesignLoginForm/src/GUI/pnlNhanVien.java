@@ -13,7 +13,7 @@ public class pnlNhanVien extends JPanel {
 	public pnlNhanVien() {
 		setBackground(Color.PINK);
 		setForeground(Color.PINK);
-		setBounds(0,0, 919, 739);
+		setBounds(0,0, 1166,685);
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("this is nhan vien");

@@ -49,7 +49,7 @@ public class FrameDashBoard extends JFrame {
 	 */
 	public FrameDashBoard() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1250, 800);
+		setBounds(100, 100, 1500, 800);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -60,6 +60,7 @@ public class FrameDashBoard extends JFrame {
 		
 		//chuyển màn hình
 		pnlHoaDon = new pnlHoadon();
+		pnlHoaDon.setBounds(0, 0, 1166, 685);
 		pnlKhachhang = new pnlKhachHang();
 		pnlSanPham = new pnlSanPham();
 		pnlNhanvien = new pnlNhanVien();
@@ -261,7 +262,7 @@ public class FrameDashBoard extends JFrame {
 		lblExit.setForeground(Color.WHITE);
 		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExit.setFont(new Font("Arial", Font.BOLD, 16));
-		lblExit.setBounds(1220, 0, 30, 30);
+		lblExit.setBounds(1460, 0, 30, 30);
 		lblExit.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -281,7 +282,7 @@ public class FrameDashBoard extends JFrame {
 		contentPane.add(lblExit);
 		
 		JPanel panelMainContent =  new JPanel();
-		panelMainContent.setBounds(324, 105, 919, 685);
+		panelMainContent.setBounds(324, 105, 1166, 685);
 		contentPane.add(panelMainContent);
 		panelMainContent.setLayout(null);
 		

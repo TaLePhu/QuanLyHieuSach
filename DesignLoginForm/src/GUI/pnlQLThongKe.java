@@ -13,7 +13,7 @@ public class pnlQLThongKe extends JPanel {
 	public pnlQLThongKe() {
 		setBackground(Color.BLUE);
 		setForeground(Color.ORANGE);
-		setSize(919, 739);
+		setSize(1166,685);
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("this is thong ke");

@@ -13,7 +13,7 @@ public class pnlTroGiup extends JPanel {
 	public pnlTroGiup() {
 		setBackground(Color.MAGENTA);
 		setForeground(Color.BLUE);
-		setBounds(0,0, 919, 739);
+		setBounds(0,0, 1166,685);
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("this is help");
