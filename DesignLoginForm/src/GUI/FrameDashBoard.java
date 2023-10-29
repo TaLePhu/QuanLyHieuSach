@@ -50,17 +50,17 @@ public class FrameDashBoard extends JFrame {
 	public FrameDashBoard() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1500, 800);
-		setUndecorated(true);
+		//setUndecorated(true);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(176, 224, 230));
-		contentPane.setBorder(new LineBorder(new Color(0, 191, 255), 2));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		//chuyển màn hình
 		pnlHoaDon = new pnlHoadon();
-		pnlHoaDon.setBounds(0, 0, 1166, 685);
+		pnlHoaDon.setBounds(0, 0, 1166, 763);
 		pnlKhachhang = new pnlKhachHang();
 		pnlSanPham = new pnlSanPham();
 		pnlNhanvien = new pnlNhanVien();
@@ -71,7 +71,7 @@ public class FrameDashBoard extends JFrame {
 		
 		JPanel pnlMenu = new JPanel();
 		pnlMenu.setBackground(new Color(224, 255, 255));
-		pnlMenu.setBounds(10, 0, 310, 800);
+		pnlMenu.setBounds(0, 0, 323, 763);
 		contentPane.add(pnlMenu);
 		pnlMenu.setLayout(null);
 
@@ -90,7 +90,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLHoaDon.setBackground(new Color(230, 230, 250));
-		pnlQLHoaDon.setBounds(0, 242, 300, 75);
+		pnlQLHoaDon.setBounds(0, 242, 323, 75);
 		pnlMenu.add(pnlQLHoaDon);
 		pnlQLHoaDon.setLayout(null);
 
@@ -118,7 +118,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLKhachHang.setBackground(new Color(230, 230, 250));
-		pnlQLKhachHang.setBounds(0, 322, 300, 75);
+		pnlQLKhachHang.setBounds(0, 322, 323, 75);
 		pnlMenu.add(pnlQLKhachHang);
 		pnlQLKhachHang.setLayout(null);
 
@@ -144,7 +144,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLNhanVien.setBackground(new Color(230, 230, 250));
-		pnlQLNhanVien.setBounds(0, 402, 300, 75);
+		pnlQLNhanVien.setBounds(0, 402, 323, 75);
 		pnlMenu.add(pnlQLNhanVien);
 		pnlQLNhanVien.setLayout(null);
 
@@ -170,7 +170,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLSanPham.setBackground(new Color(230, 230, 250));
-		pnlQLSanPham.setBounds(0, 483, 300, 75);
+		pnlQLSanPham.setBounds(0, 483, 323, 75);
 		pnlMenu.add(pnlQLSanPham);
 		pnlQLSanPham.setLayout(null);
 
@@ -196,7 +196,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLThongKe.setBackground(new Color(230, 230, 250));
-		pnlQLThongKe.setBounds(0, 564, 300, 75);
+		pnlQLThongKe.setBounds(0, 564, 323, 75);
 		pnlMenu.add(pnlQLThongKe);
 		pnlQLThongKe.setLayout(null);
 
@@ -223,7 +223,7 @@ public class FrameDashBoard extends JFrame {
 		});
 		pnlQLHelp.setLayout(null);
 		pnlQLHelp.setBackground(new Color(230, 230, 250));
-		pnlQLHelp.setBounds(0, 643, 300, 75);
+		pnlQLHelp.setBounds(0, 643, 323, 75);
 		pnlMenu.add(pnlQLHelp);
 
 		JLabel lblHelp = new JLabel("Trợ giúp");
@@ -242,7 +242,7 @@ public class FrameDashBoard extends JFrame {
 		JPanel pnlHome = new JPanel();
 		pnlHome.setLayout(null);
 		pnlHome.setBackground(new Color(230, 230, 250));
-		pnlHome.setBounds(0, 162, 300, 75);
+		pnlHome.setBounds(0, 162, 323, 75);
 		pnlMenu.add(pnlHome);
 		
 		JLabel lblHome = new JLabel("Trang chủ");
@@ -258,48 +258,53 @@ public class FrameDashBoard extends JFrame {
 		Image img_iconHome = new ImageIcon(this.getClass().getResource("/iconHome_s.png")).getImage();
 		lblIconHome.setIcon(new ImageIcon(img_iconHome));
 		
-		JLabel lblExit = new JLabel("X");
-		lblExit.setForeground(Color.WHITE);
-		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
-		lblExit.setFont(new Font("Arial", Font.BOLD, 16));
-		lblExit.setBounds(1460, 0, 30, 30);
-		lblExit.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(JOptionPane.showConfirmDialog(null,"ban co chac muon thoat?","canh bao",JOptionPane.YES_NO_OPTION) == 0) {
-					FrameDashBoard.this.dispose();
-				}
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				lblExit.setForeground(Color.red);
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				lblExit.setForeground(Color.white);
-			}
-		});
-		contentPane.add(lblExit);
+		JPanel pnlMainContent = new JPanel();
+		pnlMainContent.setBounds(323, 0, 1163, 763);
+		contentPane.add(pnlMainContent);
+		pnlMainContent.setLayout(null);
 		
-		JPanel panelMainContent =  new JPanel();
-		panelMainContent.setBounds(324, 105, 1166, 685);
-		contentPane.add(panelMainContent);
-		panelMainContent.setLayout(null);
+//		JLabel lblExit = new JLabel("X");
+//		lblExit.setForeground(Color.WHITE);
+//		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblExit.setFont(new Font("Arial", Font.BOLD, 16));
+//		lblExit.setBounds(1460, 0, 30, 30);
+//		lblExit.addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				if(JOptionPane.showConfirmDialog(null,"ban co chac muon thoat?","canh bao",JOptionPane.YES_NO_OPTION) == 0) {
+//					FrameDashBoard.this.dispose();
+//				}
+//			}
+//			@Override
+//			public void mouseEntered(MouseEvent arg0) {
+//				lblExit.setForeground(Color.red);
+//			}
+//			@Override
+//			public void mouseExited(MouseEvent arg0) {
+//				lblExit.setForeground(Color.white);
+//			}
+//		});
+//		contentPane.add(lblExit);
 		
-		panelMainContent.add(pnlHoaDon);
-		panelMainContent.add(pnlKhachhang);
-		panelMainContent.add(pnlNhanvien);
-		panelMainContent.add(pnlSanPham);
-		panelMainContent.add(pnlThongKe);
-		panelMainContent.add(pnlHelp);
+//		JPanel panelMainContent =  new JPanel();
+//		panelMainContent.setBounds(324, 105, 1166, 685);
+//		contentPane.add(panelMainContent);
+//		panelMainContent.setLayout(null);
+//		
+		pnlMainContent.add(pnlHoaDon);
+		pnlMainContent.add(pnlKhachhang);
+		pnlMainContent.add(pnlNhanvien);
+		pnlMainContent.add(pnlSanPham);
+		pnlMainContent.add(pnlThongKe);
+		pnlMainContent.add(pnlHelp);
 
 		menuClicked(pnlHoaDon);
 		
-		JLabel lblTitle = new JLabel("Quản lý hiệu sách tư nhân");
-		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setBounds(563, 21, 418, 47);
-		contentPane.add(lblTitle);
+//		JLabel lblTitle = new JLabel("Quản lý hiệu sách tư nhân");
+//		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
+//		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblTitle.setBounds(563, 21, 418, 47);
+//		contentPane.add(lblTitle);
 		 
 		
 	}

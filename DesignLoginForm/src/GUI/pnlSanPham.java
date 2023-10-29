@@ -13,7 +13,7 @@ public class pnlSanPham extends JPanel {
 	public pnlSanPham() {
 		setBackground(Color.CYAN);
 		setForeground(Color.YELLOW);
-		setBounds(0,0, 1166,685);
+		setBounds(0,0, 1163,763);
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("this is san pham");

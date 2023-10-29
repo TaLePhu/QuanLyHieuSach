@@ -17,7 +17,7 @@ public class pnlHoadon extends JPanel {
 	public pnlHoadon() {
 		setBackground(Color.YELLOW);
 		setForeground(Color.GREEN);
-		setBounds(0,0, 1166, 685);
+		setBounds(0,0, 1163, 763);
 		setLayout(null);
 //		setVisible(true);
 		
@@ -29,7 +29,7 @@ public class pnlHoadon extends JPanel {
 		add(lblNewLabel);
 		
 		table = new JTable();
-		table.setBounds(147, 410, 675, 234);
+		table.setBounds(136, 406, 675, 234);
 		add(table);
 	}
 }

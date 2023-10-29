@@ -10,7 +10,7 @@ public class pnlKhachHang extends JPanel {
 	 * Create the panel.
 	 */
 	public pnlKhachHang() {
-		setBounds(0,0, 1166, 685);
+		setBounds(0,0, 1163, 763);
 		setLayout(null);
 		setVisible(true);
 		
