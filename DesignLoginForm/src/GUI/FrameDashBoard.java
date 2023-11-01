@@ -335,14 +335,14 @@ public class FrameDashBoard extends JFrame {
 		 * */
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			panel.setBackground(new Color(230, 230, 250));
+			panel.setBackground(new Color(176, 196, 222));
 		}
 
 		/*Phương thức này được gọi khi con trỏ chuột rời khỏi đối tượng JPanel
 		 * */
 		@Override
 		public void mouseExited(MouseEvent e) {
-//			panel.setBackground(new Color(47, 79, 79));
+			panel.setBackground(new Color(230, 230, 250));
 		}
 
 		 /*Phương thức này được gọi khi người 
