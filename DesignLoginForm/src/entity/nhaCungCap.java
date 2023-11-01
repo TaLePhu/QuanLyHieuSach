@@ -2,41 +2,24 @@ package entity;
 
 import java.util.Objects;
 
-public class nhaCungCap {
-	private String maNCC;
-	private String tenNCC;
+public class NhaCungCap {
+	private String maNhaCungCap;
+	private String tenNhaCungCap;
 	private String diaChi;
-	private String soDT;
+	private String soDienThoai;
 	private String email;
 	private String tinhTrang;
-	public nhaCungCap(String maNCC, String tenNCC, String diaChi, String soDT, String email, String tinhTrang) {
-		super();
-		this.maNCC = maNCC;
-		this.tenNCC = tenNCC;
-		this.diaChi = diaChi;
-		this.soDT = soDT;
-		this.email = email;
-		this.tinhTrang = tinhTrang;
+	public String getMaNhaCungCap() {
+		return maNhaCungCap;
 	}
-	public nhaCungCap(String maNCC) {
-		super();
-		this.maNCC = maNCC;
+	public void setMaNhaCungCap(String maNhaCungCap) {
+		this.maNhaCungCap = maNhaCungCap;
 	}
-	public nhaCungCap() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getTenNhaCungCap() {
+		return tenNhaCungCap;
 	}
-	public String getMaNCC() {
-		return maNCC;
-	}
-	public void setMaNCC(String maNCC) {
-		this.maNCC = maNCC;
-	}
-	public String getTenNCC() {
-		return tenNCC;
-	}
-	public void setTenNCC(String tenNCC) {
-		this.tenNCC = tenNCC;
+	public void setTenNhaCungCap(String tenNhaCungCap) {
+		this.tenNhaCungCap = tenNhaCungCap;
 	}
 	public String getDiaChi() {
 		return diaChi;
@@ -44,11 +27,11 @@ public class nhaCungCap {
 	public void setDiaChi(String diaChi) {
 		this.diaChi = diaChi;
 	}
-	public String getSoDT() {
-		return soDT;
+	public String getSoDienThoai() {
+		return soDienThoai;
 	}
-	public void setSoDT(String soDT) {
-		this.soDT = soDT;
+	public void setSoDienThoai(String soDienThoai) {
+		this.soDienThoai = soDienThoai;
 	}
 	public String getEmail() {
 		return email;
@@ -62,9 +45,32 @@ public class nhaCungCap {
 	public void setTinhTrang(String tinhTrang) {
 		this.tinhTrang = tinhTrang;
 	}
+	public NhaCungCap(String maNhaCungCap, String tenNhaCungCap, String diaChi, String soDienThoai, String email,
+			String tinhTrang) {
+		super();
+		this.maNhaCungCap = maNhaCungCap;
+		this.tenNhaCungCap = tenNhaCungCap;
+		this.diaChi = diaChi;
+		this.soDienThoai = soDienThoai;
+		this.email = email;
+		this.tinhTrang = tinhTrang;
+	}
+	public NhaCungCap() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public NhaCungCap(String maNhaCungCap) {
+		super();
+		this.maNhaCungCap = maNhaCungCap;
+	}
+	@Override
+	public String toString() {
+		return "NhaCungCap [maNhaCungCap=" + maNhaCungCap + ", tenNhaCungCap=" + tenNhaCungCap + ", diaChi=" + diaChi
+				+ ", soDienThoai=" + soDienThoai + ", email=" + email + ", tinhTrang=" + tinhTrang + "]";
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(maNCC);
+		return Objects.hash(maNhaCungCap);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -74,13 +80,9 @@ public class nhaCungCap {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		nhaCungCap other = (nhaCungCap) obj;
-		return Objects.equals(maNCC, other.maNCC);
+		NhaCungCap other = (NhaCungCap) obj;
+		return Objects.equals(maNhaCungCap, other.maNhaCungCap);
 	}
-	@Override
-	public String toString() {
-		return "nhaCungCap [maNCC=" + maNCC + ", tenNCC=" + tenNCC + ", diaChi=" + diaChi + ", soDT=" + soDT
-				+ ", email=" + email + ", tinhTrang=" + tinhTrang + "]";
-	}
+	
 	
 }

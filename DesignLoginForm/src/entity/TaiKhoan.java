@@ -4,35 +4,14 @@ import java.util.Objects;
 
 public class TaiKhoan {
 	private String maTaiKhoan;
-	private String tenTaiKhoan;
 	private String matKhau;
+	private String tenTaiKhoan;
 	private NhanVien nhanVien;
-	public TaiKhoan(String maTaiKhoan, String tenTaiKhoan, String matKhau, NhanVien nhanVien) {
-		super();
-		this.maTaiKhoan = maTaiKhoan;
-		this.tenTaiKhoan = tenTaiKhoan;
-		this.matKhau = matKhau;
-		this.nhanVien = nhanVien;
-	}
-	public TaiKhoan(String maTaiKhoan) {
-		super();
-		this.maTaiKhoan = maTaiKhoan;
-	}
-	public TaiKhoan() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	public String getMaTaiKhoan() {
 		return maTaiKhoan;
 	}
 	public void setMaTaiKhoan(String maTaiKhoan) {
 		this.maTaiKhoan = maTaiKhoan;
-	}
-	public String getTenTaiKhoan() {
-		return tenTaiKhoan;
-	}
-	public void setTenTaiKhoan(String tenTaiKhoan) {
-		this.tenTaiKhoan = tenTaiKhoan;
 	}
 	public String getMatKhau() {
 		return matKhau;
@@ -40,11 +19,37 @@ public class TaiKhoan {
 	public void setMatKhau(String matKhau) {
 		this.matKhau = matKhau;
 	}
+	public String getTenTaiKhoan() {
+		return tenTaiKhoan;
+	}
+	public void setTenTaiKhoan(String tenTaiKhoan) {
+		this.tenTaiKhoan = tenTaiKhoan;
+	}
 	public NhanVien getNhanVien() {
 		return nhanVien;
 	}
 	public void setNhanVien(NhanVien nhanVien) {
 		this.nhanVien = nhanVien;
+	}
+	public TaiKhoan(String maTaiKhoan, String matKhau, String tenTaiKhoan, NhanVien nhanVien) {
+		super();
+		this.maTaiKhoan = maTaiKhoan;
+		this.matKhau = matKhau;
+		this.tenTaiKhoan = tenTaiKhoan;
+		this.nhanVien = nhanVien;
+	}
+	public TaiKhoan() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public TaiKhoan(String maTaiKhoan) {
+		super();
+		this.maTaiKhoan = maTaiKhoan;
+	}
+	@Override
+	public String toString() {
+		return "TaiKhoan [maTaiKhoan=" + maTaiKhoan + ", matKhau=" + matKhau + ", tenTaiKhoan=" + tenTaiKhoan
+				+ ", nhanVien=" + nhanVien + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -61,11 +66,7 @@ public class TaiKhoan {
 		TaiKhoan other = (TaiKhoan) obj;
 		return Objects.equals(maTaiKhoan, other.maTaiKhoan);
 	}
-	@Override
-	public String toString() {
-		return "TaiKhoan [maTaiKhoan=" + maTaiKhoan + ", tenTaiKhoan=" + tenTaiKhoan + ", matKhau=" + matKhau
-				+ ", nhanVien=" + nhanVien + "]";
-	}
+	
 	
 	
 	

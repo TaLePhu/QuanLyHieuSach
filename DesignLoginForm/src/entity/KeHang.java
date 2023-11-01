@@ -8,18 +8,6 @@ public class KeHang {
 	private String viTri;
 	private int sucChua;
 	private String tinhTrang;
-	public KeHang(String maKeHang, String tenKeHang, String viTri, int sucChua, String tinhTrang) {
-		super();
-		this.maKeHang = maKeHang;
-		this.tenKeHang = tenKeHang;
-		this.viTri = viTri;
-		this.sucChua = sucChua;
-		this.tinhTrang = tinhTrang;
-	}
-	public KeHang(String maKeHang) {
-		super();
-		this.maKeHang = maKeHang;
-	}
 	public String getMaKeHang() {
 		return maKeHang;
 	}
@@ -50,9 +38,30 @@ public class KeHang {
 	public void setTinhTrang(String tinhTrang) {
 		this.tinhTrang = tinhTrang;
 	}
+	public KeHang(String maKeHang, String tenKeHang, String viTri, int sucChua, String tinhTrang) {
+		super();
+		this.maKeHang = maKeHang;
+		this.tenKeHang = tenKeHang;
+		this.viTri = viTri;
+		this.sucChua = sucChua;
+		this.tinhTrang = tinhTrang;
+	}
+	public KeHang() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public KeHang(String maKeHang) {
+		super();
+		this.maKeHang = maKeHang;
+	}
+	@Override
+	public String toString() {
+		return "KeHang [maKeHang=" + maKeHang + ", tenKeHang=" + tenKeHang + ", viTri=" + viTri + ", sucChua=" + sucChua
+				+ ", tinhTrang=" + tinhTrang + "]";
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(maKeHang);
+		return Objects.hash(maKeHang, sucChua, tenKeHang, tinhTrang, viTri);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -63,12 +72,10 @@ public class KeHang {
 		if (getClass() != obj.getClass())
 			return false;
 		KeHang other = (KeHang) obj;
-		return Objects.equals(maKeHang, other.maKeHang);
+		return Objects.equals(maKeHang, other.maKeHang) && sucChua == other.sucChua
+				&& Objects.equals(tenKeHang, other.tenKeHang) && Objects.equals(tinhTrang, other.tinhTrang)
+				&& Objects.equals(viTri, other.viTri);
 	}
-	@Override
-	public String toString() {
-		return "KeHang [maKeHang=" + maKeHang + ", tenKeHang=" + tenKeHang + ", viTri=" + viTri + ", sucChua=" + sucChua
-				+ ", tinhTrang=" + tinhTrang + "]";
-	}
+	
 	
 }

@@ -1,30 +1,16 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class KhuyenMai {
 	private String maKhuyenMai;
 	private String tenKhuyenMai;
-	private int giaTriGiam;
-	private Date ngayBD;
-	private Date ngayKT;
+	private int giaTriGiamGia;
+	private Date ngayBatDau;
+	private Date ngayKetThuc;
 	private String doiTuongApDung;
-	
-	public KhuyenMai(String maKhuyenMai, String tenKhuyenMai, int giaTriGiam, Date ngayBD, Date ngayKT,
-			String doiTuongApDung) {
-		this.maKhuyenMai = maKhuyenMai;
-		this.tenKhuyenMai = tenKhuyenMai;
-		this.giaTriGiam = giaTriGiam;
-		this.ngayBD = ngayBD;
-		this.ngayKT = ngayKT;
-		this.doiTuongApDung = doiTuongApDung;
-	}
-	public KhuyenMai(String maKhuyenMai) {
-		this.maKhuyenMai = maKhuyenMai;
-	}
-	public KhuyenMai() {
-	}
+	private String tinhTrang;
 	public String getMaKhuyenMai() {
 		return maKhuyenMai;
 	}
@@ -37,23 +23,23 @@ public class KhuyenMai {
 	public void setTenKhuyenMai(String tenKhuyenMai) {
 		this.tenKhuyenMai = tenKhuyenMai;
 	}
-	public int getGiaTriGiam() {
-		return giaTriGiam;
+	public int getGiaTriGiamGia() {
+		return giaTriGiamGia;
 	}
-	public void setGiaTriGiam(int giaTriGiam) {
-		this.giaTriGiam = giaTriGiam;
+	public void setGiaTriGiamGia(int giaTriGiamGia) {
+		this.giaTriGiamGia = giaTriGiamGia;
 	}
-	public Date getNgayBD() {
-		return ngayBD;
+	public Date getNgayBatDau() {
+		return ngayBatDau;
 	}
-	public void setNgayBD(Date ngayBD) {
-		this.ngayBD = ngayBD;
+	public void setNgayBatDau(Date ngayBatDau) {
+		this.ngayBatDau = ngayBatDau;
 	}
-	public Date getNgayKT() {
-		return ngayKT;
+	public Date getNgayKetThuc() {
+		return ngayKetThuc;
 	}
-	public void setNgayKT(Date ngayKT) {
-		this.ngayKT = ngayKT;
+	public void setNgayKetThuc(Date ngayKetThuc) {
+		this.ngayKetThuc = ngayKetThuc;
 	}
 	public String getDoiTuongApDung() {
 		return doiTuongApDung;
@@ -61,10 +47,36 @@ public class KhuyenMai {
 	public void setDoiTuongApDung(String doiTuongApDung) {
 		this.doiTuongApDung = doiTuongApDung;
 	}
+	public String getTinhTrang() {
+		return tinhTrang;
+	}
+	public void setTinhTrang(String tinhTrang) {
+		this.tinhTrang = tinhTrang;
+	}
+	public KhuyenMai(String maKhuyenMai, String tenKhuyenMai, int giaTriGiamGia, Date ngayBatDau, Date ngayKetThuc,
+			String doiTuongApDung, String tinhTrang) {
+		super();
+		this.maKhuyenMai = maKhuyenMai;
+		this.tenKhuyenMai = tenKhuyenMai;
+		this.giaTriGiamGia = giaTriGiamGia;
+		this.ngayBatDau = ngayBatDau;
+		this.ngayKetThuc = ngayKetThuc;
+		this.doiTuongApDung = doiTuongApDung;
+		this.tinhTrang = tinhTrang;
+	}
+	public KhuyenMai() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public KhuyenMai(String maKhuyenMai) {
+		super();
+		this.maKhuyenMai = maKhuyenMai;
+	}
 	@Override
 	public String toString() {
-		return "KhuyenMai [maKhuyenMai=" + maKhuyenMai + ", tenKhuyenMai=" + tenKhuyenMai + ", giaTriGiam=" + giaTriGiam
-				+ ", ngayBD=" + ngayBD + ", ngayKT=" + ngayKT + ", doiTuongApDung=" + doiTuongApDung + "]";
+		return "KhuyenMai [maKhuyenMai=" + maKhuyenMai + ", tenKhuyenMai=" + tenKhuyenMai + ", giaTriGiamGia="
+				+ giaTriGiamGia + ", ngayBatDau=" + ngayBatDau + ", ngayKetThuc=" + ngayKetThuc + ", doiTuongApDung="
+				+ doiTuongApDung + ", tinhTrang=" + tinhTrang + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -82,6 +94,5 @@ public class KhuyenMai {
 		return Objects.equals(maKhuyenMai, other.maKhuyenMai);
 	}
 	
-	 
 	
 }

@@ -6,12 +6,12 @@ import java.util.Objects;
 public class HoaDonNhap {
 	private String maHDNhap;
 	private String trangThai;
-	private nhaCungCap nhaCC;
+	private NhaCungCap nhaCC;
 	private NhanVien nhanVien;
 	private Date ngayGiaoDich;
 	private float tongThanhTien;
 
-	public HoaDonNhap(String maHDNhap, String trangThai, nhaCungCap nhaCC, NhanVien nhanVien, Date ngayGiaoDich,
+	public HoaDonNhap(String maHDNhap, String trangThai, NhaCungCap nhaCC, NhanVien nhanVien, Date ngayGiaoDich,
 			float tongThanhTien) {
 		super();
 		this.maHDNhap = maHDNhap;
@@ -48,11 +48,11 @@ public class HoaDonNhap {
 		this.trangThai = trangThai;
 	}
 
-	public nhaCungCap getNhaCC() {
+	public NhaCungCap getNhaCC() {
 		return nhaCC;
 	}
 
-	public void setNhaCC(nhaCungCap nhaCC) {
+	public void setNhaCC(NhaCungCap nhaCC) {
 		this.nhaCC = nhaCC;
 	}
 

@@ -1,110 +1,106 @@
+
 package entity;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.Objects;
 
 public class NhanVien {
-	private String maNhanvien;
-	private String tenNhanVien;
-	private Date ngaySinh;
-	private String diaChi;
-	private String email;
-	private boolean gioiTinh;
-	private String chucVu;
-	private String tinhTrang;
-
-	public NhanVien(String maNhanvien, String tenNhanVien, Date ngaySinh, String diaChi, String email, boolean gioiTinh,
-			String chucVu, String tinhTrang) {
+    private String maNhanVien;
+    private String hoTenNhanVien;
+    private Date ngaySinh;
+    private String diaChi;
+    private String soDienThoai;
+    private String email;
+    private boolean gioiTinh;
+    private String chucVu;
+    private String tinhTrang;
+    
+	public String getMaNhanVien() {
+		return maNhanVien;
+	}
+	public void setMaNhanVien(String maNhanVien) {
+		this.maNhanVien = maNhanVien;
+	}
+	public String getHoTenNhanVien() {
+		return hoTenNhanVien;
+	}
+	public void setHoTenNhanVien(String hoTenNhanVien) {
+		this.hoTenNhanVien = hoTenNhanVien;
+	}
+	public Date getNgaySinh() {
+		return ngaySinh;
+	}
+	public void setNgaySinh(Date ngaySinh) {
+		this.ngaySinh = ngaySinh;
+	}
+	public String getDiaChi() {
+		return diaChi;
+	}
+	public void setDiaChi(String diaChi) {
+		this.diaChi = diaChi;
+	}
+	public String getSoDienThoai() {
+		return soDienThoai;
+	}
+	public void setSoDienThoai(String soDienThoai) {
+		this.soDienThoai = soDienThoai;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public boolean isGioiTinh() {
+		return gioiTinh;
+	}
+	public void setGioiTinh(boolean gioiTinh) {
+		this.gioiTinh = gioiTinh;
+	}
+	public String getTinhTrang() {
+		return tinhTrang;
+	}
+	public void setTinhTrang(String tinhTrang) {
+		this.tinhTrang = tinhTrang;
+	}
+	public String getChucVu() {
+		return chucVu;
+	}
+	public void setChucVu(String chucVu) {
+		this.chucVu = chucVu;
+	}
+	public NhanVien(String maNhanVien, String hoTenNhanVien, Date ngaySinh, String diaChi, String soDienThoai,
+			String email, boolean gioiTinh, String chucVu, String tinhTrang) {
 		super();
-		this.maNhanvien = maNhanvien;
-		this.tenNhanVien = tenNhanVien;
+		this.maNhanVien = maNhanVien;
+		this.hoTenNhanVien = hoTenNhanVien;
 		this.ngaySinh = ngaySinh;
 		this.diaChi = diaChi;
+		this.soDienThoai = soDienThoai;
 		this.email = email;
 		this.gioiTinh = gioiTinh;
 		this.chucVu = chucVu;
 		this.tinhTrang = tinhTrang;
 	}
-
-	public NhanVien(String maNhanvien) {
-		super();
-		this.maNhanvien = maNhanvien;
-	}
-
 	public NhanVien() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public String getMaNhanvien() {
-		return maNhanvien;
+	public NhanVien(String maNhanVien) {
+		super();
+		this.maNhanVien = maNhanVien;
 	}
-
-	public void setMaNhanvien(String maNhanvien) {
-		this.maNhanvien = maNhanvien;
+	@Override
+	public String toString() {
+		return "NhanVien [maNhanVien=" + maNhanVien + ", hoTenNhanVien=" + hoTenNhanVien + ", ngaySinh=" + ngaySinh
+				+ ", diaChi=" + diaChi + ", soDienThoai=" + soDienThoai + ", email=" + email + ", gioiTinh=" + gioiTinh
+				+ ", chucVu=" + chucVu + ", tinhTrang=" + tinhTrang + "]";
 	}
-
-	public String getTenNhanVien() {
-		return tenNhanVien;
-	}
-
-	public void setTenNhanVien(String tenNhanVien) {
-		this.tenNhanVien = tenNhanVien;
-	}
-
-	public Date getNgaySinh() {
-		return ngaySinh;
-	}
-
-	public void setNgaySinh(Date ngaySinh) {
-		this.ngaySinh = ngaySinh;
-	}
-
-	public String getDiaChi() {
-		return diaChi;
-	}
-
-	public void setDiaChi(String diaChi) {
-		this.diaChi = diaChi;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public boolean isGioiTinh() {
-		return gioiTinh;
-	}
-
-	public void setGioiTinh(boolean gioiTinh) {
-		this.gioiTinh = gioiTinh;
-	}
-
-	public String getChucVu() {
-		return chucVu;
-	}
-
-	public void setChucVu(String chucVu) {
-		this.chucVu = chucVu;
-	}
-
-	public String getTinhTrang() {
-		return tinhTrang;
-	}
-
-	public void setTinhTrang(String tinhTrang) {
-		this.tinhTrang = tinhTrang;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(maNhanvien);
+		return Objects.hash(maNhanVien);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -114,14 +110,10 @@ public class NhanVien {
 		if (getClass() != obj.getClass())
 			return false;
 		NhanVien other = (NhanVien) obj;
-		return Objects.equals(maNhanvien, other.maNhanvien);
+		return Objects.equals(maNhanVien, other.maNhanVien);
 	}
+	
+	
 
-	@Override
-	public String toString() {
-		return "NhanVien [maNhanvien=" + maNhanvien + ", tenNhanVien=" + tenNhanVien + ", ngaySinh=" + ngaySinh
-				+ ", diaChi=" + diaChi + ", email=" + email + ", gioiTinh=" + gioiTinh + ", chucVu=" + chucVu
-				+ ", tinhTrang=" + tinhTrang + "]";
-	}
-
+    
 }
