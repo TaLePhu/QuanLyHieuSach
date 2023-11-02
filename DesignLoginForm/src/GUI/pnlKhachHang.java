@@ -296,7 +296,7 @@ public class pnlKhachHang extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "Địa chỉ"
+				"M\u00E3 kh\u00E1ch h\u00E0ng", "T\u00EAn kh\u00E1ch h\u00E0ng", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i", "Email", "\u0110\u1ECBa ch\u1EC9"
 			}
 		));
 		setVisible(true);
