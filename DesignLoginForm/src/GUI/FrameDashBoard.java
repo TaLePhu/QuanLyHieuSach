@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -321,10 +323,11 @@ public class FrameDashBoard extends JFrame {
 		panel.setVisible(true);
 	}
 	
-
+	
 	// xử lý sự kiện nhấp chuột 
 	private class PanelbtnMouseAdapter extends MouseAdapter {
 		JPanel panel;
+		private static List<JPanel> selectedLabels = new ArrayList<>();
 
 		public PanelbtnMouseAdapter(JPanel panel) {
 			this.panel = panel;
@@ -361,4 +364,5 @@ public class FrameDashBoard extends JFrame {
 		}
 
 	}
+	
 }

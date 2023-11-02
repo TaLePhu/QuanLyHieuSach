@@ -34,6 +34,7 @@ public class pnlHoadon extends JPanel {
 	private JTextField txtGiaBan;
 	private JTextField txtSoLuong;
 	private JTable table;
+	private JTable table_N;
 	private JTextField txtSDTKhachHang;
 	private JTextField txtMaKH;
 	private JTextField txtTenKH;
@@ -46,6 +47,18 @@ public class pnlHoadon extends JPanel {
 	private JTextField txtTongTien;
 	private JTextField txtTienKhachDua;
 	private JTextField txtTienThua;
+	private JTextField txtMaSP_N;
+	private JTextField txtTenSP_N;
+	private JTextField txtGiaNhap;
+	private JTextField txtSoLuong_N;
+	private JTextField txtSDTNCC;
+	private JTextField txtMaNCC;
+	private JTextField txtTenNCC;
+	private JTextField txtDiaChiNCC;
+	private JTextField txtMaHD_N;
+	private JTextField txtMaNV_N;
+	private JTextField txtTenNV_N;
+	private JTextField textField_13;
 
 	/**
 	 * Create the panel.
@@ -132,7 +145,7 @@ public class pnlHoadon extends JPanel {
 		scrollPane.setBounds(10, 160, 750, 400);
 		pnlHDBan.add(scrollPane);
 		
-		String[] tb = new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Đơn giá bán", "Số lượng","Khuyến mãi", "%VAT",
+		String[] tb = new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng","Khuyến mãi", "%VAT",
 		"Thành tiền" };
 		DefaultTableModel model = new DefaultTableModel(tb, 0);
 		table = new JTable(model);
@@ -258,62 +271,62 @@ public class pnlHoadon extends JPanel {
 		
 		pnlHoaDon.add(dcrNgayLap);
 		
-		JPanel pnlHoaDon_1 = new JPanel();
-		pnlHoaDon_1.setLayout(null);
-		pnlHoaDon_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin khuy\u1EBFn m\u00E3i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlHoaDon_1.setBounds(770, 320, 380, 150);
-		pnlHDBan.add(pnlHoaDon_1);
+		JPanel pnlTTKhuyenMai = new JPanel();
+		pnlTTKhuyenMai.setLayout(null);
+		pnlTTKhuyenMai.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin khuyến mãi", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlTTKhuyenMai.setBounds(770, 320, 380, 150);
+		pnlHDBan.add(pnlTTKhuyenMai);
 		
 		JLabel maKhuyenMai = new JLabel("Mã khuyễn mãi");
 		maKhuyenMai.setFont(new Font("Tahoma", Font.BOLD, 12));
 		maKhuyenMai.setBounds(10, 20, 100, 20);
-		pnlHoaDon_1.add(maKhuyenMai);
+		pnlTTKhuyenMai.add(maKhuyenMai);
 		
 		txtMaKM = new JTextField();
 		txtMaKM.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMaKM.setColumns(10);
 		txtMaKM.setBounds(120, 20, 250, 20);
-		pnlHoaDon_1.add(txtMaKM);
+		pnlTTKhuyenMai.add(txtMaKM);
 		
 		JLabel lblNgayBDKM = new JLabel("Ngày bắt đầu");
 		lblNgayBDKM.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNgayBDKM.setBounds(10, 50, 112, 20);
-		pnlHoaDon_1.add(lblNgayBDKM);
+		pnlTTKhuyenMai.add(lblNgayBDKM);
 		
 		txtGiaTriGG = new JTextField();
 		txtGiaTriGG.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtGiaTriGG.setEnabled(false);
 		txtGiaTriGG.setColumns(10);
 		txtGiaTriGG.setBounds(120, 110, 250, 20);
-		pnlHoaDon_1.add(txtGiaTriGG);
+		pnlTTKhuyenMai.add(txtGiaTriGG);
 		
 		JLabel lblGiaTriGG = new JLabel("Giá trị");
 		lblGiaTriGG.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblGiaTriGG.setBounds(10, 110, 100, 20);
-		pnlHoaDon_1.add(lblGiaTriGG);
+		pnlTTKhuyenMai.add(lblGiaTriGG);
 		
 		JDateChooser dcrNgayBDKM = new JDateChooser();
 		dcrNgayBDKM.setLocale(new Locale("vi", "VN"));
 		dcrNgayBDKM.setEnabled(false);
 		dcrNgayBDKM.setDateFormatString("dd/MM/yyyy");
 		dcrNgayBDKM.setBounds(120, 50, 250, 20);
-		pnlHoaDon_1.add(dcrNgayBDKM);
+		pnlTTKhuyenMai.add(dcrNgayBDKM);
 		
 		JLabel lblNgayKTKM = new JLabel("Ngày kết thuc");
 		lblNgayKTKM.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNgayKTKM.setBounds(10, 80, 112, 20);
-		pnlHoaDon_1.add(lblNgayKTKM);
+		pnlTTKhuyenMai.add(lblNgayKTKM);
 		
 		JDateChooser dcrNgayKTKM = new JDateChooser();
 		dcrNgayKTKM.setLocale(new Locale("vi", "VN"));
 		dcrNgayKTKM.setEnabled(false);
 		dcrNgayKTKM.setDateFormatString("dd/MM/yyyy");
 		dcrNgayKTKM.setBounds(120, 80, 250, 20);
-		pnlHoaDon_1.add(dcrNgayKTKM);
+		pnlTTKhuyenMai.add(dcrNgayKTKM);
 		
 		JPanel pnlThanhToan = new JPanel();
 		pnlThanhToan.setLayout(null);
-		pnlThanhToan.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin thanh to\u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlThanhToan.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin thanh toán", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlThanhToan.setBounds(0, 590, 770, 136);
 		pnlHDBan.add(pnlThanhToan);
 		
@@ -354,7 +367,7 @@ public class pnlHoadon extends JPanel {
 		
 		JButton btnThanhToan = new JButton("Thanh toán");
 		btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnThanhToan.setBounds(810, 490, 300, 70);
+		btnThanhToan.setBounds(810, 490, 300, 50);
 		pnlHDBan.add(btnThanhToan);
 		
 		JButton btnTamIn = new JButton("In tạm hóa đơn");
@@ -363,20 +376,246 @@ public class pnlHoadon extends JPanel {
 			}
 		});
 		btnTamIn.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnTamIn.setBounds(810, 570, 300, 70);
+		btnTamIn.setBounds(810, 550, 300, 50);
 		pnlHDBan.add(btnTamIn);
 		
 		JButton btnXoaTrang = new JButton("Xóa trắng");
 		btnXoaTrang.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnXoaTrang.setBounds(810, 650, 300, 70);
+		btnXoaTrang.setBounds(810, 670, 300, 50);
 		pnlHDBan.add(btnXoaTrang);
+		
+		JButton btnLayInTam = new JButton("Hóa đơn in tạm");
+		btnLayInTam.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnLayInTam.setBounds(810, 610, 300, 50);
+		pnlHDBan.add(btnLayInTam);
+		
+		JPanel pnlHDNhap = new JPanel();
+		pnlHDNhap.setLayout(null);
+		tabbedPane.addTab("Hóa đơn nhập", null, pnlHDNhap, null);
+		
+		JLabel lblMaSP_N = new JLabel("Mã sản phẩm");
+		lblMaSP_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblMaSP_N.setBounds(10, 20, 100, 20);
+		pnlHDNhap.add(lblMaSP_N);
+		
+		txtMaSP_N = new JTextField();
+		txtMaSP_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtMaSP_N.setColumns(10);
+		txtMaSP_N.setBounds(120, 20, 250, 20);
+		pnlHDNhap.add(txtMaSP_N);
+		
+		JLabel lblTenSP_N = new JLabel("Tên sản phẩm");
+		lblTenSP_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTenSP_N.setBounds(390, 20, 100, 20);
+		pnlHDNhap.add(lblTenSP_N);
+		
+		txtTenSP_N = new JTextField();
+		txtTenSP_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtTenSP_N.setEnabled(false);
+		txtTenSP_N.setColumns(10);
+		txtTenSP_N.setBounds(510, 20, 250, 20);
+		pnlHDNhap.add(txtTenSP_N);
+		
+		JLabel lblGiaNhap = new JLabel("Giá");
+		lblGiaNhap.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblGiaNhap.setBounds(10, 45, 100, 20);
+		pnlHDNhap.add(lblGiaNhap);
+		
+		txtGiaNhap = new JTextField();
+		txtGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtGiaNhap.setEnabled(false);
+		txtGiaNhap.setColumns(10);
+		txtGiaNhap.setBounds(120, 45, 250, 20);
+		pnlHDNhap.add(txtGiaNhap);
+		
+		JPanel pnlBorderSP_N = new JPanel();
+		pnlBorderSP_N.setLayout(null);
+		pnlBorderSP_N.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin sản phẩm nhập", TitledBorder.LEFT, TitledBorder.TOP, null, Color.BLACK));
+		pnlBorderSP_N.setBounds(0, 0, 770, 130);
+		pnlHDNhap.add(pnlBorderSP_N);
+		
+		txtSoLuong_N = new JTextField();
+		txtSoLuong_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtSoLuong_N.setColumns(10);
+		txtSoLuong_N.setBounds(510, 45, 250, 20);
+		pnlBorderSP_N.add(txtSoLuong_N);
+		
+		JLabel lblSoLuong_N = new JLabel("Số lượng");
+		lblSoLuong_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSoLuong_N.setBounds(390, 45, 100, 20);
+		pnlBorderSP_N.add(lblSoLuong_N);
+		
+		JButton btnXoaSP_N = new JButton("Xóa sản phẩm");
+		btnXoaSP_N.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnXoaSP_N.setBounds(510, 75, 250, 40);
+		pnlBorderSP_N.add(btnXoaSP_N);
+		
+		JButton btnThemSP_N = new JButton("Thêm sản phẩm");
+		btnThemSP_N.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnThemSP_N.setBounds(240, 75, 250, 40);
+		pnlBorderSP_N.add(btnThemSP_N);
+		
+		JScrollPane scrollPane_N = new JScrollPane();
+		scrollPane_N.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_N.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane_N.setBounds(10, 160, 1138, 400);
+		pnlHDNhap.add(scrollPane_N);
+		
+		
+		String[] tb_N = new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Nhà cung cấp", "Đơn giá nhập", "Số lượng",
+		"Thành tiền" };
+		DefaultTableModel model_N = new DefaultTableModel(tb_N, 0);
+		table_N = new JTable(model_N);
+		
+		//table = new JTable();
+		scrollPane_N.setViewportView(table_N);
+		
+		JPanel pnlGioHang_N = new JPanel();
+		pnlGioHang_N.setLayout(null);
+		pnlGioHang_N.setBorder(new TitledBorder(null, "Thông tin giỏ hàng nhập", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlGioHang_N.setBounds(0, 140, 1158, 440);
+		pnlHDNhap.add(pnlGioHang_N);
+		
+		JPanel pnlNCC = new JPanel();
+		pnlNCC.setLayout(null);
+		pnlNCC.setBorder(new TitledBorder(null, "Thông tin nhà cung cấp", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlNCC.setBounds(770, 0, 388, 140);
+		pnlHDNhap.add(pnlNCC);
+		
+		JLabel lblSDTNCC = new JLabel("Số điện thoại");
+		lblSDTNCC.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSDTNCC.setBounds(10, 20, 100, 20);
+		pnlNCC.add(lblSDTNCC);
+		
+		txtSDTNCC = new JTextField();
+		txtSDTNCC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtSDTNCC.setColumns(10);
+		txtSDTNCC.setBounds(120, 20, 250, 20);
+		pnlNCC.add(txtSDTNCC);
+		
+		JLabel lblMaNCC = new JLabel("Mã nhà cung cấp");
+		lblMaNCC.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblMaNCC.setBounds(10, 50, 112, 20);
+		pnlNCC.add(lblMaNCC);
+		
+		txtMaNCC = new JTextField();
+		txtMaNCC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtMaNCC.setEnabled(false);
+		txtMaNCC.setColumns(10);
+		txtMaNCC.setBounds(120, 50, 250, 20);
+		pnlNCC.add(txtMaNCC);
+		
+		txtTenNCC = new JTextField();
+		txtTenNCC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtTenNCC.setEnabled(false);
+		txtTenNCC.setColumns(10);
+		txtTenNCC.setBounds(120, 80, 250, 20);
+		pnlNCC.add(txtTenNCC);
+		
+		txtDiaChiNCC = new JTextField();
+		txtDiaChiNCC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtDiaChiNCC.setEnabled(false);
+		txtDiaChiNCC.setColumns(10);
+		txtDiaChiNCC.setBounds(120, 110, 250, 20);
+		pnlNCC.add(txtDiaChiNCC);
+		
+		JLabel lblTenNCC = new JLabel("Tên nhà cung cấp");
+		lblTenNCC.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTenNCC.setBounds(10, 80, 112, 20);
+		pnlNCC.add(lblTenNCC);
+		
+		JLabel lblDiaChiNCC = new JLabel("Địa chỉ");
+		lblDiaChiNCC.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblDiaChiNCC.setBounds(10, 110, 100, 20);
+		pnlNCC.add(lblDiaChiNCC);
+		
+		JPanel pnlHoaDon_N = new JPanel();
+		pnlHoaDon_N.setLayout(null);
+		pnlHoaDon_N.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin hóa đơn nhập", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlHoaDon_N.setBounds(0, 590, 380, 140);
+		pnlHDNhap.add(pnlHoaDon_N);
+		
+		JLabel lblMaHD_N = new JLabel("Mã hóa đơn");
+		lblMaHD_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblMaHD_N.setBounds(10, 20, 100, 20);
+		pnlHoaDon_N.add(lblMaHD_N);
+		
+		txtMaHD_N = new JTextField();
+		txtMaHD_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtMaHD_N.setEnabled(false);
+		txtMaHD_N.setColumns(10);
+		txtMaHD_N.setBounds(120, 20, 250, 20);
+		pnlHoaDon_N.add(txtMaHD_N);
+		
+		JLabel lblNgayLapHD_N = new JLabel("Ngày lập hóa đơn");
+		lblNgayLapHD_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNgayLapHD_N.setBounds(10, 50, 112, 20);
+		pnlHoaDon_N.add(lblNgayLapHD_N);
+		
+		txtMaNV_N = new JTextField();
+		txtMaNV_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtMaNV_N.setEnabled(false);
+		txtMaNV_N.setColumns(10);
+		txtMaNV_N.setBounds(120, 80, 250, 20);
+		pnlHoaDon_N.add(txtMaNV_N);
+		
+		txtTenNV_N = new JTextField();
+		txtTenNV_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtTenNV_N.setEnabled(false);
+		txtTenNV_N.setColumns(10);
+		txtTenNV_N.setBounds(120, 110, 250, 20);
+		pnlHoaDon_N.add(txtTenNV_N);
+		
+		JLabel lblMaNV_N = new JLabel("Mã nhân viên");
+		lblMaNV_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblMaNV_N.setBounds(10, 80, 100, 20);
+		pnlHoaDon_N.add(lblMaNV_N);
+		
+		JLabel lblTenNV_N = new JLabel("Tên nhân viên");
+		lblTenNV_N.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTenNV_N.setBounds(10, 110, 100, 20);
+		pnlHoaDon_N.add(lblTenNV_N);
+		
+		JDateChooser dcrNgayLap_N = new JDateChooser();
+		dcrNgayLap_N.setLocale(new Locale("vi", "VN"));
+		dcrNgayLap_N.setEnabled(false);
+		dcrNgayLap_N.setDateFormatString("dd/MM/yyyy");
+		dcrNgayLap_N.setDate(new Date(System.currentTimeMillis()));
+		dcrNgayLap_N.setBounds(120, 50, 250, 20);
+		pnlHoaDon_N.add(dcrNgayLap_N);
+		
+		pnlHoaDon.add(dcrNgayLap);
+		
+		JPanel pnlThanhToan_1 = new JPanel();
+		pnlThanhToan_1.setLayout(null);
+		pnlThanhToan_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin thanh to\u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlThanhToan_1.setBounds(390, 590, 380, 136);
+		pnlHDNhap.add(pnlThanhToan_1);
+		
+		JLabel lblTongTien_N = new JLabel("Tổng tiền");
+		lblTongTien_N.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTongTien_N.setBounds(10, 30, 130, 30);
+		pnlThanhToan_1.add(lblTongTien_N);
+		
+		textField_13 = new JTextField();
+		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_13.setEnabled(false);
+		textField_13.setColumns(10);
+		textField_13.setBounds(130, 30, 240, 30);
+		pnlThanhToan_1.add(textField_13);
+		
+		JButton btnThanhToan_1 = new JButton("Thanh toán");
+		btnThanhToan_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnThanhToan_1.setBounds(810, 590, 300, 60);
+		pnlHDNhap.add(btnThanhToan_1);
+		
+		JButton btnXoaTrang_1_1 = new JButton("Xóa trắng");
+		btnXoaTrang_1_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnXoaTrang_1_1.setBounds(810, 660, 300, 60);
+		pnlHDNhap.add(btnXoaTrang_1_1);
 		btnXoaSP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
-		JPanel pnlHDNhap = new JPanel();
-		tabbedPane.addTab("Hóa đơn nhập", null, pnlHDNhap, null);
-		pnlHDNhap.setLayout(null);
 	}
 }
