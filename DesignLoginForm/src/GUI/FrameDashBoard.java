@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class FrameDashBoard extends JFrame {
 
@@ -28,6 +30,9 @@ public class FrameDashBoard extends JFrame {
 	private pnlSanPham pnlSanPham;
 	private pnlQLThongKe pnlThongKe;
 	private pnlTroGiup pnlHelp;
+	private pnlNhaCungCap pnlNCC;
+	private pnlKhuyenMai pnlKhuyenMai;
+	private JTextField txtMaNV_DX;
 	
 
 	/**
@@ -68,6 +73,8 @@ public class FrameDashBoard extends JFrame {
 		pnlNhanvien = new pnlNhanVien();
 		pnlThongKe = new pnlQLThongKe();
 		pnlHelp = new pnlTroGiup();
+		pnlNCC = new pnlNhaCungCap();
+		pnlKhuyenMai = new pnlKhuyenMai();
 		
 
 		
@@ -80,7 +87,7 @@ public class FrameDashBoard extends JFrame {
 		JLabel lblIconLogo = new JLabel("");
 		lblIconLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlMenu.add(lblIconLogo);
-		lblIconLogo.setBounds(0, 10, 300, 82);
+		lblIconLogo.setBounds(0, 0, 320, 72);
 		Image img = new ImageIcon(this.getClass().getResource("/logo_s.png")).getImage();
 		lblIconLogo.setIcon(new ImageIcon(img));
 
@@ -92,7 +99,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLHoaDon.setBackground(new Color(230, 230, 250));
-		pnlQLHoaDon.setBounds(0, 242, 323, 75);
+		pnlQLHoaDon.setBounds(10, 190, 300, 60);
 		pnlMenu.add(pnlQLHoaDon);
 		pnlQLHoaDon.setLayout(null);
 
@@ -100,12 +107,12 @@ public class FrameDashBoard extends JFrame {
 		JLabel lblOrder = new JLabel("Quản lý hóa đơn");
 		lblOrder.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOrder.setFont(new Font("Arial", Font.BOLD, 20));
-		lblOrder.setBounds(80, 10, 181, 60);
+		lblOrder.setBounds(80, 5, 181, 50);
 		pnlQLHoaDon.add(lblOrder);
 
 		JLabel lblIconOrder = new JLabel("");
 		lblIconOrder.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconOrder.setBounds(0, 0, 80, 70);
+		lblIconOrder.setBounds(10, 5, 50, 50);
 		pnlQLHoaDon.add(lblIconOrder);
 		Image img_iconHoaDon = new ImageIcon(this.getClass().getResource("/order_icon_s.png")).getImage();
 		lblIconOrder.setIcon(new ImageIcon(img_iconHoaDon));
@@ -120,19 +127,19 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLKhachHang.setBackground(new Color(230, 230, 250));
-		pnlQLKhachHang.setBounds(0, 322, 323, 75);
+		pnlQLKhachHang.setBounds(10, 255, 300, 60);
 		pnlMenu.add(pnlQLKhachHang);
 		pnlQLKhachHang.setLayout(null);
 
 		JLabel lblCustomer = new JLabel("Quản lý khách hàng");
 		lblCustomer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCustomer.setFont(new Font("Arial", Font.BOLD, 20));
-		lblCustomer.setBounds(80, 10, 200, 60);
+		lblCustomer.setBounds(80, 5, 200, 50);
 		pnlQLKhachHang.add(lblCustomer);
 
 		JLabel lblIcon_customers = new JLabel("");
 		lblIcon_customers.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIcon_customers.setBounds(0, 0, 80, 70);
+		lblIcon_customers.setBounds(10, 5, 50, 50);
 		pnlQLKhachHang.add(lblIcon_customers);
 		Image img_iconCustomer = new ImageIcon(this.getClass().getResource("/icon_customers_s.png")).getImage();
 		lblIcon_customers.setIcon(new ImageIcon(img_iconCustomer));
@@ -146,19 +153,19 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLNhanVien.setBackground(new Color(230, 230, 250));
-		pnlQLNhanVien.setBounds(0, 402, 323, 75);
+		pnlQLNhanVien.setBounds(10, 320, 300, 60);
 		pnlMenu.add(pnlQLNhanVien);
 		pnlQLNhanVien.setLayout(null);
 
 		JLabel lblEmployee = new JLabel("Quản lý nhân viên");
 		lblEmployee.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmployee.setFont(new Font("Arial", Font.BOLD, 20));
-		lblEmployee.setBounds(80, 10, 200, 60);
+		lblEmployee.setBounds(80, 5, 200, 50);
 		pnlQLNhanVien.add(lblEmployee);
 
 		JLabel lblIconEmployee = new JLabel("");
 		lblIconEmployee.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconEmployee.setBounds(0, 0, 80, 70);
+		lblIconEmployee.setBounds(10, 5, 50, 50);
 		pnlQLNhanVien.add(lblIconEmployee);
 		Image img_iconEmployee = new ImageIcon(this.getClass().getResource("/icon_employee_s.png")).getImage();
 		lblIconEmployee.setIcon(new ImageIcon(img_iconEmployee));
@@ -172,19 +179,19 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLSanPham.setBackground(new Color(230, 230, 250));
-		pnlQLSanPham.setBounds(0, 483, 323, 75);
+		pnlQLSanPham.setBounds(10, 385, 300, 60);
 		pnlMenu.add(pnlQLSanPham);
 		pnlQLSanPham.setLayout(null);
 
 		JLabel lblProduct = new JLabel("Quản lý sản phẩm ");
 		lblProduct.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProduct.setFont(new Font("Arial", Font.BOLD, 20));
-		lblProduct.setBounds(80, 10, 200, 60);
+		lblProduct.setBounds(80, 5, 200, 50);
 		pnlQLSanPham.add(lblProduct);
 
 		JLabel lblIconProduct = new JLabel("");
 		lblIconProduct.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconProduct.setBounds(0, 0, 80, 70);
+		lblIconProduct.setBounds(10, 5, 50, 50);
 		pnlQLSanPham.add(lblIconProduct);
 		Image img_iconProduct = new ImageIcon(this.getClass().getResource("/icon_book_s.png")).getImage();
 		lblIconProduct.setIcon(new ImageIcon(img_iconProduct));
@@ -198,19 +205,19 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLThongKe.setBackground(new Color(230, 230, 250));
-		pnlQLThongKe.setBounds(0, 564, 323, 75);
+		pnlQLThongKe.setBounds(10, 450, 300, 60);
 		pnlMenu.add(pnlQLThongKe);
 		pnlQLThongKe.setLayout(null);
 
 		JLabel lblThongKe = new JLabel("Quản lý thống kê");
 		lblThongKe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThongKe.setBounds(82, 10, 200, 60);
+		lblThongKe.setBounds(80, 5, 200, 50);
 		pnlQLThongKe.add(lblThongKe);
 		lblThongKe.setFont(new Font("Arial", Font.BOLD, 20));
 
 		JLabel lblIconThongKe = new JLabel("");
 		lblIconThongKe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconThongKe.setBounds(0, 0, 80, 70);
+		lblIconThongKe.setBounds(10, 5, 50, 50);
 		pnlQLThongKe.add(lblIconThongKe);
 		Image img_iconThongke = new ImageIcon(this.getClass().getResource("/icon_thongke_s.png")).getImage();
 		lblIconThongKe.setIcon(new ImageIcon(img_iconThongke));
@@ -225,18 +232,18 @@ public class FrameDashBoard extends JFrame {
 		});
 		pnlQLHelp.setLayout(null);
 		pnlQLHelp.setBackground(new Color(230, 230, 250));
-		pnlQLHelp.setBounds(0, 643, 323, 75);
+		pnlQLHelp.setBounds(10, 645, 300, 60);
 		pnlMenu.add(pnlQLHelp);
 
 		JLabel lblHelp = new JLabel("Trợ giúp");
 		lblHelp.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHelp.setFont(new Font("Arial", Font.BOLD, 20));
-		lblHelp.setBounds(100, 10, 136, 60);
+		lblHelp.setBounds(80, 5, 140, 50);
 		pnlQLHelp.add(lblHelp);
 
 		JLabel lblIconHelp = new JLabel("");
 		lblIconHelp.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconHelp.setBounds(0, 0, 80, 70);
+		lblIconHelp.setBounds(10, 5, 50, 50);
 		pnlQLHelp.add(lblIconHelp);
 		Image img_iconHelp = new ImageIcon(this.getClass().getResource("/icon_help_s.png")).getImage();
 		lblIconHelp.setIcon(new ImageIcon(img_iconHelp));
@@ -244,21 +251,90 @@ public class FrameDashBoard extends JFrame {
 		JPanel pnlHome = new JPanel();
 		pnlHome.setLayout(null);
 		pnlHome.setBackground(new Color(230, 230, 250));
-		pnlHome.setBounds(0, 162, 323, 75);
+		pnlHome.setBounds(10, 125, 300, 60);
 		pnlMenu.add(pnlHome);
 		
 		JLabel lblHome = new JLabel("Trang chủ");
 		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHome.setFont(new Font("Arial", Font.BOLD, 20));
-		lblHome.setBounds(81, 10, 153, 60);
+		lblHome.setBounds(80, 5, 150, 50);
 		pnlHome.add(lblHome);
 		
 		JLabel lblIconHome = new JLabel("");
 		lblIconHome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconHome.setBounds(0, 0, 80, 70);
+		lblIconHome.setBounds(10, 5, 50, 50);
 		pnlHome.add(lblIconHome);
 		Image img_iconHome = new ImageIcon(this.getClass().getResource("/iconHome_s.png")).getImage();
 		lblIconHome.setIcon(new ImageIcon(img_iconHome));
+		
+		JPanel pnlQLKhuyenMai = new JPanel();
+		pnlQLKhuyenMai.setLayout(null);
+		pnlQLKhuyenMai.setBackground(new Color(230, 230, 250));
+		pnlQLKhuyenMai.setBounds(10, 580, 300, 60);
+		pnlMenu.add(pnlQLKhuyenMai);
+		
+		JLabel lblKhuyenMai = new JLabel("Quản lý khuyến mãi");
+		lblKhuyenMai.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKhuyenMai.setFont(new Font("Arial", Font.BOLD, 20));
+		lblKhuyenMai.setBounds(80, 5, 210, 50);
+		pnlQLKhuyenMai.add(lblKhuyenMai);
+		
+		JLabel lblIconKhuyenMai = new JLabel("");
+		lblIconKhuyenMai.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconKhuyenMai.setBounds(10, 5, 50, 50);
+		pnlQLKhuyenMai.add(lblIconKhuyenMai);
+		Image img_iconSale = new ImageIcon(this.getClass().getResource("/icon_sale.png")).getImage();
+		lblIconKhuyenMai.setIcon(new ImageIcon(img_iconSale));
+		pnlQLKhuyenMai.addMouseListener(new PanelbtnMouseAdapter(pnlQLKhuyenMai) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(pnlKhuyenMai);
+			}
+		});
+		
+		JPanel pnlQLNCC = new JPanel();
+		pnlQLNCC.setLayout(null);
+		pnlQLNCC.setBackground(new Color(230, 230, 250));
+		pnlQLNCC.setBounds(10, 515, 300, 60);
+		pnlMenu.add(pnlQLNCC);
+		
+		JLabel lblIconNCC = new JLabel("");
+		lblIconNCC.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconNCC.setBounds(10, 5, 50, 50);
+		pnlQLNCC.add(lblIconNCC);
+		
+		Image img_iconNCC = new ImageIcon(this.getClass().getResource("/icon_workshop.png")).getImage();
+		lblIconNCC.setIcon(new ImageIcon(img_iconNCC));
+		pnlQLNCC.addMouseListener(new PanelbtnMouseAdapter(pnlQLNCC) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(pnlNCC);
+			}
+		});
+		
+		JLabel lblNhaCC = new JLabel("Quản lý nhà cung cấp");
+		lblNhaCC.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNhaCC.setFont(new Font("Arial", Font.BOLD, 20));
+		lblNhaCC.setBounds(80, 5, 210, 50);
+		pnlQLNCC.add(lblNhaCC);
+		
+		
+		JPanel pnlDangXuat = new JPanel();
+		pnlDangXuat.setLayout(null);
+		pnlDangXuat.setBackground(new Color(230, 230, 250));
+		pnlDangXuat.setBounds(10, 710, 300, 50);
+		pnlMenu.add(pnlDangXuat);
+		
+		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDangXuat.setBounds(190, 10, 110, 30);
+		pnlDangXuat.add(btnDangXuat);
+		
+		txtMaNV_DX = new JTextField();
+		txtMaNV_DX.setEnabled(false);
+		txtMaNV_DX.setBounds(5, 10, 180, 30);
+		pnlDangXuat.add(txtMaNV_DX);
+		txtMaNV_DX.setColumns(10);
 		
 		JPanel pnlMainContent = new JPanel();
 		pnlMainContent.setBounds(323, 0, 1163, 763);
@@ -299,6 +375,8 @@ public class FrameDashBoard extends JFrame {
 		pnlMainContent.add(pnlSanPham);
 		pnlMainContent.add(pnlThongKe);
 		pnlMainContent.add(pnlHelp);
+		pnlMainContent.add(pnlNCC);
+		pnlMainContent.add(pnlKhuyenMai);
 
 		menuClicked(pnlHoaDon);
 		
@@ -319,6 +397,8 @@ public class FrameDashBoard extends JFrame {
 		pnlSanPham.setVisible(false);
 		pnlThongKe.setVisible(false);
 		pnlHelp.setVisible(false);
+		pnlKhuyenMai.setVisible(false);
+		pnlNCC.setVisible(false);
 		
 		panel.setVisible(true);
 	}
@@ -327,7 +407,6 @@ public class FrameDashBoard extends JFrame {
 	// xử lý sự kiện nhấp chuột 
 	private class PanelbtnMouseAdapter extends MouseAdapter {
 		JPanel panel;
-		private static List<JPanel> selectedLabels = new ArrayList<>();
 
 		public PanelbtnMouseAdapter(JPanel panel) {
 			this.panel = panel;
@@ -364,5 +443,4 @@ public class FrameDashBoard extends JFrame {
 		}
 
 	}
-	
 }
