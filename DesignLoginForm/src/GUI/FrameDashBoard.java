@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class FrameDashBoard extends JFrame {
 
@@ -35,11 +36,12 @@ public class FrameDashBoard extends JFrame {
 	private pnlTroGiup pnlHelp;
 	private pnlNhaCungCap pnlNCC;
 	private pnlKhuyenMai pnlKhuyenMai;
-	private JTextField txtMaNV_DX;
+	private JTextField txtTenNV_DN;
 	private pnlManHinhChinh pnlManHinhChinh;
 	
 	Color DefaultColor = new Color(230, 230, 250);
 	Color ClickColor = new Color(60, 179, 113);
+	private JTextField txtChucVu;
 	
 
 	/**
@@ -107,7 +109,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLHoaDon.setBackground(new Color(230, 230, 250));
-		pnlQLHoaDon.setBounds(10, 152, 300, 60);
+		pnlQLHoaDon.setBounds(10, 145, 300, 60);
 		pnlMenu.add(pnlQLHoaDon);
 		pnlQLHoaDon.setLayout(null);
 
@@ -135,7 +137,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLKhachHang.setBackground(new Color(230, 230, 250));
-		pnlQLKhachHang.setBounds(10, 222, 300, 60);
+		pnlQLKhachHang.setBounds(10, 210, 300, 60);
 		pnlMenu.add(pnlQLKhachHang);
 		pnlQLKhachHang.setLayout(null);
 
@@ -161,7 +163,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLNhanVien.setBackground(new Color(230, 230, 250));
-		pnlQLNhanVien.setBounds(10, 292, 300, 60);
+		pnlQLNhanVien.setBounds(10, 275, 300, 60);
 		pnlMenu.add(pnlQLNhanVien);
 		pnlQLNhanVien.setLayout(null);
 
@@ -187,7 +189,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLSanPham.setBackground(new Color(230, 230, 250));
-		pnlQLSanPham.setBounds(10, 362, 300, 60);
+		pnlQLSanPham.setBounds(10, 340, 300, 60);
 		pnlMenu.add(pnlQLSanPham);
 		pnlQLSanPham.setLayout(null);
 
@@ -213,7 +215,7 @@ public class FrameDashBoard extends JFrame {
 			}
 		});
 		pnlQLThongKe.setBackground(new Color(230, 230, 250));
-		pnlQLThongKe.setBounds(10, 572, 300, 60);
+		pnlQLThongKe.setBounds(10, 535, 300, 60);
 		pnlMenu.add(pnlQLThongKe);
 		pnlQLThongKe.setLayout(null);
 
@@ -240,7 +242,7 @@ public class FrameDashBoard extends JFrame {
 		});
 		pnlQLHelp.setLayout(null);
 		pnlQLHelp.setBackground(new Color(230, 230, 250));
-		pnlQLHelp.setBounds(10, 642, 300, 60);
+		pnlQLHelp.setBounds(10, 600, 300, 60);
 		pnlMenu.add(pnlQLHelp);
 
 		JLabel lblHelp = new JLabel("Trợ giúp");
@@ -259,7 +261,7 @@ public class FrameDashBoard extends JFrame {
 		JPanel pnlHome = new JPanel();
 		pnlHome.setLayout(null);
 		pnlHome.setBackground(ClickColor);
-		pnlHome.setBounds(10, 82, 300, 60);
+		pnlHome.setBounds(10, 80, 300, 60);
 		pnlMenu.add(pnlHome);
 		
 		JLabel lblHome = new JLabel("Trang chủ");
@@ -278,7 +280,7 @@ public class FrameDashBoard extends JFrame {
 		JPanel pnlQLKhuyenMai = new JPanel();
 		pnlQLKhuyenMai.setLayout(null);
 		pnlQLKhuyenMai.setBackground(new Color(230, 230, 250));
-		pnlQLKhuyenMai.setBounds(10, 502, 300, 60);
+		pnlQLKhuyenMai.setBounds(10, 470, 300, 60);
 		pnlMenu.add(pnlQLKhuyenMai);
 		
 		JLabel lblKhuyenMai = new JLabel("Quản lý khuyến mãi");
@@ -303,7 +305,7 @@ public class FrameDashBoard extends JFrame {
 		JPanel pnlQLNCC = new JPanel();
 		pnlQLNCC.setLayout(null);
 		pnlQLNCC.setBackground(new Color(230, 230, 250));
-		pnlQLNCC.setBounds(10, 432, 300, 60);
+		pnlQLNCC.setBounds(10, 405, 300, 60);
 		pnlMenu.add(pnlQLNCC);
 		
 		JLabel lblIconNCC = new JLabel("");
@@ -329,24 +331,43 @@ public class FrameDashBoard extends JFrame {
 		
 		JPanel pnlDangXuat = new JPanel();
 		pnlDangXuat.setLayout(null);
-		pnlDangXuat.setBackground(new Color(230, 230, 250));
-		pnlDangXuat.setBounds(10, 710, 300, 50);
+		pnlDangXuat.setBackground(SystemColor.textHighlight);
+		pnlDangXuat.setBounds(10, 665, 300, 95);
 		pnlMenu.add(pnlDangXuat);
 		
-		JButton btnXemThongTin = new JButton("Xem thông tin");
-		btnXemThongTin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnXemThongTin.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnXemThongTin.setBounds(153, 10, 137, 30);
-		pnlDangXuat.add(btnXemThongTin);
+		txtTenNV_DN = new JTextField();
+		txtTenNV_DN.setEnabled(false);
+		txtTenNV_DN.setBounds(120, 5, 175, 25);
+		pnlDangXuat.add(txtTenNV_DN);
+		txtTenNV_DN.setColumns(10);
 		
-		txtMaNV_DX = new JTextField();
-		txtMaNV_DX.setEnabled(false);
-		txtMaNV_DX.setBounds(5, 10, 144, 30);
-		pnlDangXuat.add(txtMaNV_DX);
-		txtMaNV_DX.setColumns(10);
+		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnDangXuat.setBounds(5, 60, 140, 30);
+		pnlDangXuat.add(btnDangXuat);
+		
+		JButton btnDoiMatKhau = new JButton("Đổi mật khẩu");
+		btnDoiMatKhau.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnDoiMatKhau.setBounds(155, 60, 140, 30);
+		pnlDangXuat.add(btnDoiMatKhau);
+		
+		txtChucVu = new JTextField();
+		txtChucVu.setEnabled(false);
+		txtChucVu.setColumns(10);
+		txtChucVu.setBounds(120, 33, 175, 25);
+		pnlDangXuat.add(txtChucVu);
+		
+		JLabel lblChucVu = new JLabel("Tên nhân viên");
+		lblChucVu.setForeground(Color.WHITE);
+		lblChucVu.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblChucVu.setBounds(5, 5, 110, 25);
+		pnlDangXuat.add(lblChucVu);
+		
+		JLabel lblChucVu1 = new JLabel("Chức vụ");
+		lblChucVu1.setForeground(Color.WHITE);
+		lblChucVu1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblChucVu1.setBounds(5, 33, 110, 25);
+		pnlDangXuat.add(lblChucVu1);
 		
 		JLabel lblTenHieuSach = new JLabel("Thế giới sách");
 		lblTenHieuSach.setForeground(Color.BLUE);
