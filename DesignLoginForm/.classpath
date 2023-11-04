@@ -11,7 +11,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Program Files/Java/jdk-21/lib/jrt-fs.jar">
+=======
+	<classpathentry kind="lib" path="E:/JDK/lib/jrt-fs.jar">
+>>>>>>> 902f23a48840cb124fc8bf81a5238550cb7f5637
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
