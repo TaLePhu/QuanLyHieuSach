@@ -129,6 +129,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		panel_1.add(lblNgySinh);
 		
 		jdNgaySinh = new JDateChooser();
+		jdNgaySinh.setDateFormatString("yyyy-MM-dd");
 		jdNgaySinh.setBounds(645, 31, 128, 19);
 		panel_1.add(jdNgaySinh);
 		
@@ -159,12 +160,12 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(286, 73, 127, 19);
+		txtEmail.setBounds(286, 73, 139, 19);
 		panel_1.add(txtEmail);
 		
 		JLabel lblGiiTnh = new JLabel("Giới tính:");
 		lblGiiTnh.setFont(new Font("Arial", Font.BOLD, 12));
-		lblGiiTnh.setBounds(435, 71, 60, 22);
+		lblGiiTnh.setBounds(438, 71, 60, 22);
 		panel_1.add(lblGiiTnh);
 		
 		
@@ -196,7 +197,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		panel_1.add(lblTnhTrng);
 		
 		cbTinhTrang = new JComboBox();
-		cbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Đang làm việc ", "Tạm ngưng"}));
+		cbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Đang làm việc", "Tạm ngưng"}));
 		cbTinhTrang.setBounds(944, 72, 174, 21);
 		panel_1.add(cbTinhTrang);
 		
@@ -204,9 +205,11 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		txtMessage.setToolTipText("");
 		txtMessage.setFont(new Font("Arial", Font.ITALIC, 10));
 		txtMessage.setBackground(new Color(240, 240, 240));
-		txtMessage.setText("Thông báo lỗi ");
+		txtMessage.setText("");
 		txtMessage.setForeground(new Color(255, 0, 0));
 		txtMessage.setColumns(10);
+		txtMessage.setBorder(null);
+		txtMessage.setEditable(false);
 		txtMessage.setBounds(24, 107, 1094, 19);
 		panel_1.add(txtMessage);
 		
@@ -338,12 +341,14 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		
 		txtMessageTK = new JTextField();
 		txtMessageTK.setToolTipText("");
-		txtMessageTK.setText("Thông báo lỗi ");
+		txtMessageTK.setText("");
 		txtMessageTK.setForeground(Color.RED);
 		txtMessageTK.setFont(new Font("Arial", Font.ITALIC, 10));
 		txtMessageTK.setColumns(10);
 		txtMessageTK.setBackground(UIManager.getColor("Button.background"));
 		txtMessageTK.setBounds(24, 107, 1094, 19);
+		txtMessageTK.setBorder(null);
+		txtMessageTK.setEditable(false);
 		panel_1_1.add(txtMessageTK);
 		
 		JPanel panel_4 = new JPanel();
