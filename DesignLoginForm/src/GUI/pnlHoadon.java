@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.Box;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.awt.event.ActionEvent;
@@ -28,7 +29,16 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 
-public class pnlHoadon extends JPanel {
+import dao.Dao_KhuyenMai;
+import dao.Dao_NhaCungCap;
+import entity.KhachHang;
+import entity.KhuyenMai;
+import entity.NhaCungCap;
+
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+public class pnlHoadon extends JPanel implements ActionListener,DocumentListener {
 	private JTextField txtMaSP;
 	private JTextField txtTenSP;
 	private JTextField txtGiaBan;
@@ -58,7 +68,17 @@ public class pnlHoadon extends JPanel {
 	private JTextField txtMaHD_N;
 	private JTextField txtMaNV_N;
 	private JTextField txtTenNV_N;
-	private JTextField textField_13;
+	private JTextField txtTongTien_N;
+	private JDateChooser dcrNgayLap;
+	private JDateChooser dcrNgayBDKM;
+	private JDateChooser dcrNgayKTKM;
+	
+	private NhaCungCap ncc;
+	private KhuyenMai khuyenMai;
+	private KhachHang khachHang;
+	
+	private Dao_NhaCungCap dao_NCC;
+	private Dao_KhuyenMai dao_KhuyenMai;
 
 	/**
 	 * Create the panel.
@@ -68,6 +88,20 @@ public class pnlHoadon extends JPanel {
 		setForeground(Color.BLACK);
 		setBounds(0,0, 1163, 763);
 		setLayout(null);
+		
+		
+		
+		try {
+			connectDB.ConnectDB.getInstance().connect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ncc = new NhaCungCap();
+		khuyenMai = new KhuyenMai();
+		
+		dao_NCC = new Dao_NhaCungCap();
+		dao_KhuyenMai = new Dao_KhuyenMai();
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 1163, 763);
@@ -261,7 +295,7 @@ public class pnlHoadon extends JPanel {
 		lblTenNV.setBounds(10, 110, 100, 20);
 		pnlHoaDon.add(lblTenNV);
 		
-		JDateChooser dcrNgayLap = new JDateChooser();
+		dcrNgayLap = new JDateChooser();
 		dcrNgayLap.setBounds(120, 50, 250, 20);
 		
 		dcrNgayLap.setLocale(new Locale("vi", "VN"));
@@ -305,7 +339,7 @@ public class pnlHoadon extends JPanel {
 		lblGiaTriGG.setBounds(10, 110, 100, 20);
 		pnlTTKhuyenMai.add(lblGiaTriGG);
 		
-		JDateChooser dcrNgayBDKM = new JDateChooser();
+		dcrNgayBDKM = new JDateChooser();
 		dcrNgayBDKM.setLocale(new Locale("vi", "VN"));
 		dcrNgayBDKM.setEnabled(false);
 		dcrNgayBDKM.setDateFormatString("dd/MM/yyyy");
@@ -317,7 +351,7 @@ public class pnlHoadon extends JPanel {
 		lblNgayKTKM.setBounds(10, 80, 112, 20);
 		pnlTTKhuyenMai.add(lblNgayKTKM);
 		
-		JDateChooser dcrNgayKTKM = new JDateChooser();
+		dcrNgayKTKM = new JDateChooser();
 		dcrNgayKTKM.setLocale(new Locale("vi", "VN"));
 		dcrNgayKTKM.setEnabled(false);
 		dcrNgayKTKM.setDateFormatString("dd/MM/yyyy");
@@ -586,36 +620,126 @@ public class pnlHoadon extends JPanel {
 		
 		pnlHoaDon.add(dcrNgayLap);
 		
-		JPanel pnlThanhToan_1 = new JPanel();
-		pnlThanhToan_1.setLayout(null);
-		pnlThanhToan_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin thanh to\u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlThanhToan_1.setBounds(390, 590, 380, 136);
-		pnlHDNhap.add(pnlThanhToan_1);
+		JPanel pnlThanhToan_N = new JPanel();
+		pnlThanhToan_N.setLayout(null);
+		pnlThanhToan_N.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin thanh to\u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlThanhToan_N.setBounds(390, 590, 380, 136);
+		pnlHDNhap.add(pnlThanhToan_N);
 		
 		JLabel lblTongTien_N = new JLabel("Tổng tiền");
 		lblTongTien_N.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTongTien_N.setBounds(10, 30, 130, 30);
-		pnlThanhToan_1.add(lblTongTien_N);
+		pnlThanhToan_N.add(lblTongTien_N);
 		
-		textField_13 = new JTextField();
-		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField_13.setEnabled(false);
-		textField_13.setColumns(10);
-		textField_13.setBounds(130, 30, 240, 30);
-		pnlThanhToan_1.add(textField_13);
+		txtTongTien_N = new JTextField();
+		txtTongTien_N.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtTongTien_N.setEnabled(false);
+		txtTongTien_N.setColumns(10);
+		txtTongTien_N.setBounds(130, 30, 240, 30);
+		pnlThanhToan_N.add(txtTongTien_N);
 		
-		JButton btnThanhToan_1 = new JButton("Thanh toán");
-		btnThanhToan_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnThanhToan_1.setBounds(810, 590, 300, 60);
-		pnlHDNhap.add(btnThanhToan_1);
+		JButton btnThanhToan_N = new JButton("Thanh toán");
+		btnThanhToan_N.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnThanhToan_N.setBounds(810, 590, 300, 60);
+		pnlHDNhap.add(btnThanhToan_N);
 		
-		JButton btnXoaTrang_1_1 = new JButton("Xóa trắng");
-		btnXoaTrang_1_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnXoaTrang_1_1.setBounds(810, 660, 300, 60);
-		pnlHDNhap.add(btnXoaTrang_1_1);
-		btnXoaSP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnXoaTrang_N = new JButton("Xóa trắng");
+		btnXoaTrang_N.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnXoaTrang_N.setBounds(810, 660, 300, 60);
+		pnlHDNhap.add(btnXoaTrang_N);
+		// add event
+		btnXoaSP.addActionListener(this);
+		btnLayInTam.addActionListener(this);
+		btnTamIn.addActionListener(this);
+		btnThanhToan.addActionListener(this);
+		btnThanhToan_N.addActionListener(this);
+		btnThemSP.addActionListener(this);
+		btnThemSP_N.addActionListener(this);
+		btnXoaSP.addActionListener(this);
+		btnXoaSP_N.addActionListener(this);
+		btnXoaTrang.addActionListener(this);
+		btnXoaTrang_N.addActionListener(this);
+		
+		txtMaSP.getDocument().addDocumentListener(this);
+		txtMaSP_N.getDocument().addDocumentListener(this);
+		txtSDTKhachHang.getDocument().addDocumentListener(this);
+		txtSDTNCC.getDocument().addDocumentListener(this);
+		txtMaKM.getDocument().addDocumentListener(this);
+		
+		
+	}
+	
+	// tìm số điện thoại nhà cung cấp theo số điện thoại
+	public void timTheoSDTNCC() {
+		String ten = txtSDTNCC.getText();
+		ArrayList<NhaCungCap> ds = dao_NCC.getAllNhaCungCap();
+		ArrayList<NhaCungCap> dsMoi = new ArrayList<NhaCungCap>();
+		if (ten.isEmpty()) {
+				txtMaNCC.setText("");
+				txtDiaChiNCC.setText("");
+				txtTenNCC.setText("");	
+		} 
+		else {
+			for (NhaCungCap t : ds) {
+				if (t.getSoDienThoai().toLowerCase().startsWith(ten.toLowerCase()))
+					dsMoi.add(t);
 			}
-		});
+			for (NhaCungCap t : dsMoi) {
+				txtMaNCC.setText(t.getMaNhaCungCap());
+				txtDiaChiNCC.setText(t.getDiaChi());
+				txtTenNCC.setText(t.getTenNhaCungCap());
+			}
+		}
+	}
+	
+	//tìm kiếm khuyến mãi theo mã khuyến mãi
+	public void timKMTheoMaKM() {
+		String ma = txtMaKM.getText();
+		ArrayList<KhuyenMai> ds = dao_KhuyenMai.getAllKhuyenMai();
+		ArrayList<KhuyenMai> dsMoi = new ArrayList<KhuyenMai>();
+		if (ma.isEmpty()) {
+				dcrNgayBDKM.setDate(null);
+				dcrNgayKTKM.setDate(null);
+				txtGiaTriGG.setText("");	
+		} 
+		else {
+			for (KhuyenMai t : ds) {
+				if (t.getMaKhuyenMai().toLowerCase().startsWith(ma.toLowerCase()))
+					dsMoi.add(t);
+			}
+			for (KhuyenMai t : dsMoi) {
+				dcrNgayBDKM.setDate(t.getNgayBatDau());
+				dcrNgayKTKM.setDate(t.getNgayBatDau());
+				txtGiaTriGG.setText(String.valueOf(t.getGiaTriGiamGia()));
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		timTheoSDTNCC();
+		timKMTheoMaKM();
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		timTheoSDTNCC();
+		timKMTheoMaKM();
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		timTheoSDTNCC();
+		timKMTheoMaKM();
+		
 	}
 }
