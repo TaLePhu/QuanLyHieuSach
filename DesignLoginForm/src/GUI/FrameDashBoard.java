@@ -4,27 +4,29 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
-import javax.swing.colorchooser.DefaultColorSelectionModel;
+
+import dao.Dao_NhanVien;
+import entity.NhanVien;
+import entity.TaiKhoan;
+
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
 public class FrameDashBoard extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 	
@@ -42,6 +44,7 @@ public class FrameDashBoard extends JFrame {
 	Color DefaultColor = new Color(230, 230, 250);
 	Color ClickColor = new Color(60, 179, 113);
 	private JTextField txtChucVu;
+	public static TaiKhoan taiKhoanLogin;
 	
 
 	/**
@@ -51,7 +54,7 @@ public class FrameDashBoard extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameDashBoard frame = new FrameDashBoard();
+					FrameDashBoard frame = new FrameDashBoard(taiKhoanLogin);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +66,8 @@ public class FrameDashBoard extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameDashBoard() {
+	public FrameDashBoard(TaiKhoan tk) {
+		taiKhoanLogin = tk;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1500, 800);
 		//setUndecorated(true);
@@ -328,7 +332,11 @@ public class FrameDashBoard extends JFrame {
 		lblNhaCC.setBounds(80, 5, 210, 50);
 		pnlQLNCC.add(lblNhaCC);
 		
-		
+//		Check nhân viên login
+		Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
+		NhanVien nvLogin = taiKhoanLogin.getNhanVien();
+		NhanVien findNVLogin = nhanVien_dao.getTheoMaNV(nvLogin.getMaNhanVien());
+	
 		JPanel pnlDangXuat = new JPanel();
 		pnlDangXuat.setLayout(null);
 		pnlDangXuat.setBackground(SystemColor.textHighlight);
@@ -336,10 +344,12 @@ public class FrameDashBoard extends JFrame {
 		pnlMenu.add(pnlDangXuat);
 		
 		txtTenNV_DN = new JTextField();
+		txtTenNV_DN.setFont(new Font("Arial", Font.BOLD, 14));
 		txtTenNV_DN.setEnabled(false);
 		txtTenNV_DN.setBounds(120, 5, 175, 25);
 		pnlDangXuat.add(txtTenNV_DN);
 		txtTenNV_DN.setColumns(10);
+		txtTenNV_DN.setText(findNVLogin.getHoTenNhanVien());
 		
 		JButton btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -352,10 +362,14 @@ public class FrameDashBoard extends JFrame {
 		pnlDangXuat.add(btnDoiMatKhau);
 		
 		txtChucVu = new JTextField();
+		txtChucVu.setFont(new Font("Arial", Font.BOLD, 14));
 		txtChucVu.setEnabled(false);
 		txtChucVu.setColumns(10);
 		txtChucVu.setBounds(120, 33, 175, 25);
 		pnlDangXuat.add(txtChucVu);
+		txtChucVu.setText(findNVLogin.getChucVu());
+		
+		
 		
 		JLabel lblChucVu = new JLabel("Tên nhân viên");
 		lblChucVu.setForeground(Color.WHITE);
@@ -563,12 +577,6 @@ public class FrameDashBoard extends JFrame {
 
 		menuClicked(pnlManHinhChinh);
 		
-//		JLabel lblTitle = new JLabel("Quản lý hiệu sách tư nhân");
-//		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
-//		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblTitle.setBounds(563, 21, 418, 47);
-//		contentPane.add(lblTitle);
-		 
 		
 	}
 	
@@ -596,35 +604,6 @@ public class FrameDashBoard extends JFrame {
 			this.panel = panel;
 		}
 
-		/*Phương thức này được gọi khi con trỏ chuột vào 
-		 đối tượng JPanel mà đối tượng PanelbtnMouseAdapter được gắn vào
-		 * */
-//		@Override
-//		public void mouseEntered(MouseEvent e) {
-//			panel.setBackground(new Color(176, 196, 222));
-//		}
-//
-//		/*Phương thức này được gọi khi con trỏ chuột rời khỏi đối tượng JPanel
-//		 * */
-//		@Override
-//		public void mouseExited(MouseEvent e) {
-//			panel.setBackground(new Color(230, 230, 250));
-//		}
-//
-//		 /*Phương thức này được gọi khi người 
-//		  * dùng nhấn chuột lên đối tượng JPanel*/
-//		@Override
-//		public void mousePressed(MouseEvent e) {
-//			panel.setBackground(new Color(60, 179, 113));
-//		}
-//
-//		
-//		/*
-//		 * Phương thức này được gọi khi người dùng thả chuột sau khi đã nhấn*/
-//		@Override
-//		public void mouseReleased(MouseEvent e) {
-//			panel.setBackground(new Color(230, 230, 250));
-//		}
 
 	}
 }
