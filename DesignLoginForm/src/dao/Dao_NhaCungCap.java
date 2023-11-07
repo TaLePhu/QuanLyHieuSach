@@ -169,5 +169,39 @@ public class Dao_NhaCungCap implements I_NhaCungCap{
 		}
 		return n>0;
 	}
+	
+	// tìm nhà cung cấp theo số điện thoại
+	public ArrayList<NhaCungCap> getNCCTheoSDT(String sdtT) {
+		ArrayList<NhaCungCap> dsNCC = new ArrayList<NhaCungCap>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from NHACUNGCAP where SODIENTHOAI = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1,sdtT);
 
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maNhaCungCap = rs.getString("MANHACUNGCAP");
+				String tenNhaCungCap = rs.getString("TENNHACUNGCAP");
+				String diaChi = rs.getString("DIACHI");
+				String sdt = rs.getString("SODIENTHOAI");
+				String emmail = rs.getString("EMAIL");
+				String tinhTrang = rs.getString("TINHTRANG");
+				NhaCungCap ncc = new NhaCungCap(maNhaCungCap, tenNhaCungCap, diaChi, sdt, emmail, tinhTrang);
+				dsNCC.add(ncc);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsNCC;
+	}
 }
