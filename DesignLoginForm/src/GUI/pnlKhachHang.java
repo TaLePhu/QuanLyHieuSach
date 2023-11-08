@@ -9,7 +9,10 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JTextField;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
@@ -21,8 +24,15 @@ import javax.swing.table.DefaultTableModel;
 
 import javax.swing.JPasswordField;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.toedter.calendar.JDateChooser;
@@ -33,7 +43,11 @@ import entity.KhachHang;
 
 import javax.swing.JButton;
 
-public class pnlKhachHang extends JPanel {
+public class pnlKhachHang extends JPanel implements ActionListener, MouseListener, DocumentListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtMaKH;
 	private JTextField txtTenKH;
 	private JTextField txtSoDT;
@@ -44,7 +58,7 @@ public class pnlKhachHang extends JPanel {
 	private JRadioButton radNam;
 	private JRadioButton radNu;
 	private JDateChooser jdNgaySinh;
-	private JButton btnThem, btnSua, btnLamMoi;
+	private JButton btnThem, btnSua, btnLammoi;
 	private Dao_KhachHang khachHang_dao;
 	private DefaultTableModel modelKH;
 
@@ -94,6 +108,7 @@ public class pnlKhachHang extends JPanel {
 		pnlMaKH.add(lblMaKH);
 
 		txtMaKH = new JTextField();
+		txtMaKH.setEditable(false);
 		txtMaKH.setBounds(10, 40, 250, 30);
 		pnlMaKH.add(txtMaKH);
 		txtMaKH.setColumns(10);
@@ -119,15 +134,16 @@ public class pnlKhachHang extends JPanel {
 		pnlInfo.add(pnlNgaySinh);
 		pnlNgaySinh.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Ngày sinh:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel.setBounds(10, 10, 137, 25);
-		pnlNgaySinh.add(lblNewLabel);
+		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
+		lblNgaySinh.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNgaySinh.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblNgaySinh.setBounds(10, 10, 137, 25);
+		pnlNgaySinh.add(lblNgaySinh);
 
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(10, 45, 250, 35);
-		pnlNgaySinh.add(dateChooser);
+		jdNgaySinh = new JDateChooser();
+		jdNgaySinh.setDateFormatString("yyyy-MM-dd");
+		jdNgaySinh.setBounds(10, 45, 250, 35);
+		pnlNgaySinh.add(jdNgaySinh);
 
 		JPanel pnlGioi = new JPanel();
 		pnlGioi.setBounds(10, 300, 270, 45);
@@ -148,6 +164,10 @@ public class pnlKhachHang extends JPanel {
 		radNu.setFont(new Font("Arial", Font.PLAIN, 18));
 		radNu.setBounds(192, 10, 61, 25);
 		pnlGioi.add(radNu);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(radNam);
+		group.add(radNu);
 
 		JPanel pnlSoDT = new JPanel();
 		pnlSoDT.setLayout(null);
@@ -223,9 +243,9 @@ public class pnlKhachHang extends JPanel {
 
 		// chức năng search
 		JPanel pnlSearch = new JPanel();
-		pnlSearch.addMouseListener(new PanelbtnMouseAdapter(pnlSearch) {
-
-		});
+//		pnlSearch.addMouseListener(new PanelbtnMouseAdapter(pnlSearch) {
+//
+//		});
 		pnlSearch.setBackground(SystemColor.activeCaption);
 		pnlSearch.setBounds(687, 10, 60, 60);
 		pnlTimKiem.add(pnlSearch);
@@ -238,19 +258,23 @@ public class pnlKhachHang extends JPanel {
 		Image img_iconSearch = new ImageIcon(this.getClass().getResource("/icon_search_s.png")).getImage();
 		lblIconSearch.setIcon(new ImageIcon(img_iconSearch));
 
-		JButton btnThem = new JButton("Thêm khách hàng");
+		// nút thêm khách hàng
+		btnThem = new JButton("Thêm khách hàng");
 		btnThem.setFont(new Font("Arial", Font.BOLD, 15));
 		btnThem.setBounds(22, 21, 228, 63);
+		btnThem.setIcon(new ImageIcon(img_iconAdd));
 		pnlChucNang.add(btnThem);
 
-		JButton btnSua = new JButton("Sửa khách hàng");
+		btnSua = new JButton("Sửa khách hàng");
 		btnSua.setFont(new Font("Arial", Font.BOLD, 15));
 		btnSua.setBounds(283, 21, 228, 63);
+		btnSua.setIcon(new ImageIcon(img_iconUpdate));
 		pnlChucNang.add(btnSua);
 
-		JButton btnLammoi = new JButton("Làm mới");
+		btnLammoi = new JButton("Làm mới");
 		btnLammoi.setFont(new Font("Arial", Font.BOLD, 15));
 		btnLammoi.setBounds(549, 21, 228, 63);
+		btnLammoi.setIcon(new ImageIcon(img_iconLammoi));
 		pnlChucNang.add(btnLammoi);
 
 		JPanel pnlDSKH = new JPanel();
@@ -275,50 +299,55 @@ public class pnlKhachHang extends JPanel {
 		DoDataOnTable();
 
 		setVisible(true);
+
+		// đăng ký sự kiện
+		table.addMouseListener(this);
+		txtSearch.getDocument().addDocumentListener(this);
+		btnLammoi.addActionListener(this);
 	}
 
-	// xử lý sự kiện nhấp chuột
-	private class PanelbtnMouseAdapter extends MouseAdapter {
-		JPanel panel;
-
-		public PanelbtnMouseAdapter(JPanel panel) {
-			this.panel = panel;
-		}
-
-		/*
-		 * Phương thức này được gọi khi con trỏ chuột vào đối tượng JPanel mà đối tượng
-		 * PanelbtnMouseAdapter được gắn vào
-		 */
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			panel.setBackground(new Color(230, 230, 250));
-		}
-
-		/*
-		 * Phương thức này được gọi khi con trỏ chuột rời khỏi đối tượng JPanel
-		 */
-		@Override
-		public void mouseExited(MouseEvent e) {
-			panel.setBackground(new Color(176, 196, 222));
-		}
-
-		/*
-		 * Phương thức này được gọi khi người dùng nhấn chuột lên đối tượng JPanel
-		 */
-		@Override
-		public void mousePressed(MouseEvent e) {
-			panel.setBackground(new Color(60, 179, 113));
-		}
-
-		/*
-		 * Phương thức này được gọi khi người dùng thả chuột sau khi đã nhấn
-		 */
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			panel.setBackground(new Color(176, 196, 222));
-		}
-
-	}
+//	// xử lý sự kiện nhấp chuột
+//	private class PanelbtnMouseAdapter extends MouseAdapter {
+//		JPanel panel;
+//
+//		public PanelbtnMouseAdapter(JPanel panel) {
+//			this.panel = panel;
+//		}
+//
+//		/*
+//		 * Phương thức này được gọi khi con trỏ chuột vào đối tượng JPanel mà đối tượng
+//		 * PanelbtnMouseAdapter được gắn vào
+//		 */
+//		@Override
+//		public void mouseEntered(MouseEvent e) {
+//			panel.setBackground(new Color(230, 230, 250));
+//		}
+//
+//		/*
+//		 * Phương thức này được gọi khi con trỏ chuột rời khỏi đối tượng JPanel
+//		 */
+//		@Override
+//		public void mouseExited(MouseEvent e) {
+//			panel.setBackground(new Color(176, 196, 222));
+//		}
+//
+//		/*
+//		 * Phương thức này được gọi khi người dùng nhấn chuột lên đối tượng JPanel
+//		 */
+//		@Override
+//		public void mousePressed(MouseEvent e) {
+//			panel.setBackground(new Color(60, 179, 113));
+//		}
+//
+//		/*
+//		 * Phương thức này được gọi khi người dùng thả chuột sau khi đã nhấn
+//		 */
+//		@Override
+//		public void mouseReleased(MouseEvent e) {
+//			panel.setBackground(new Color(176, 196, 222));
+//		}
+//
+//	}
 
 	/*
 	 * ham do data on tale
@@ -329,6 +358,141 @@ public class pnlKhachHang extends JPanel {
 		for (KhachHang kh : dsKhachHang) {
 			modelKH.addRow(new Object[] { kh.getMaKhachhang(), kh.getTenKhachHang(), kh.getSoDT(), kh.getEmail(),
 					kh.getDiaChi(), kh.isGioiTinh() ? "Nam" : "Nữ", kh.getNgaySinh() });
+		}
+	}
+
+	/*
+	 * hàm get data lên txtField
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int row = table.getSelectedRow();
+		txtMaKH.setText(modelKH.getValueAt(row, 0).toString());
+		txtTenKH.setText(modelKH.getValueAt(row, 1).toString());
+		txtSoDT.setText(modelKH.getValueAt(row, 2).toString());
+		txtEmail.setText(modelKH.getValueAt(row, 3).toString());
+		txtDiaChi.setText(modelKH.getValueAt(row, 4).toString());
+		String gt = table.getValueAt(row, 5).toString();
+		if (gt.equals("Nam")) {
+			radNam.setSelected(true);
+		} else {
+			radNu.setSelected(true);
+		}
+
+		// lay value ngay sinh tu model
+		String dateNS = modelKH.getValueAt(row, 6).toString();
+		try {
+			// Tạo đối tượng SimpleDateFormat để định dạng ngày
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			// Chuyển đổi chuỗi thành đối tượng Date
+			Date utilNS = sdf.parse(dateNS);
+			// Thiết lập giá trị cho JDateChooser
+			jdNgaySinh.setDate(utilNS);
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/*
+	 * xoa data on table
+	 */
+	private void clearDataOnTalbe() {
+		while (modelKH.getRowCount() != 0) {
+			modelKH.removeRow(0);
+		}
+	}
+
+	/*
+	 * xóa rỗng textField
+	 */
+	private void clearTextField() {
+		Date now = new Date();
+		txtMaKH.setText("");
+		txtTenKH.setText("");
+		jdNgaySinh.setDate(null);
+		radNam.setSelected(true);
+		txtSoDT.setText("");
+		txtEmail.setText("");
+		txtDiaChi.setText("");
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+
+		if (o.equals(btnLammoi)) {
+			clearTextField();
+		}
+
+	}
+
+	/*
+	 * xử lí sự kiện DocumentEvent
+	 */
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		updateTable();
+
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		updateTable();
+
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		updateTable();
+
+	}
+
+	// tìm kiếm và hiển thị lại danh sách
+	public void updateTable() {
+		String sdt = txtSearch.getText();
+		ArrayList<KhachHang> ds = khachHang_dao.getAllKhachHang();
+		ArrayList<KhachHang> dsMoi = new ArrayList<KhachHang>();
+		
+		modelKH = (DefaultTableModel) table.getModel();
+		modelKH.getDataVector().removeAllElements();
+		
+		if(sdt.isEmpty()) {
+			DoDataOnTable();
+		} else {
+			for(KhachHang kh: ds) {
+				if(kh.getSoDT().startsWith(sdt)) {
+					dsMoi.add(kh);
+				}
+			}
+			for(KhachHang kh : dsMoi) {
+				modelKH.addRow(new Object[] { kh.getMaKhachhang(), kh.getTenKhachHang(), kh.getSoDT(), kh.getEmail(),
+						kh.getDiaChi(), kh.isGioiTinh() ? "Nam" : "Nữ", kh.getNgaySinh() });
+			}
 		}
 	}
 
