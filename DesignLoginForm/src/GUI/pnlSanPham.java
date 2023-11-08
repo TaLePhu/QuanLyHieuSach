@@ -341,14 +341,8 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		String[] tblS = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Nhà sản xuất","Tác giả", "Năm sản xuất", "Số trang",
 				"Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Tình trạng" };
 				modelSach = new DefaultTableModel(tblS, 0);
-				tblSach = new JTable(new DefaultTableModel(
-					new Object[][] {
-					},
-					new String[] {
-						"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "Gi\u00E1 mua", "S\u1ED1 l\u01B0\u1EE3ng", "Gi\u00E1 b\u00E1n", "Nh\u00E0 s\u1EA3n xu\u1EA5t", "T\u00E1c gi\u1EA3", "N\u0103m s\u1EA3n xu\u1EA5t", "S\u1ED1 trang", "M\u00E3 Danh m\u1EE5c", "M\u00E3 k\u1EC7 h\u00E0ng", "M\u00E3 khuy\u1EBFn m\u00E3i", "T\u00ECnh tr\u1EA1ng"
-					}
-				));
-				tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tblSach = new JTable(modelSach);
+				tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 				scrollPane.setViewportView(tblSach);
 		
 		JPanel pnlVanPhongPham = new JPanel();
