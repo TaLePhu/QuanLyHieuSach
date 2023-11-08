@@ -24,7 +24,7 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Select * from SanPham";
+			String sql = "Select * from SanPham where SOTRANG IS NULL";
 			Statement sta = con.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			while (rs.next()) {

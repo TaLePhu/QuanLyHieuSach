@@ -19,7 +19,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import dao.Dao_Sach;
+import dao.Dao_VanPhongPham;
 import entity.Sach;
+import entity.VanPhongPham;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
@@ -56,6 +58,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 	private DefaultTableModel modelSach;
 	private DefaultTableModel modelVPPham;
 	private Dao_Sach sach_dao = new Dao_Sach();
+	private Dao_VanPhongPham vpPham_dao = new Dao_VanPhongPham();
 
 	/**
 	 * Create the panel.
@@ -322,23 +325,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlDsSP.add(scrollPane);
 		
 //		tblSach = new JTable();
-//		tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		tblSach.setModel(new DefaultTableModel(
-//			new Object[][] {
-//			},
-//			new String[] {
-//				"M\u00E3 K\u1EC7 H\u00E0ng", "T\u00EAn K\u1EC7 H\u00E0ng", "Gi\u00E1 Mua", "S\u1ED1 L\u01B0\u1EE3ng", "Gi\u00E1 B\u00E1n", "Nh\u00E0 S\u1EA3n Xu\u1EA5t", "T\u00E1c Gi\u1EA3", "N\u0103m Xu\u1EA5t B\u1EA3n", "S\u1ED1 Trang", "M\u00E3 Danh M\u1EE5c", "M\u00E3 K\u1EC7 H\u00E0ng", "M\u00E3 Khuy\u1EBFn M\u00E3i", "T\u00ECnh Tr\u1EA1ng"
-//			}
-//		) {
-//			Class[] columnTypes = new Class[] {
-//				String.class, String.class, Float.class, Integer.class, Float.class, String.class, String.class, Integer.class, Integer.class, String.class, String.class, String.class, String.class
-//			};
-//			public Class getColumnClass(int columnIndex) {
-//				return columnTypes[columnIndex];
-//			}
-//		});
-//		scrollPane.setViewportView(tblSach);
-		String[] tblS = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Nhà sản xuất","Tác giả", "Năm sản xuất", "Số trang",
+		String[] tblS = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Nhà xuất bản","Tác giả", "Năm xuất bản", "Số trang",
 				"Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Tình trạng" };
 				modelSach = new DefaultTableModel(tblS, 0);
 				tblSach = new JTable(modelSach);
@@ -597,24 +584,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		scrollPane_1.setBounds(10, 21, 793, 343);
 		pnlDsSP_1.add(scrollPane_1);
 		
-//		tblVanPhongPham = new JTable();
-//		tblVanPhongPham.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		tblVanPhongPham.setModel(new DefaultTableModel(
-//			new Object[][] {
-//			},
-//			new String[] {
-//				"M\u00E3 S\u1EA3n Ph\u1EA9m", "T\u00EAn S\u1EA3n Ph\u1EA9m", "Gi\u00E1 Mua", "S\u1ED1 L\u01B0\u1EE3ng", "Gi\u00E1 B\u00E1n", "Th\u01B0\u01A1ng Hi\u1EC7u", "Xu\u1EA5t X\u1EE9", "M\u00E0u S\u1EAFc", "Ch\u1EA5t Li\u1EC7u", "M\u00E3 Danh M\u1EE5c", "T\u00ECnh Tr\u1EA1ng", "M\u00E3 Khuy\u1EBFn M\u00E3i", "M\u00E3 K\u1EC7 H\u00E0ng"
-//			}
-//		) {
-//			Class[] columnTypes = new Class[] {
-//				String.class, String.class, Float.class, Integer.class, Float.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
-//			};
-//			public Class getColumnClass(int columnIndex) {
-//				return columnTypes[columnIndex];
-//			}
-//		});
-//		scrollPane_1.setViewportView(tblVanPhongPham);
-		String[] tblVP = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Nhà sản xuất","Tác giả", "Năm sản xuất", "Số trang",
+		String[] tblVP = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Thương hiệu","Xuất xứ", "Màu sắc", "Chất liệu",
 				"Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Tình trạng" };
 				modelVPPham = new DefaultTableModel(tblVP, 0);
 				tblVanPhongPham = new JTable(modelVPPham);
@@ -623,7 +593,8 @@ public class pnlSanPham extends JPanel implements ActionListener {
 				
 				
 				
-		loadDataSach(sach_dao.getAllSanPhamSach());		
+		loadDataSach(sach_dao.getAllSanPhamSach());	
+		loadDataVPPham(vpPham_dao.getAllSanPhamVanPhong());
 				
 		btnThem.addActionListener(this);
 		btnThem_2.addActionListener(this);
@@ -659,8 +630,17 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		dm.getDataVector().removeAllElements();
 		for (Sach s : ds) {
 			modelSach.addRow(new Object[] {s.getMaSP(), s.getTenSP(), s.getGiaMua(), s.getSoLuong(),s.getGiaBan(),
-					s.getNhaXB(), s.getTacGia(), s.getNamXB(), s.getSoTrang(), s.getMaDanhMuc(), s.getMaKeHang(),
-					s.getMaKeHang(), s.getMaKhuyenMai(), s.getTinhTrang()});
+					s.getNhaXB(), s.getTacGia(), s.getNamXB(), s.getSoTrang(), s.getMaDanhMuc().getMaDanhMuc(), s.getMaKeHang().getMaKeHang(),
+					 s.getMaKhuyenMai().getMaKhuyenMai(), s.getTinhTrang()});
+		}
+	}
+	public void loadDataVPPham(ArrayList<VanPhongPham> ds) {
+		DefaultTableModel dm = (DefaultTableModel) tblVanPhongPham.getModel();
+		dm.getDataVector().removeAllElements();
+		for (VanPhongPham vpp : ds) {
+			modelVPPham.addRow(new Object[] {vpp.getMaSP(), vpp.getTenSP(), vpp.getGiaMua(), vpp.getSoLuong(),vpp.getGiaBan(),
+					vpp.getThuongHieu(), vpp.getXuatXu(), vpp.getMauSac(), vpp.getChatLieu(), vpp.getMaDanhMuc().getMaDanhMuc(), vpp.getMaKeHang().getMaKeHang(),
+					 vpp.getMaKhuyenMai().getMaKhuyenMai(), vpp.getTinhTrang()});
 		}
 	}
 

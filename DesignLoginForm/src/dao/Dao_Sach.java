@@ -25,7 +25,7 @@ public class Dao_Sach implements I_Sach {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Select * from SanPham";
+			String sql = "Select * from SanPham where SOTRANG > 0";
 			Statement sta = con.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			while (rs.next()) {
@@ -44,10 +44,6 @@ public class Dao_Sach implements I_Sach {
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-//				String thuongHieu = rs.getString("THUONGHIEU");
-//				String xuatXu = rs.getString("XUATXU");
-//				String mauSac = rs.getString("MAUSAC");
-//				String chatLieu = rs.getString("CHATLIEU");
 				String tinhTrang = rs.getString("TINHTRANG");
 
 				Sach sp = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, maDM, maKH, maKM, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
