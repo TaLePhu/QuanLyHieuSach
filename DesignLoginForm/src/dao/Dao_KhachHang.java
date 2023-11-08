@@ -88,4 +88,46 @@ public class Dao_KhachHang {
 			}
 			return -1;
 		}
+		
+		//update
+		public void update(KhachHang k) throws SQLException {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			PreparedStatement stmt = null;
+			try {
+				stmt = con.prepareStatement(
+						"update KHACHHANG SET HOTENKHACHHANG = ?, NGAYSINH=?, DIACHI=?, SODIENTHOAI=?, EMAIL=?, GIOITINH=?"
+						+ "WHERE MAKHACHHANG = ?");
+				stmt.setString(1, k.getTenKhachHang());
+				stmt.setString(3, k.getDiaChi());
+				java.sql.Date sqlNgaySinh = new java.sql.Date(k.getNgaySinh().getTime());
+				stmt.setDate(2, sqlNgaySinh);
+				stmt.setString(4, k.getSoDT());
+				stmt.setString(5, k.getEmail());
+				stmt.setBoolean(6, k.isGioiTinh());
+				stmt.setString(7, k.getMaKhachhang());
+				
+				int n = stmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					stmt.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

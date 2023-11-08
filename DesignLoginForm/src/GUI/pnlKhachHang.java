@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -145,6 +147,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		jdNgaySinh.setBounds(10, 45, 250, 35);
 		pnlNgaySinh.add(jdNgaySinh);
 
+		// giới tính
 		JPanel pnlGioi = new JPanel();
 		pnlGioi.setBounds(10, 300, 270, 45);
 		pnlInfo.add(pnlGioi);
@@ -155,16 +158,16 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		lblGioiTinh.setBounds(10, 10, 86, 25);
 		pnlGioi.add(lblGioiTinh);
 
-		JRadioButton radNam = new JRadioButton("Nam");
+		radNam = new JRadioButton("Nam");
 		radNam.setFont(new Font("Arial", Font.PLAIN, 18));
 		radNam.setBounds(102, 10, 74, 25);
 		pnlGioi.add(radNam);
 
-		JRadioButton radNu = new JRadioButton("Nữ");
+		radNu = new JRadioButton("Nữ");
 		radNu.setFont(new Font("Arial", Font.PLAIN, 18));
 		radNu.setBounds(192, 10, 61, 25);
 		pnlGioi.add(radNu);
-		
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(radNam);
 		group.add(radNu);
@@ -304,6 +307,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		table.addMouseListener(this);
 		txtSearch.getDocument().addDocumentListener(this);
 		btnLammoi.addActionListener(this);
+		btnSua.addActionListener(this);
 	}
 
 //	// xử lý sự kiện nhấp chuột
@@ -379,18 +383,20 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			radNu.setSelected(true);
 		}
 
+		jdNgaySinh.setDate((java.util.Date) modelKH.getValueAt(row, 6));
+
 		// lay value ngay sinh tu model
-		String dateNS = modelKH.getValueAt(row, 6).toString();
-		try {
-			// Tạo đối tượng SimpleDateFormat để định dạng ngày
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			// Chuyển đổi chuỗi thành đối tượng Date
-			Date utilNS = sdf.parse(dateNS);
-			// Thiết lập giá trị cho JDateChooser
-			jdNgaySinh.setDate(utilNS);
-		} catch (ParseException ex) {
-			ex.printStackTrace();
-		}
+//		String dateNS = modelKH.getValueAt(row, 6).toString();
+//		try {
+//			// Tạo đối tượng SimpleDateFormat để định dạng ngày
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//			// Chuyển đổi chuỗi thành đối tượng Date
+//			Date utilNS = sdf.parse(dateNS);
+//			// Thiết lập giá trị cho JDateChooser
+//			jdNgaySinh.setDate(utilNS);
+//		} catch (ParseException ex) {
+//			ex.printStackTrace();
+//		}
 	}
 
 	/*
@@ -414,6 +420,39 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		txtSoDT.setText("");
 		txtEmail.setText("");
 		txtDiaChi.setText("");
+	}
+
+	/*
+	 * update info khachHang
+	 */
+	private void replaceID() {
+		int pos = table.getSelectedRow();
+		
+		if (pos == -1) {
+			JOptionPane.showMessageDialog(null, "vui long chon dong can sua");
+			return;
+		}
+		
+		String ma = txtMaKH.getText();
+		String ten = txtTenKH.getText();
+		String diachi = txtDiaChi.getText();
+		String sdt = txtSoDT.getText();
+		String email = txtEmail.getText();
+		boolean gioi = radNam.isSelected();
+		Date ngaySinh = jdNgaySinh.getDate();
+		java.sql.Date sqlNgaySinh = new java.sql.Date(ngaySinh.getTime());
+
+		KhachHang kh = new KhachHang(ma, ten, diachi, sqlNgaySinh, sdt, email, gioi);
+		
+		try {
+			khachHang_dao.update(kh);
+			clearDataOnTalbe();
+			DoDataOnTable();
+			JOptionPane.showMessageDialog(this, "sua thanh con");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	@Override
@@ -440,12 +479,17 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 	}
 
+	//su kien nghe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
 		if (o.equals(btnLammoi)) {
 			clearTextField();
+		}
+		
+		if(o.equals(btnSua)) {
+			replaceID();
 		}
 
 	}
@@ -477,19 +521,19 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		String sdt = txtSearch.getText();
 		ArrayList<KhachHang> ds = khachHang_dao.getAllKhachHang();
 		ArrayList<KhachHang> dsMoi = new ArrayList<KhachHang>();
-		
+
 		modelKH = (DefaultTableModel) table.getModel();
 		modelKH.getDataVector().removeAllElements();
-		
-		if(sdt.isEmpty()) {
+
+		if (sdt.isEmpty()) {
 			DoDataOnTable();
 		} else {
-			for(KhachHang kh: ds) {
-				if(kh.getSoDT().startsWith(sdt)) {
+			for (KhachHang kh : ds) {
+				if (kh.getSoDT().startsWith(sdt)) {
 					dsMoi.add(kh);
 				}
 			}
-			for(KhachHang kh : dsMoi) {
+			for (KhachHang kh : dsMoi) {
 				modelKH.addRow(new Object[] { kh.getMaKhachhang(), kh.getTenKhachHang(), kh.getSoDT(), kh.getEmail(),
 						kh.getDiaChi(), kh.isGioiTinh() ? "Nam" : "Nữ", kh.getNgaySinh() });
 			}
