@@ -308,6 +308,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		txtSearch.getDocument().addDocumentListener(this);
 		btnLammoi.addActionListener(this);
 		btnSua.addActionListener(this);
+		btnThem.addActionListener(this);
 	}
 
 //	// xử lý sự kiện nhấp chuột
@@ -385,18 +386,6 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 		jdNgaySinh.setDate((java.util.Date) modelKH.getValueAt(row, 6));
 
-		// lay value ngay sinh tu model
-//		String dateNS = modelKH.getValueAt(row, 6).toString();
-//		try {
-//			// Tạo đối tượng SimpleDateFormat để định dạng ngày
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//			// Chuyển đổi chuỗi thành đối tượng Date
-//			Date utilNS = sdf.parse(dateNS);
-//			// Thiết lập giá trị cho JDateChooser
-//			jdNgaySinh.setDate(utilNS);
-//		} catch (ParseException ex) {
-//			ex.printStackTrace();
-//		}
 	}
 
 	/*
@@ -427,12 +416,12 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 	 */
 	private void replaceID() {
 		int pos = table.getSelectedRow();
-		
+
 		if (pos == -1) {
 			JOptionPane.showMessageDialog(null, "vui long chon dong can sua");
 			return;
 		}
-		
+
 		String ma = txtMaKH.getText();
 		String ten = txtTenKH.getText();
 		String diachi = txtDiaChi.getText();
@@ -443,7 +432,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		java.sql.Date sqlNgaySinh = new java.sql.Date(ngaySinh.getTime());
 
 		KhachHang kh = new KhachHang(ma, ten, diachi, sqlNgaySinh, sdt, email, gioi);
-		
+
 		try {
 			khachHang_dao.update(kh);
 			clearDataOnTalbe();
@@ -453,6 +442,45 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			e.printStackTrace();
 			return;
 		}
+	}
+
+	/*
+	 * hàm genarateOBJKhachhang lấy data from TXT thành OBJ
+	 */
+	private KhachHang genarateOBJKH() {
+		KhachHang temp;
+
+		int soLuong = khachHang_dao.getSoLuong();
+		if (soLuong == -1) {
+			JOptionPane.showMessageDialog(null, " phát sinh mã thất bại - vui lòng thử lại");
+			return null;
+		}
+
+		String ma = String.format("KH%07d", soLuong + 1);
+
+		if (txtTenKH.getText().isEmpty()) {
+			return null;
+		}
+		String ten = txtTenKH.getText();
+		Date dateNS = jdNgaySinh.getDate();
+		java.sql.Date sqlNS = new java.sql.Date(dateNS.getTime());
+
+		boolean gioi = radNam.isSelected();
+
+		if (txtSoDT.getText().isEmpty()) {
+			return null;
+		}
+		String sdt = txtSoDT.getText();
+		String email = txtEmail.getText();
+		String diachi = txtDiaChi.getText();
+		try {
+			temp = new KhachHang(ma, ten, diachi, sqlNS, sdt, email, gioi);
+			return temp;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return null; 
+		}
+
 	}
 
 	@Override
@@ -479,7 +507,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 	}
 
-	//su kien nghe
+	// su kien nghe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -487,9 +515,33 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		if (o.equals(btnLammoi)) {
 			clearTextField();
 		}
-		
-		if(o.equals(btnSua)) {
+
+		if (o.equals(btnSua)) {
 			replaceID();
+		}
+
+		if (o.equals(btnThem)) {
+			if(!txtMaKH.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "dang trong che do chinh sua !!!");
+				return;
+			}
+			
+			
+			
+			KhachHang kh = genarateOBJKH();
+			try {
+				if (!khachHang_dao.createKhachHang(kh)) {
+					JOptionPane.showInternalMessageDialog(null, "trung ma");
+					return;
+				} else {
+					clearTextField();
+					clearDataOnTalbe();
+					DoDataOnTable();
+					JOptionPane.showMessageDialog(this, "them khach hang thanh cong");
+				}
+			} catch (Exception e21) {
+				JOptionPane.showMessageDialog(null, e21.getMessage());
+			}
 		}
 
 	}
