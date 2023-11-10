@@ -2,8 +2,6 @@ package GUI;
 
 import java.awt.EventQueue;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +16,7 @@ import java.awt.Image;
 
 import javax.swing.SwingConstants;
 
+import crypto.AESCrypto;
 import dao.Dao_NhanVien;
 import dao.Dao_TaiKhoan;
 import entity.NhanVien;
@@ -25,9 +24,7 @@ import entity.TaiKhoan;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.awt.event.ActionEvent;
 
 public class FrameLogin extends JFrame {
@@ -35,7 +32,6 @@ public class FrameLogin extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String SECRET_KEY = "ThisIsASecretKey";
     private Dao_TaiKhoan taiKhoan_dao = new Dao_TaiKhoan();
     private Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
 	private JTextField txtTenDangNhap;
@@ -72,7 +68,7 @@ public class FrameLogin extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(0, 0, 596, 363);
+		panel.setBounds(0, 0, 586, 363);
 		getContentPane().add(panel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Thế giới sách");
@@ -122,23 +118,26 @@ public class FrameLogin extends JFrame {
 		btnLogin.setBounds(190, 278, 184, 41);
 		panel.add(btnLogin);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 580, 373);
-		panel.add(lblNewLabel);
-		Image img_bg = new ImageIcon(this.getClass().getResource("/BGLogin2.png")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(img_bg));
 		
 		txtMatKhau = new JPasswordField();
-		txtMatKhau.setBackground(new Color(255, 255, 255));
-		txtMatKhau.setBounds(207, 189, 343, 26);
+		txtMatKhau.setBounds(207, 186, 343, 29);
 		panel.add(txtMatKhau);
+		
+		JLabel bg = new JLabel("");
+		bg.setBounds(0, -1, 586, 364);
+		panel.add(bg);
+		Image img_iconUpdate = new ImageIcon(this.getClass().getResource("/BGLogin2.png")).getImage();
+		bg.setIcon(new ImageIcon(img_iconUpdate));
+		
+		txtTenDangNhap.setText("Admin");
+		txtMatKhau.setText("MatKhau123");
 	}
 	
 	private boolean checkLogin() throws Exception {
 		ArrayList<TaiKhoan> dsTK = taiKhoan_dao.getAllTaiKhoan();
 
 		String user = txtTenDangNhap.getText().trim();
-		String pass = encrypt(txtMatKhau.getText().trim());
+		String pass =AESCrypto.encrypt(txtMatKhau.getText().trim());
 		StringBuilder sb = new StringBuilder();
 		if (user.equals("")) {
 			sb.append("Vui lòng nhập tên đăng nhập!!!\n");
@@ -185,21 +184,4 @@ public class FrameLogin extends JFrame {
 		txtTenDangNhap.requestFocus();
 		return false;
 	}
-    
-    public static String encrypt(String plainText) throws Exception {
-        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(encryptedBytes);
-    }
-    
-    public static String decrypt(String encryptedText) throws Exception {
-        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        byte[] encryptedBytes = Base64.getDecoder().decode(encryptedText);
-        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-        return new String(decryptedBytes, StandardCharsets.UTF_8);
-    }
 }

@@ -17,6 +17,7 @@ import javax.swing.ScrollPaneConstants;
 
 import com.toedter.calendar.JDateChooser;
 
+import crypto.AESCrypto;
 import dao.Dao_NhanVien;
 import dao.Dao_TaiKhoan;
 import entity.NhanVien;
@@ -71,7 +72,6 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 	private JTextField txtMessageTK;
 	private JTextField txtTimTK;
 	private JTable tblTaiKhoan;
-	private static final String SECRET_KEY = "ThisIsASecretKey";
 	private Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
     private Dao_TaiKhoan taiKhoan_dao = new Dao_TaiKhoan();
     private DefaultTableModel modelNV;
@@ -616,7 +616,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
     
     public void fillFormTK(int r) throws Exception {
     	txtMaTK.setText(tblTaiKhoan.getValueAt(r, 0).toString());
-    	txtMatKhau.setText(decrypt(tblTaiKhoan.getValueAt(r, 1).toString()));
+    	txtMatKhau.setText(AESCrypto.decrypt(tblTaiKhoan.getValueAt(r, 1).toString()));
     	txtTenTK.setText(tblTaiKhoan.getValueAt(r, 2).toString());
     	cbMaNhanVien.setSelectedItem(tblTaiKhoan.getValueAt(r, 3).toString());
 	
@@ -653,7 +653,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
     	String maTK ="";
     	String tenTK = txtTenTK.getText().trim();
     	String matKhau = txtMatKhau.getText().trim();
-    	String mKMaHoa = encrypt(matKhau);
+    	String mKMaHoa =AESCrypto.encrypt(matKhau);
     	NhanVien nv = new NhanVien((String) cbMaNhanVien.getSelectedItem());
     	maTK= phatSinhMaTK();
     	TaiKhoan tk = new TaiKhoan(maTK, mKMaHoa, tenTK, nv);
@@ -682,7 +682,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 				String maTK = txtMaTK.getText().trim();
 	    		String tenTK = txtTenTK.getText().trim();
 	    		String matKhau = txtMatKhau.getText().trim();
-	    		String mKMaHoa = encrypt(matKhau);
+	    		String mKMaHoa =AESCrypto.encrypt(matKhau);
 	    		NhanVien nv = new NhanVien((String) cbMaNhanVien.getSelectedItem());
 				TaiKhoan tkMoi = new TaiKhoan(maTK, mKMaHoa, tenTK, nv);
 				if (!taiKhoan_dao.capNhat(tkMoi)) {
@@ -699,22 +699,6 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		}
     }
     
-    public static String encrypt(String plainText) throws Exception {
-        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(encryptedBytes);
-    }
-    
-    public static String decrypt(String encryptedText) throws Exception {
-        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        byte[] encryptedBytes = Base64.getDecoder().decode(encryptedText);
-        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-        return new String(decryptedBytes, StandardCharsets.UTF_8);
-    }
 
 
 	@Override

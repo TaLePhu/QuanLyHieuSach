@@ -2,26 +2,39 @@ package GUI;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
 
 import dao.Dao_NhanVien;
+import dao.Dao_TaiKhoan;
 import entity.NhanVien;
 import entity.TaiKhoan;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import crypto.AESCrypto;
+
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 
-public class FrameDashBoard extends JFrame {
+public class FrameDashBoard extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -45,6 +58,8 @@ public class FrameDashBoard extends JFrame {
 	Color ClickColor = new Color(60, 179, 113);
 	private JTextField txtChucVu;
 	public static TaiKhoan taiKhoanLogin;
+	private JButton btnDangXuat, btnDoiMatKhau;
+	private Dao_TaiKhoan taiKhoan_dao = new Dao_TaiKhoan();
 	
 
 	/**
@@ -351,12 +366,12 @@ public class FrameDashBoard extends JFrame {
 		txtTenNV_DN.setColumns(10);
 		txtTenNV_DN.setText(findNVLogin.getHoTenNhanVien());
 		
-		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDangXuat.setBounds(5, 60, 140, 30);
 		pnlDangXuat.add(btnDangXuat);
 		
-		JButton btnDoiMatKhau = new JButton("Đổi mật khẩu");
+		btnDoiMatKhau = new JButton("Đổi mật khẩu");
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDoiMatKhau.setBounds(155, 60, 140, 30);
 		pnlDangXuat.add(btnDoiMatKhau);
@@ -577,7 +592,8 @@ public class FrameDashBoard extends JFrame {
 
 		menuClicked(pnlManHinhChinh);
 		
-		
+		btnDangXuat.addActionListener(this);
+		btnDoiMatKhau.addActionListener(this);
 	}
 	
 	// xử lý sự kiện chuyển màn hình
@@ -606,4 +622,44 @@ public class FrameDashBoard extends JFrame {
 
 
 	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnDangXuat)) {
+			if (JOptionPane.showConfirmDialog(this, "Đăng xuất?", "Cảnh báo",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				setVisible(false);
+				new FrameLogin().setVisible(true);
+			}
+		}
+		if (o.equals(btnDoiMatKhau)) {
+			String matKhauCu = JOptionPane.showInputDialog("Nhập mật khẩu hiện tại");
+			try {
+				
+				if (matKhauCu.equals(AESCrypto.decrypt(taiKhoanLogin.getMatKhau()))) {
+					String matKhauMoi = JOptionPane.showInputDialog("Nhập mật khẩu mới");
+					if (JOptionPane.showConfirmDialog(this, "Bạn muốn đổi mật khẩu mới", "Thông báo",
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						TaiKhoan tkMoi = new TaiKhoan(taiKhoanLogin.getMaTaiKhoan(), AESCrypto.encrypt(matKhauMoi),taiKhoanLogin.getTenTaiKhoan(), taiKhoanLogin.getNhanVien());
+						taiKhoan_dao.capNhat(tkMoi);
+					} else {
+						JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Sai mật khẩu!!!");
+				}
+			} catch (HeadlessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		}
+		
+	}
+	
 }

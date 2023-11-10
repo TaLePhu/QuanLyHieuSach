@@ -2,26 +2,39 @@ package GUI;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
 
 import dao.Dao_NhanVien;
+import dao.Dao_TaiKhoan;
 import entity.NhanVien;
 import entity.TaiKhoan;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import crypto.AESCrypto;
+
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 
-public class FrameDashBoardNVBH extends JFrame {
+public class FrameDashBoardNVBH extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -33,6 +46,7 @@ public class FrameDashBoardNVBH extends JFrame {
 	private pnlHoadon pnlHoaDon;
 	private pnlKhachHang pnlKhachhang;
 	private pnlSanPham pnlSanPham;
+	private pnlThongKeNV pnlThongKeNV;
 	private pnlTroGiup pnlHelp;
 	private JTextField txtTenNV_DN;
 	private pnlManHinhChinh pnlManHinhChinh;
@@ -41,6 +55,8 @@ public class FrameDashBoardNVBH extends JFrame {
 	Color ClickColor = new Color(60, 179, 113);
 	private JTextField txtChucVu;
 	public static TaiKhoan taiKhoanLogin;
+	private JButton btnDangXuat, btnDoiMatKhau;
+	private Dao_TaiKhoan taiKhoan_dao = new Dao_TaiKhoan();
 	
 
 	/**
@@ -79,6 +95,7 @@ public class FrameDashBoardNVBH extends JFrame {
 		pnlHoaDon.setBounds(0, 0, 1166, 763);
 		pnlKhachhang = new pnlKhachHang();
 		pnlSanPham = new pnlSanPham();
+		pnlThongKeNV = new pnlThongKeNV();
 		pnlHelp = new pnlTroGiup();
 		pnlManHinhChinh = new pnlManHinhChinh();
 		
@@ -177,6 +194,32 @@ public class FrameDashBoardNVBH extends JFrame {
 		Image img_iconProduct = new ImageIcon(this.getClass().getResource("/icon_book_s.png")).getImage();
 		lblIconProduct.setIcon(new ImageIcon(img_iconProduct));
 
+		
+		// menu Thongke
+				JPanel pnlQLThongKe = new JPanel();
+				pnlQLThongKe.addMouseListener(new PanelbtnMouseAdapter(pnlQLThongKe) {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						menuClicked(pnlThongKeNV);
+					}
+				});
+				pnlQLThongKe.setBackground(new Color(230, 230, 250));
+				pnlQLThongKe.setBounds(10, 350, 300, 60);
+				pnlMenu.add(pnlQLThongKe);
+				pnlQLThongKe.setLayout(null);
+
+				JLabel lblThongKe = new JLabel("Thống kê");
+				lblThongKe.setHorizontalAlignment(SwingConstants.CENTER);
+				lblThongKe.setBounds(91, 5, 133, 50);
+				pnlQLThongKe.add(lblThongKe);
+				lblThongKe.setFont(new Font("Arial", Font.BOLD, 20));
+
+				JLabel lblIconThongKe = new JLabel("");
+				lblIconThongKe.setHorizontalAlignment(SwingConstants.CENTER);
+				lblIconThongKe.setBounds(10, 5, 50, 50);
+				pnlQLThongKe.add(lblIconThongKe);
+				Image img_iconThongke = new ImageIcon(this.getClass().getResource("/icon_thongke_s.png")).getImage();
+				lblIconThongKe.setIcon(new ImageIcon(img_iconThongke));
 
 		// menu help
 		JPanel pnlQLHelp = new JPanel();
@@ -188,7 +231,7 @@ public class FrameDashBoardNVBH extends JFrame {
 		});
 		pnlQLHelp.setLayout(null);
 		pnlQLHelp.setBackground(new Color(230, 230, 250));
-		pnlQLHelp.setBounds(10, 350, 300, 60);
+		pnlQLHelp.setBounds(10, 420, 300, 60);
 		pnlMenu.add(pnlQLHelp);
 
 		JLabel lblHelp = new JLabel("Trợ giúp");
@@ -243,12 +286,12 @@ public class FrameDashBoardNVBH extends JFrame {
 		txtTenNV_DN.setColumns(10);
 		txtTenNV_DN.setText(findNVLogin.getHoTenNhanVien());
 		
-		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDangXuat.setBounds(5, 60, 140, 30);
 		pnlDangXuat.add(btnDangXuat);
 		
-		JButton btnDoiMatKhau = new JButton("Đổi mật khẩu");
+		btnDoiMatKhau = new JButton("Đổi mật khẩu");
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDoiMatKhau.setBounds(155, 60, 140, 30);
 		pnlDangXuat.add(btnDoiMatKhau);
@@ -295,6 +338,7 @@ public class FrameDashBoardNVBH extends JFrame {
 				pnlQLKhachHang.setBackground(DefaultColor);
 				pnlQLSanPham.setBackground(DefaultColor);
 				pnlQLHelp.setBackground(DefaultColor);
+				pnlQLThongKe.setBackground(DefaultColor);
 			}
 			
 		});
@@ -313,6 +357,7 @@ public class FrameDashBoardNVBH extends JFrame {
 				pnlQLKhachHang.setBackground(DefaultColor);
 				pnlQLSanPham.setBackground(DefaultColor);
 				pnlQLHelp.setBackground(DefaultColor);
+				pnlQLThongKe.setBackground(DefaultColor);
 			}
 		});
 		
@@ -324,6 +369,7 @@ public class FrameDashBoardNVBH extends JFrame {
 				pnlQLKhachHang.setBackground(ClickColor);
 				pnlQLSanPham.setBackground(DefaultColor);
 				pnlQLHelp.setBackground(DefaultColor);
+				pnlQLThongKe.setBackground(DefaultColor);
 			}
 		});
 		
@@ -336,6 +382,7 @@ public class FrameDashBoardNVBH extends JFrame {
 				pnlQLKhachHang.setBackground(DefaultColor);
 				pnlQLSanPham.setBackground(ClickColor);
 				pnlQLHelp.setBackground(DefaultColor);
+				pnlQLThongKe.setBackground(DefaultColor);
 			}
 		});
 		
@@ -349,45 +396,35 @@ public class FrameDashBoardNVBH extends JFrame {
 				pnlQLKhachHang.setBackground(DefaultColor);
 				pnlQLSanPham.setBackground(DefaultColor);
 				pnlQLHelp.setBackground(ClickColor);
+				pnlQLThongKe.setBackground(DefaultColor);
 			}
 		});
 		
-//		JLabel lblExit = new JLabel("X");
-//		lblExit.setForeground(Color.WHITE);
-//		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblExit.setFont(new Font("Arial", Font.BOLD, 16));
-//		lblExit.setBounds(1460, 0, 30, 30);
-//		lblExit.addMouseListener(new MouseAdapter(){
-//			@Override
-//			public void mouseClicked(MouseEvent arg0) {
-//				if(JOptionPane.showConfirmDialog(null,"ban co chac muon thoat?","canh bao",JOptionPane.YES_NO_OPTION) == 0) {
-//					FrameDashBoard.this.dispose();
-//				}
-//			}
-//			@Override
-//			public void mouseEntered(MouseEvent arg0) {
-//				lblExit.setForeground(Color.red);
-//			}
-//			@Override
-//			public void mouseExited(MouseEvent arg0) {
-//				lblExit.setForeground(Color.white);
-//			}
-//		});
-//		contentPane.add(lblExit);
+		pnlQLThongKe.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				pnlHome.setBackground(DefaultColor);
+				pnlQLHoaDon.setBackground(DefaultColor);
+				pnlQLKhachHang.setBackground(DefaultColor);
+				pnlQLSanPham.setBackground(DefaultColor);
+				pnlQLHelp.setBackground(DefaultColor);
+				pnlQLThongKe.setBackground(ClickColor);
+			}
+		});
 		
-//		JPanel panelMainContent =  new JPanel();
-//		panelMainContent.setBounds(324, 105, 1166, 685);
-//		contentPane.add(panelMainContent);
-//		panelMainContent.setLayout(null);
-//		
+	
 		pnlMainContent.add(pnlHoaDon);
 		pnlMainContent.add(pnlKhachhang);
 		pnlMainContent.add(pnlSanPham);
 		pnlMainContent.add(pnlHelp);
 		pnlMainContent.add(pnlManHinhChinh);
+		pnlMainContent.add(pnlThongKeNV);
 		
 
 		menuClicked(pnlManHinhChinh);
+		
+		btnDangXuat.addActionListener(this);
+		btnDoiMatKhau.addActionListener(this);
 		
 		
 	}
@@ -399,6 +436,7 @@ public class FrameDashBoardNVBH extends JFrame {
 		pnlSanPham.setVisible(false);
 		pnlHelp.setVisible(false);
 		pnlManHinhChinh.setVisible(false);
+		pnlThongKeNV.setVisible(false);
 		
 		panel.setVisible(true);
 	}
@@ -413,5 +451,43 @@ public class FrameDashBoardNVBH extends JFrame {
 		}
 
 
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnDangXuat)) {
+			if (JOptionPane.showConfirmDialog(this, "Đăng xuất?", "Cảnh báo",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				setVisible(false);
+				new FrameLogin().setVisible(true);
+			}
+		}
+		if (o.equals(btnDoiMatKhau)) {
+			String matKhauCu = JOptionPane.showInputDialog("Nhập mật khẩu hiện tại");
+			try {
+				if (matKhauCu.equals(AESCrypto.decrypt(taiKhoanLogin.getMatKhau()))) {
+					String matKhauMoi = JOptionPane.showInputDialog("Nhập mật khẩu mới");
+					if (JOptionPane.showConfirmDialog(this, "Bạn muốn đổi mật khẩu mới", "Thông báo",
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						TaiKhoan tkMoi = new TaiKhoan(taiKhoanLogin.getMaTaiKhoan(),AESCrypto.encrypt(matKhauMoi),taiKhoanLogin.getTenTaiKhoan(), taiKhoanLogin.getNhanVien());
+						taiKhoan_dao.capNhat(tkMoi);
+					} else {
+						JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Sai mật khẩu!!!");
+				}
+			} catch (HeadlessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		}
+		
 	}
 }
