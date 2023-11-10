@@ -86,6 +86,7 @@ public class FrameLogin extends JFrame {
 		
 		txtTenDangNhap = new JTextField();
 		txtTenDangNhap.setBounds(207, 122, 343, 29);
+		txtTenDangNhap.setText("Admin");
 		panel.add(txtTenDangNhap);
 		
 		JLabel jLabel2 = new JLabel();
@@ -120,7 +121,13 @@ public class FrameLogin extends JFrame {
 		
 		
 		txtMatKhau = new JPasswordField();
+<<<<<<< HEAD
 		txtMatKhau.setBounds(207, 186, 343, 29);
+=======
+		txtMatKhau.setBackground(new Color(255, 255, 255));
+		txtMatKhau.setBounds(207, 189, 343, 26);
+		txtMatKhau.setText("MatKhau123");
+>>>>>>> a10cf9fe42c08ba85613cb86e4b49c0f32e7a5b4
 		panel.add(txtMatKhau);
 		
 		JLabel bg = new JLabel("");
