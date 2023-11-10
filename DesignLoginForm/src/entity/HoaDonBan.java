@@ -27,6 +27,9 @@ public class HoaDonBan {
 		this.tongThanhTien = tongThanhTien;
 		this.tienThua = tienThua;
 	}
+	public HoaDonBan() {
+		// TODO Auto-generated constructor stub
+	}	
 
 	public HoaDonBan(String maHDBan) {
 		super();

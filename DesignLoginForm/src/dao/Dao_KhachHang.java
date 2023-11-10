@@ -10,6 +10,7 @@ import java.util.Date;
 import connectDB.ConnectDB;
 
 import entity.KhachHang;
+import entity.NhaCungCap;
 
 public class Dao_KhachHang {
 	// get all data on table
@@ -120,5 +121,40 @@ public class Dao_KhachHang {
 
 	// them
 	// thêm khách hàng
+	public ArrayList<KhachHang> getKHTheoSDT(String sdtT) {
+		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from KHACHHANG where SODIENTHOAI = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1,sdtT);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String ma = rs.getString("MAKHACHHANG");
+				String ten = rs.getString("HOTENKHACHHANG");
+
+				Date ngaySinh = rs.getDate("NGAYSINH");
+				String diaChi = rs.getString("DIACHI");
+				String soDT = rs.getString("SODIENTHOAI");
+				Boolean gioiTinh = rs.getBoolean("GIOITINH");
+				String email = rs.getString("EMAIL");
+				KhachHang khachHang = new KhachHang(ma, ten, diaChi, ngaySinh, soDT, email, gioiTinh);
+				dsKH.add(khachHang);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsKH;
+	}
 
 }
