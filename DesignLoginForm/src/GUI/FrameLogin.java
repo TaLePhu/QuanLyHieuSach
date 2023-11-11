@@ -22,6 +22,7 @@ import dao.Dao_TaiKhoan;
 import entity.NhanVien;
 import entity.TaiKhoan;
 
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -121,18 +122,12 @@ public class FrameLogin extends JFrame {
 		
 		
 		txtMatKhau = new JPasswordField();
-<<<<<<< HEAD
 
-=======
->>>>>>> 564ccef1af78170cd714aaee817d548da43f28ec
 		txtMatKhau.setBounds(207, 186, 343, 29);
 		txtMatKhau.setBackground(new Color(255, 255, 255));
 		txtMatKhau.setBounds(207, 189, 343, 26);
 		txtMatKhau.setText("MatKhau123");
-<<<<<<< HEAD
 
-=======
->>>>>>> 564ccef1af78170cd714aaee817d548da43f28ec
 		panel.add(txtMatKhau);
 		
 		JLabel bg = new JLabel("");
