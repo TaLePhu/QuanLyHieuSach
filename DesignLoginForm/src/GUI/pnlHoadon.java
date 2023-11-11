@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,12 +40,14 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 
+import dao.Dao_ChiTietHoaDonBan;
 import dao.Dao_HoaDonBan;
 import dao.Dao_KhachHang;
 import dao.Dao_KhuyenMai;
 import dao.Dao_NhaCungCap;
 import dao.Dao_NhanVien;
 import dao.Dao_SanPham;
+import entity.ChiTietHoaDonBan;
 import entity.HoaDonBan;
 import entity.KhachHang;
 import entity.KhuyenMai;
@@ -75,8 +78,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JTextField txtMaHD;
 	private JTextField txtMaNhanVien;
 	private JTextField txtTenNV;
-	private JTextField txtMaKM;
-	private JTextField txtGiaTriGG;
 	private JTextField txtTongTien;
 	private JTextField txtTienKhachDua;
 	private JTextField txtTienThua;
@@ -93,8 +94,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JTextField txtTenNV_N;
 	private JTextField txtTongTien_N;
 	private JDateChooser dcrNgayLap;
-	private JDateChooser dcrNgayBDKM;
-	private JDateChooser dcrNgayKTKM;
 
 
 	private NhaCungCap ncc;
@@ -110,17 +109,17 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private Dao_KhachHang dao_KhachHang;
 	private Dao_HoaDonBan dao_HoaDonBan;
 	private Dao_NhanVien dao_NhanVien;
+	private Dao_ChiTietHoaDonBan dao_ChiTietHoaDonBan;
 
 	private JButton btnXoaSP;
 	private JButton btnThemSP;
 	private JButton btnSuaSP;
 	private JButton btnTimSP;
 	private JButton btnTimKhachHang;
-	private JButton btnTimKhuyenMai;
 	private JButton btnThanhToan;
 	private JButton btnTamIn;
 	private JButton btnTaoMoi;
-	private JButton btnLayInTam;
+	private JButton btnInHoaDon;
 	private JButton btnXoaSP_N;
 	private JButton btnThemSP_N;
 	private JButton btnSuaSP_N;
@@ -152,7 +151,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		khuyenMai = new KhuyenMai();
 		sanPham = new SanPham();
 		khachHang =  new KhachHang();
-		hoaDonBan = new HoaDonBan();
+		//hoaDonBan = new HoaDonBan();
 		//nhanVien = new NhanVien();
 
 		dao_NCC = new Dao_NhaCungCap();
@@ -161,6 +160,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		dao_KhachHang = new Dao_KhachHang();
 		dao_HoaDonBan = new Dao_HoaDonBan();
 		dao_NhanVien = new Dao_NhanVien();
+		dao_ChiTietHoaDonBan = new Dao_ChiTietHoaDonBan();
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 1163, 763);
@@ -325,7 +325,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		JPanel pnlHoaDon = new JPanel();
 		pnlHoaDon.setLayout(null);
 		pnlHoaDon.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin hóa đơn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlHoaDon.setBounds(770, 160, 380, 150);
+		pnlHoaDon.setBounds(770, 170, 380, 150);
 		pnlHDBan.add(pnlHoaDon);
 
 		JLabel lblMaHD = new JLabel("Mã hóa đơn");
@@ -379,64 +379,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		pnlHoaDon.add(dcrNgayLap);
 
-		JPanel pnlTTKhuyenMai = new JPanel();
-		pnlTTKhuyenMai.setLayout(null);
-		pnlTTKhuyenMai.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin khuyến mãi", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlTTKhuyenMai.setBounds(770, 320, 380, 150);
-		pnlHDBan.add(pnlTTKhuyenMai);
-
-		JLabel maKhuyenMai = new JLabel("Mã khuyễn mãi");
-		maKhuyenMai.setFont(new Font("Tahoma", Font.BOLD, 12));
-		maKhuyenMai.setBounds(10, 20, 100, 20);
-		pnlTTKhuyenMai.add(maKhuyenMai);
-
-		txtMaKM = new JTextField();
-		txtMaKM.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtMaKM.setColumns(10);
-		txtMaKM.setBounds(120, 20, 170, 20);
-		pnlTTKhuyenMai.add(txtMaKM);
-
-		JLabel lblNgayBDKM = new JLabel("Ngày bắt đầu");
-		lblNgayBDKM.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNgayBDKM.setBounds(10, 50, 112, 20);
-		pnlTTKhuyenMai.add(lblNgayBDKM);
-
-		txtGiaTriGG = new JTextField();
-		txtGiaTriGG.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtGiaTriGG.setEnabled(false);
-		txtGiaTriGG.setColumns(10);
-		txtGiaTriGG.setBounds(120, 110, 250, 20);
-		pnlTTKhuyenMai.add(txtGiaTriGG);
-
-		JLabel lblGiaTriGG = new JLabel("Giá trị");
-		lblGiaTriGG.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblGiaTriGG.setBounds(10, 110, 100, 20);
-		pnlTTKhuyenMai.add(lblGiaTriGG);
-
-		dcrNgayBDKM = new JDateChooser();
-		dcrNgayBDKM.setLocale(new Locale("vi", "VN"));
-		dcrNgayBDKM.setEnabled(false);
-		dcrNgayBDKM.setDateFormatString("dd/MM/yyyy");
-		dcrNgayBDKM.setBounds(120, 50, 250, 20);
-		pnlTTKhuyenMai.add(dcrNgayBDKM);
-
-		JLabel lblNgayKTKM = new JLabel("Ngày kết thuc");
-		lblNgayKTKM.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNgayKTKM.setBounds(10, 80, 112, 20);
-		pnlTTKhuyenMai.add(lblNgayKTKM);
-
-		dcrNgayKTKM = new JDateChooser();
-		dcrNgayKTKM.setLocale(new Locale("vi", "VN"));
-		dcrNgayKTKM.setEnabled(false);
-		dcrNgayKTKM.setDateFormatString("dd/MM/yyyy");
-		dcrNgayKTKM.setBounds(120, 80, 250, 20);
-		pnlTTKhuyenMai.add(dcrNgayKTKM);
-
-		btnTimKhuyenMai = new JButton("Tìm");
-		btnTimKhuyenMai.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimKhuyenMai.setBounds(290, 20, 80, 20);
-		pnlTTKhuyenMai.add(btnTimKhuyenMai);
-
 		JPanel pnlThanhToan = new JPanel();
 		pnlThanhToan.setLayout(null);
 		pnlThanhToan.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin thanh toán", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -480,27 +422,27 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		btnThanhToan = new JButton("Thanh toán");
 		btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnThanhToan.setBounds(810, 490, 300, 50);
+		btnThanhToan.setBounds(810, 600, 310, 110);
 		pnlHDBan.add(btnThanhToan);
 
-		btnTamIn = new JButton("In tạm hóa đơn");
+		btnTamIn = new JButton("Tạm in");
 		btnTamIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnTamIn.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnTamIn.setBounds(810, 550, 300, 50);
+		btnTamIn.setBounds(810, 430, 310, 70);
 		pnlHDBan.add(btnTamIn);
 
 		btnTaoMoi = new JButton("Tạo mới");
 		btnTaoMoi.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnTaoMoi.setBounds(810, 670, 300, 50);
+		btnTaoMoi.setBounds(810, 345, 310, 70);
 		pnlHDBan.add(btnTaoMoi);
 
-		btnLayInTam = new JButton("Hóa đơn in tạm");
-		btnLayInTam.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnLayInTam.setBounds(810, 610, 300, 50);
-		pnlHDBan.add(btnLayInTam);
+		btnInHoaDon = new JButton("In hóa đơn");
+		btnInHoaDon.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnInHoaDon.setBounds(810, 515, 310, 70);
+		pnlHDBan.add(btnInHoaDon);
 
 		JPanel pnlHDNhap = new JPanel();
 		pnlHDNhap.setLayout(null);
@@ -753,7 +695,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnTaoMoi_N.setIcon(new ImageIcon("img/update.png"));
 		btnThanhToan.setIcon(new ImageIcon("img/thanhToan.png"));
 		btnThanhToan_N.setIcon(new ImageIcon("img/thanhToan.png"));
-		btnTimKhuyenMai.setIcon(new ImageIcon("img/find16.png"));
 		btnTimNCC.setIcon(new ImageIcon("img/find16.png"));
 		btnTimSP.setIcon(new ImageIcon("img/find16.png"));
 		btnTimSP_N.setIcon(new ImageIcon("img/find16.png"));
@@ -761,7 +702,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		// add event
 		btnXoaSP.addActionListener(this);
-		btnLayInTam.addActionListener(this);
+		btnInHoaDon.addActionListener(this);
 		btnTamIn.addActionListener(this);
 		btnThanhToan.addActionListener(this);
 		btnThanhToan_N.addActionListener(this);
@@ -771,7 +712,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnXoaSP_N.addActionListener(this);
 		btnTaoMoi.addActionListener(this);
 		btnTaoMoi_N.addActionListener(this);
-		btnTimKhuyenMai.addActionListener(this);
 		btnTimNCC.addActionListener(this);
 		btnTimSP.addActionListener(this);
 		btnTimSP_N.addActionListener(this);
@@ -803,9 +743,9 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		String currentDateStr = dateFormat.format(currentDate);
 		if (soHD == -1) {
 			soHD = 0;
-			maHD = String.format("HD%s%03d",currentDateStr,soHD + 1);
+			maHD = String.format("HD%s%04d",currentDateStr,soHD + 1);
 		} else {
-			maHD = String.format("HD%s%03d",currentDateStr,soHD + 1);
+			maHD = String.format("HD%s%04d",currentDateStr,soHD + 1);
 		}
 		txtMaHD.setText(maHD);
 		// Lấy mã hóa đơn cuối cùng trong ngày
@@ -836,27 +776,27 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	}
 
 	//tìm kiếm khuyến mãi theo mã khuyến mãi
-	public void timKMTheoMaKM() {
-		String ma = txtMaKM.getText();
-		if (ma.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã khuyến mãi");	
-
-		} 
-		else {
-			ArrayList<KhuyenMai> ds = dao_KhuyenMai.getKhuyenMaiTheoMaMang(ma);
-			if (ds.size()==0) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy mã khuyến mãi");
-			}
-			else {
-				for (KhuyenMai t : ds) {
-					dcrNgayBDKM.setDate(t.getNgayBatDau());
-					dcrNgayKTKM.setDate(t.getNgayBatDau());
-					txtGiaTriGG.setText(String.valueOf(t.getGiaTriGiamGia()));
-				}
-			}
-		}
-
-	}
+//	public void timKMTheoMaKM() {
+//		String ma = txtMaKM.getText();
+//		if (ma.isEmpty()) {
+//			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã khuyến mãi");	
+//
+//		} 
+//		else {
+//			ArrayList<KhuyenMai> ds = dao_KhuyenMai.getKhuyenMaiTheoMaMang(ma);
+//			if (ds.size()==0) {
+//				JOptionPane.showMessageDialog(this, "Không tìm thấy mã khuyến mãi");
+//			}
+//			else {
+//				for (KhuyenMai t : ds) {
+//					dcrNgayBDKM.setDate(t.getNgayBatDau());
+//					dcrNgayKTKM.setDate(t.getNgayBatDau());
+//					txtGiaTriGG.setText(String.valueOf(t.getGiaTriGiamGia()));
+//				}
+//			}
+//		}
+//
+//	}
 
 	public void timSPTheoMaSP() {
 		String ma = txtMaSP.getText();
@@ -899,6 +839,54 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		}
 	}
+	
+	//Kiểm tra tiền khách đưa: tiền nhập vào là số thực và lớn hơn 0
+	public boolean validDataTKD() {
+		String tienKD = txtTienKhachDua.getText().trim();
+		if(tienKD.length() > 0) {
+			try {
+				float x = Float.parseFloat(tienKD);
+				float y = Float.parseFloat(txtTongTien.getText().trim());
+				if(x < y) {
+					JOptionPane.showMessageDialog(this,"Tiền khách đưa không đủ");
+					return false;
+				}
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				JOptionPane.showMessageDialog(this,"Tiền khách đưa nhập vào phải là kiểu số");
+			}
+		} else {
+			JOptionPane.showMessageDialog(this,"Vui lòng nhập số tiền khách đưa");
+			return false;
+		}
+		return true;
+	}
+	// kiểm tra số lượng sản phẩm muốn bán
+	public boolean validDataSLSP() {
+		String soLuong = txtSoLuong.getText().trim();
+		if(soLuong.length() > 0) {
+			try {
+				int soL = Integer.parseInt(soLuong);
+				String maSP = txtMaSP.getText();
+				int soLuongTon = 0;
+				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
+				for (SanPham sanPham : ds) {
+					soLuongTon = sanPham.getSoLuong();
+				}
+				if(soL > soLuongTon) {
+					JOptionPane.showMessageDialog(this,"Sản phẩm hiện chỉ còn: "+soLuongTon);
+					return false;
+				}
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				JOptionPane.showMessageDialog(this,"Số lượng nhập vào phải là kiểu số");
+			}
+		} else {
+			JOptionPane.showMessageDialog(this,"Vui lòng nhập số lượng sản phẩm");
+			return false;
+		}
+		return true;
+	}
 
 	//	private HoaDonBan createHDB() {
 	//		int soHD = dao_HoaDonBan.getSoLuong();
@@ -916,11 +904,12 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		Object o = arg0.getSource();
-		if(o.equals(btnTimKhuyenMai)) {
-			timKMTheoMaKM();
-		}
-		else if(o.equals(btnTimNCC)) {
+//		if(o.equals(btnTimKhuyenMai)) {
+//			timKMTheoMaKM();
+//		}
+		if(o.equals(btnTimNCC)) {
 			timTheoSDTNCC();
+			
 		}
 		else if(o.equals(btnTimSP)) {
 			timSPTheoMaSP();
@@ -930,6 +919,70 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		}
 		else if(o.equals(btnThanhToan)) {
 			phatsinhma();
+			if(validDataTKD()) {
+				String trangThai = "Đã thanh toán";
+				int soLuongTon = 0;
+				int soLuongConLai = 0; //sau khi thanh toán
+				float tienKD = Float.parseFloat(txtTienKhachDua.getText());
+				float tienTL = tienKD - tongThanhTien;
+				txtTienThua.setText(tienTL + "");
+				
+				Date dateNgayLapHD = dcrNgayLap.getDate();
+				java.sql.Date sqlNgayLapHD = new java.sql.Date(dateNgayLapHD.getTime());
+				
+				String maHD = txtMaHD.getText();
+				String maNV = txtMaNhanVien.getText();
+				NhanVien nv = new NhanVien(maNV);
+				String maKH = txtMaKH.getText();
+				KhachHang kh = new KhachHang(maKH);
+				float vat = (float) (VAT);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, sqlNgayLapHD, trangThai, vat, tienKD, tongThanhTien, tienTL);
+				try {
+					if(!dao_HoaDonBan.createHoaDon(hd)) {
+						JOptionPane.showMessageDialog(this,"Trùng mã - Kiểm trả lại");
+					}else {
+						int flag = 0;
+						for(int i = 0; i < model.getRowCount();i++) {
+							String maSP = model.getValueAt(i, 1).toString();
+							//String soLB = model.getValueAt(i, 3).toString();
+							//String thanhTien = model.getValueAt(i, 6).toString();
+							int soL = Integer.parseInt(model.getValueAt(i, 3).toString());
+							float TT = Float.parseFloat(model.getValueAt(i, 6).toString());
+							SanPham sp = new SanPham(maSP);
+							ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
+							for (SanPham sanPham : ds) {
+								soLuongTon = sanPham.getSoLuong();
+							}
+							ChiTietHoaDonBan cthd = new ChiTietHoaDonBan(hd, sp, soL, TT);
+							if(!dao_ChiTietHoaDonBan.createCTHoaDon(cthd)) {
+								JOptionPane.showMessageDialog(this,"Lỗi lưu chi tiết hóa đơn");
+							}
+							else {
+								
+							}
+							soLuongConLai = soLuongTon - soL;
+							if(!dao_SanPham.update(maSP,soLuongConLai)) {
+								JOptionPane.showMessageDialog(this,"Cập nhật số lượng thất bại");
+							}
+							else {
+							}
+							flag = 1;
+							
+						}
+						if(flag == 1) {
+							JOptionPane.showMessageDialog(this,"Thanh toán thành công");
+						}else {
+							JOptionPane.showMessageDialog(this,"Thanh toán thất bại");
+						}
+							
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 		}
 		else if(o.equals(btnThemSP)) {
 			stt = model.getRowCount();
@@ -939,7 +992,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			else {
 				String ma = txtMaSP.getText();
 				String soLuong = txtSoLuong.getText();
-				float soL = Float.parseFloat(soLuong);
+				int soL = Integer.parseInt(soLuong);
 				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma );
 				for (SanPham sp : ds) {
 					thanhTien = (float) (sp.getGiaBan()*soL + sp.getGiaBan()*soL*VAT);
@@ -998,7 +1051,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				model.removeRow(rowu);
 				stt = model.getRowCount();
 				String soLuong = txtSoLuong.getText();
-				float soL = Float.parseFloat(soLuong);
+				int soL = Integer.parseInt(soLuong);
 				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma );
 				for (SanPham sp : ds) {
 					thanhTien = (float) (sp.getGiaBan()*soL + sp.getGiaBan()*soL*VAT);
@@ -1008,6 +1061,73 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				}
 			}
 
+		}
+		else if(o.equals(btnTamIn)) {
+			phatsinhma();
+			if(validDataTKD()) {
+				String trangThai = "Tạm in";
+				int soLuongTon = 0;
+				int soLuongConLai = 0; //sau khi thanh toán
+				float tienKD = Float.parseFloat(txtTienKhachDua.getText());
+				float tienTL = tienKD - tongThanhTien;
+				txtTienThua.setText(tienTL + "");
+				
+				Date dateNgayLapHD = dcrNgayLap.getDate();
+				java.sql.Date sqlNgayLapHD = new java.sql.Date(dateNgayLapHD.getTime());
+				
+				String maHD = txtMaHD.getText();
+				String maNV = txtMaNhanVien.getText();
+				NhanVien nv = new NhanVien(maNV);
+				String maKH = txtMaKH.getText();
+				KhachHang kh = new KhachHang(maKH);
+				float vat = (float) (VAT);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, sqlNgayLapHD, trangThai, vat, tienKD, tongThanhTien, tienTL);
+				try {
+					if(!dao_HoaDonBan.createHoaDon(hd)) {
+						JOptionPane.showMessageDialog(this,"Trùng mã - Kiểm trả lại");
+					}else {
+						int flag = 0;
+						for(int i = 0; i < model.getRowCount();i++) {
+							String maSP = model.getValueAt(i, 1).toString();
+							//String soLB = model.getValueAt(i, 3).toString();
+							//String thanhTien = model.getValueAt(i, 6).toString();
+							int soL = Integer.parseInt(model.getValueAt(i, 3).toString());
+							float TT = Float.parseFloat(model.getValueAt(i, 6).toString());
+							SanPham sp = new SanPham(maSP);
+							ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
+							for (SanPham sanPham : ds) {
+								soLuongTon = sanPham.getSoLuong();
+							}
+							ChiTietHoaDonBan cthd = new ChiTietHoaDonBan(hd, sp, soL, TT);
+							if(!dao_ChiTietHoaDonBan.createCTHoaDon(cthd)) {
+								JOptionPane.showMessageDialog(this,"Lỗi tạm in chi tiết hóa đơn");
+							}
+							else {
+								
+							}
+							soLuongConLai = soLuongTon - soL;
+							if(!dao_SanPham.update(maSP,soLuongConLai)) {
+								JOptionPane.showMessageDialog(this,"Cập nhật số lượng thất bại");
+							}
+							else {
+							}
+							flag = 1;
+							
+						}
+						if(flag == 1) {
+							JOptionPane.showMessageDialog(this,"In tạm thành công");
+						}else {
+							JOptionPane.showMessageDialog(this,"In tạm thất bại");
+						}
+							
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 		}
 
 	}

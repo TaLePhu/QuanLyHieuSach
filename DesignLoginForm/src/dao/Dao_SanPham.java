@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.DanhMuc;
 import entity.KeHang;
+import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.SanPham;
 
@@ -56,5 +57,30 @@ public class Dao_SanPham {
 			}
 		}
 		return dsSP;
+	}
+	
+	// update lại số sản phẩm còn lại sao khi bán
+	public boolean update(String ma, int soLuong) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		int n =0;
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(
+					"update SANPHAM SET SOLUONG = ? WHERE MASANPHAM = ?");
+			stmt.setInt(1, soLuong);
+			stmt.setString(2, ma);
+
+			n = stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return n>0;
 	}
 }
