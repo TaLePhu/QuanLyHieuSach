@@ -528,6 +528,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, "vui lòng nhập lại số điện thoại đúng định dạng là 10 chữ số!!");
+				txtSoDT.requestFocus();
 				return false;
 			}
 		} else {
@@ -535,13 +536,14 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			return false;
 		}
 
-		if (!(email.matches("[\\p{L}\\p{M} ]+") && email.length() > 0)) {
-			JOptionPane.showMessageDialog(this, "Email  không được rỗng, là kí tự");
-			txtEmail.requestFocus();
-			return false;
-		}
+		if (!email.matches(
+				"^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+				txtEmail.setText("Email sai cú pháp!!!");
+				txtEmail.requestFocus();
+				return false;
+			}
 
-		if (!(diachi.matches("[\\p{L}\\p{M} ]+") && diachi.length() > 0)) {
+		if (!(diachi.length() > 0)) {
 			JOptionPane.showMessageDialog(this, "Địa chỉ không được rỗng, là kí tự");
 			txtDiaChi.requestFocus();
 			return false;
