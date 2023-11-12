@@ -135,7 +135,7 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
 		panel_1.add(txtGiamGia);
 		
 		cbDoiTuong = new JComboBox();
-		cbDoiTuong.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Khách hàng mới", "Khách hàng thân thiết"}));
+		cbDoiTuong.setModel(new DefaultComboBoxModel(new String[] {"Sản phẩm", "Hóa đơn"}));
 		cbDoiTuong.setBounds(923, 29, 192, 21);
 		panel_1.add(cbDoiTuong);
 		

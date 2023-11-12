@@ -122,18 +122,10 @@ public class FrameLogin extends JFrame {
 		
 		
 		txtMatKhau = new JPasswordField();
-<<<<<<< HEAD
-=======
-
->>>>>>> afea618a3494dbaf3afebc29429745209180ae2c
 		txtMatKhau.setBounds(207, 186, 343, 29);
 		txtMatKhau.setBackground(new Color(255, 255, 255));
 		txtMatKhau.setBounds(207, 189, 343, 26);
 		txtMatKhau.setText("MatKhau123");
-<<<<<<< HEAD
-=======
-
->>>>>>> afea618a3494dbaf3afebc29429745209180ae2c
 		panel.add(txtMatKhau);
 		
 		JLabel bg = new JLabel("");
