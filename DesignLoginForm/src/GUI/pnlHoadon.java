@@ -787,10 +787,23 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		// lấy thông tin nhân viên
 
-		NhanVien nvLogin = FrameDashBoard.taiKhoanLogin.getNhanVien();
-		NhanVien findNVLogin = dao_NhanVien.getTheoMaNV(nvLogin.getMaNhanVien());
-		txtMaNhanVien.setText(findNVLogin.getMaNhanVien());
-		txtTenNV.setText(findNVLogin.getHoTenNhanVien());
+		NhanVien nvLogin = null;
+		if (FrameDashBoard.taiKhoanLogin != null) {
+		    nvLogin = FrameDashBoard.taiKhoanLogin.getNhanVien();
+		}
+
+		// Nếu nvLogin vẫn là null, kiểm tra FrameDashBoardNVBH
+		if (nvLogin == null && FrameDashBoardNVBH.taiKhoanLogin != null) {
+		    nvLogin = FrameDashBoardNVBH.taiKhoanLogin.getNhanVien();
+		}
+
+		if (nvLogin != null) {
+		    NhanVien findNVLogin = dao_NhanVien.getTheoMaNV(nvLogin.getMaNhanVien());
+		    txtMaNhanVien.setText(findNVLogin.getMaNhanVien());
+		    txtTenNV.setText(findNVLogin.getHoTenNhanVien());
+		} else {
+		    JOptionPane.showMessageDialog(this, "Lỗi ngoại lệ.");
+		}
 
 
 	}
