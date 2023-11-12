@@ -119,6 +119,7 @@ CREATE TABLE HOADONBAN(
  MAHOADONBAN CHAR(20) NOT NULL,
  MANHANVIEN CHAR(10),
  MAKHACHHANG CHAR(10),
+ MAKHUYENMAI CHAR(10),
  NGAYGIAODICH DATETIME,
  TRANGTHAI NVARCHAR(30),
  TONGTHANHTIEN FLOAT,
@@ -128,6 +129,7 @@ CREATE TABLE HOADONBAN(
 
  CONSTRAINT fk_NHANVIEN_HOADONBAN FOREIGN KEY(MANHANVIEN) REFERENCES NHANVIEN(MANHANVIEN),
  CONSTRAINT fk_KHACHHANG_HOADONBAN FOREIGN KEY(MAKHACHHANG) REFERENCES KHACHHANG(MAKHACHHANG),
+ CONSTRAINT fk_KHUYENMAI_HOADONBAN FOREIGN KEY(MAKHUYENMAI) REFERENCES KHUYENMAI(MAKHUYENMAI),
 )
 GO
 
@@ -220,8 +222,8 @@ VALUES
 	('S0025', N'Thám Tử Lừng Danh Conan - Tập 2', 20000, 50, 22000, 2018, N'NXB Kim Đồng', 300, N'Gosho Aoyama',0.05, 'KH003', NULL, 'DM003','NCC004'),
 
 	('S0026', N'Từ Điển Việt - Nga', 200000, 30, 220000, 2018, N'NXB Thế Giới', 300, N'Bùi Hiền',0.05, 'KH004', NULL, 'DM004','NCC005'),
-	('S0027', N'Combo Sách Ngữ Pháp Tiếng Anh Mai Lan Hương (Bộ 2 Cuốn)', 300000, 11, 330000, 2018, N'Đà Nẵng', 300, N'Nguyễn Thanh Loan',0.05, 'KH004', NULL, 'DM004','NCC005'),
-	('S0028', N'Combo Sách Destination - Grammar And Vocabulary with Answer Key - B1 + B2 (Bộ 2 Cuốn)', 200000, 3, 220000, 2018, N'Hồng Đức', 300, N'Malcome Mann',0.05, 'KH004', NULL, 'DM004','NCC005'),
+	('S0027', N'Combo Sách Ngữ Pháp Tiếng Anh Mai Lan Hương (Bộ 2 Cuốn)', 300000, 11, 330000, 2018, N'Đà Nẵng', 300, N'Nguyễn Thanh Loan',0.05, 'KH004', 'KM004', 'DM004','NCC005'),
+	('S0028', N'Combo Sách Destination - Grammar And Vocabulary with Answer Key - B1 + B2 (Bộ 2 Cuốn)', 200000, 3, 220000, 2018, N'Hồng Đức', 300, N'Malcome Mann',0.05, 'KH004', 'KM005', 'DM004','NCC005'),
 	('S0029', N'Combo Sách Hackers Ielts Trọn Bộ - Writing + Listening + Reading + Speaking (Bộ 4 Cuốn)', 800000, 3, 880000, 2018, N'NXB Thế Giới', 300, N'Hackers',0.05, 'KH004', NULL, 'DM004','NCC005'),
 	('S0030', N'Ielts Writing Recent Actual Tests', 200000, 6, 220000, 2018, N'Tổng Hợp Tphcm', 300, N'Trịnh Khánh Lợi, Đỗ Tư Tấn',0.05, 'KH004', NULL, 'DM004','NCC005'),
 
@@ -232,23 +234,23 @@ VALUES
 	('S0034', N'Combo Sách Nhà Giả Kim + Hành Trình Về Phương Đông', 150000, 4, 165000, 2018, N'Dân trí', 150, N'Paulo Coelho, Baird T Spalding',0.05, 'KH006', NULL, 'DM006','NCC006'),
 	('S0035', N'Hồn Trương Ba Da Hàng Thịt', 40000, 10, 44000, 2022, N'NXB Kim Đồng', 500, N'Lưu Quang Vũ',0.05, 'KH006', NULL, 'DM006','NCC006'),
 	('S0036', N'Yêu Những Điều Không Hoàn Hảo', 50000, 12, 55000, 2010, N'Nhã Nam', 140, N'Hae Min, Haruki Murakami',0.05, 'KH006', NULL, 'DM006','NCC006'),
-	('S0037', N'Combo Sách Ứng Dụng Văn Phòng - Từ Cơ Bản Đến Nâng Cao - Word + Excel (Bộ 2 Cuốn)', 300000, 5, 330000, 2020, N'Nhã Nam', 1500, N'Nguyễn Quang Vinh',0.05, 'KH006', NULL, 'DM006','NCC006');
+	('S0037', N'Combo Sách Ứng Dụng Văn Phòng - Từ Cơ Bản Đến Nâng Cao - Word + Excel (Bộ 2 Cuốn)', 300000, 5, 330000, 2020, N'Nhã Nam', 1500, N'Nguyễn Quang Vinh',0.05, 'KH006', 'KM005', 'DM006','NCC006');
 
 INSERT INTO SANPHAM (MASANPHAM, TENSANPHAM, GIAMUA, SOLUONG, GIABAN, THUONGHIEU, XUATXU, MAUSAC, CHATLIEU,THUEVAT, MAKEHANG, MAKHUYENMAI, MADANHMUC, MANHACUNGCAP)
 VALUES
-	('VPP0001', N'Bộ Đồ Dùng Học Tập Lớp Học Mật Ngữ Ở Nhà Màu Hồng Đầu Tiên', 60000, 20, 66000, N'HooHooHaHa', N'Việt Nam', N'Hồng', N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC007'),
+	('VPP0001', N'Bộ Đồ Dùng Học Tập Lớp Học Mật Ngữ Ở Nhà Màu Hồng Đầu Tiên', 60000, 20, 66000, N'HooHooHaHa', N'Việt Nam', N'Hồng', N'Nhựa',0.1, 'KH007', 'KM005', 'DM007','NCC007'),
 	('VPP0002', N'Sổ May Gáy Sunshine A4 200 Trang 3675', 20000, 50, 22000, N'Hải Tiến', N'Việt Nam', null, null,0.1, 'KH007', NULL, 'DM007','NCC007'),
 	('VPP0003', N'Vỉ 5 Bút Bi 0.5 mm Thiên Long TL-027', 20000, 10, 22000, N'Thiên Long', N'Việt Nam', null, N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC007'),
 	('VPP0004', N'Bút Bi 0.5 mm Thiên Long TL-027', 4000, 30, 4400, N'Thiên Long', N'Việt Nam', null, N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC007'),
-	('VPP0005', N'Bút Bi 0.5 mm Laris - Thiên Long TL-095 - Mực Xanh', 4000, 9, 4400, N'Thiên Long', N'Việt Nam', null, N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC007'),
+	('VPP0005', N'Bút Bi 0.5 mm Laris - Thiên Long TL-095 - Mực Xanh', 4000, 9, 4400, N'Thiên Long', N'Việt Nam', null, N'Nhựa',0.1, 'KH007', 'KM006', 'DM007','NCC007'),
 	('VPP0006', N'Bút Bi Pro 027 0.5 mm - Thiên Long TL-105 - Mực Đỏ', 4000, 11, 4400, N'Thiên Long', N'Việt Nam', null, N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC007'),
 	('VPP0007', N'Viết Bic Bấm 10 Ngòi Hình Thú ', 20000, 8, 22000, N'OEM', N'Trung Quốc', null, null,0.1, 'KH007', NULL, 'DM007','NCC007'),
-	('VPP0008', N'Vỉ 5 Bút Bi 0.5 mm Thiên Long TL-027', 20000, 220, 22000, N'Thiên Long', N'Việt Nam', N'Xanh', N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC008'),
+	('VPP0008', N'Vỉ 5 Bút Bi 0.5 mm Thiên Long TL-027', 20000, 220, 22000, N'Thiên Long', N'Việt Nam', N'Xanh', N'Nhựa',0.1, 'KH007', 'KM005', 'DM007','NCC008'),
 	('VPP0009', N'Bút Chì Gỗ 2B Thiên Long', 4000, 200, 4400, N'Thiên Long', N'Việt Nam', N'Đen', null,0.1, 'KH007', NULL, 'DM007','NCC008'),
 	('VPP0010', N'Tẩy Chì Học Sinh Staedtler', 5000, 100, 5500, N'Staedtler', N'Đức', null, N'Nhựa',0.1, 'KH007', NULL, 'DM007','NCC008'),
 	('VPP0011', N'Ba Lô Mini', 400000, 10, 440000, N'Clever Hippo', N'Việt Nam',N'Đỏ', N'Nhựa,vải',0.1, 'KH007', NULL, 'DM007','NCC008'),
 	('VPP0012', N'Cặp Đa Năng Flash 20', 200000, 8, 220000, N'SAKOS', N'Việt Nam', N'Đen', N'Vải',0.1, 'KH007', NULL, 'DM007','NCC008'),
-	('VPP0013', N'Túi Đựng Phụ Kiện Đa Năng New Compact', 30000, 10, 33000, N'SAKOS', N'Việt Nam', N'Xanh dương', N'Nhựa, vải',0.1, 'KH007', NULL, 'DM007','NCC008'),
+	('VPP0013', N'Túi Đựng Phụ Kiện Đa Năng New Compact', 30000, 10, 33000, N'SAKOS', N'Việt Nam', N'Xanh dương', N'Nhựa, vải',0.1, 'KH007', 'KM004', 'DM007','NCC008'),
 
 	('VPP0014', N'Bảng Học Tập Đa Năng Bằng Gỗ - Đếm Số Và Câu Cá', 200000, 5, 220000, N'TÙNG PHÁT', N'Việt Nam', N'Nhiều màu', N'Gỗ',0.1, 'KH008', NULL, 'DM008','NCC009'),
 	('VPP0015', N'Quạt Đeo Cổ Mini', 100000, 5, 110000, N'GIVELONG', N'Trung Quốc', N'Hồng', N'Nhựa',0.1, 'KH008', NULL, 'DM008','NCC009'),
@@ -294,50 +296,50 @@ VALUES
     ('KH0000019', N'Nguyễn Văn Hoài Nam', '1995-03-15', N'963 Đường LKO, Quận 9', '0712345673', 'khachhang19@gmail.com', 1),
     ('KH0000020', N'Trần Thị Bích Phương', '1991-01-25', N'852 Đường JHK, Quận 10', '0923456789', 'khachhang20@gmail.com', 0);
 
-INSERT INTO HOADONBAN (MAHOADONBAN, MANHANVIEN, MAKHACHHANG, NGAYGIAODICH, TRANGTHAI, TONGTHANHTIEN)
+INSERT INTO HOADONBAN (MAHOADONBAN, MANHANVIEN, MAKHACHHANG, MAKHUYENMAI, NGAYGIAODICH, TRANGTHAI, TONGTHANHTIEN)
 VALUES
-    ('HD2301250001', 'NV101', 'KH0000001', '2023-01-25 10:30:00', N'Đã thanh toán', 120000),
-    ('HD2301280001', 'NV002', 'KH0000002', '2023-01-28 11:15:00', N'Đã thanh toán', 100000),
-    ('HD2301280002', 'NV003', 'KH0000003', '2023-01-28 16:45:00', N'Đã thanh toán', 150000),
+    ('HD2301250001', 'NV101', 'KH0000001','KM003', '2023-01-25 10:30:00', N'Đã thanh toán', 120000),
+    ('HD2301280001', 'NV002', 'KH0000002',NULL, '2023-01-28 11:15:00', N'Đã thanh toán', 100000),
+    ('HD2301280002', 'NV003', 'KH0000003',NULL, '2023-01-28 16:45:00', N'Đã thanh toán', 150000),
 
-    ('HD2302010001', 'NV002', 'KH0000004', '2023-02-01 14:20:00', N'Đã thanh toán', 1910000),
-    ('HD2302020001', 'NV002', 'KH0000005', '2023-02-02 16:00:00', N'Đã thanh toán', 100000),
-	('HD2302020002', 'NV002', 'KH0000006', '2023-02-02 16:05:00', N'Đã thanh toán', 97000),
-    ('HD2302020003', 'NV002', 'KH0000001', '2023-02-02 16:10:00', N'Đã thanh toán', 100000),
-    ('HD2302020004', 'NV002', 'KH0000007', '2023-02-02 17:00:00', N'Đã thanh toán', 42000),
-    ('HD2302100001', 'NV003', 'KH0000008', '2023-02-10 14:20:00', N'Đã thanh toán', 352000),
-    ('HD2302130001', 'NV003', 'KH0000009', '2023-02-13 16:00:00', N'Đã thanh toán', 50000),
-	('HD2302150001', 'NV004', 'KH0000002', '2023-02-15 10:30:00', N'Đã thanh toán', 120000),
+    ('HD2302010001', 'NV002', 'KH0000004',NULL, '2023-02-01 14:20:00', N'Đã thanh toán', 1910000),
+    ('HD2302020001', 'NV002', 'KH0000005',NULL, '2023-02-02 16:00:00', N'Đã thanh toán', 100000),
+	('HD2302020002', 'NV002', 'KH0000006',NULL, '2023-02-02 16:05:00', N'Đã thanh toán', 97000),
+    ('HD2302020003', 'NV002', 'KH0000001',NULL, '2023-02-02 16:10:00', N'Đã thanh toán', 100000),
+    ('HD2302020004', 'NV002', 'KH0000007',NULL, '2023-02-02 17:00:00', N'Đã thanh toán', 42000),
+    ('HD2302100001', 'NV003', 'KH0000008',NULL, '2023-02-10 14:20:00', N'Đã thanh toán', 352000),
+    ('HD2302130001', 'NV003', 'KH0000009',NULL, '2023-02-13 16:00:00', N'Đã thanh toán', 50000),
+	('HD2302150001', 'NV004', 'KH0000002',NULL, '2023-02-15 10:30:00', N'Đã thanh toán', 120000),
 
-    ('HD2303100001', 'NV002', 'KH0000010', '2023-03-10 11:15:00', N'Đã thanh toán', 100000),
-    ('HD2303280001', 'NV003', 'KH0000011', '2023-03-28 16:45:00', N'Đã thanh toán', 150000),
+    ('HD2303100001', 'NV002', 'KH0000010',NULL, '2023-03-10 11:15:00', N'Đã thanh toán', 100000),
+    ('HD2303280001', 'NV003', 'KH0000011',NULL, '2023-03-28 16:45:00', N'Đã thanh toán', 150000),
 
-    ('HD2304010001', 'NV002', 'KH0000012', '2023-04-01 14:20:00', N'Đã thanh toán', 200000),
-    ('HD2304030001', 'NV002', 'KH0000013', '2023-04-03 16:00:00', N'Đã thanh toán', 100000),
-	('HD2304050001', 'NV002', 'KH0000006', '2023-04-05 10:30:00', N'Đã thanh toán', 100000),
+    ('HD2304010001', 'NV002', 'KH0000012',NULL, '2023-04-01 14:20:00', N'Đã thanh toán', 200000),
+    ('HD2304030001', 'NV002', 'KH0000013',NULL, '2023-04-03 16:00:00', N'Đã thanh toán', 100000),
+	('HD2304050001', 'NV002', 'KH0000006',NULL, '2023-04-05 10:30:00', N'Đã thanh toán', 100000),
 
-    ('HD2305020001', 'NV002', 'KH0000001', '2023-05-02 11:15:00', N'Đã thanh toán', 100000),
-    ('HD2305020002', 'NV002', 'KH0000014', '2023-05-02 16:45:00', N'Đã thanh toán', 50000),
-    ('HD2305100001', 'NV003', 'KH0000015', '2023-05-10 14:20:00', N'Đã thanh toán', 500000),
-    ('HD2305130001', 'NV003', 'KH0000016', '2023-05-13 16:00:00', N'Đã thanh toán', 1000000),
+    ('HD2305020001', 'NV002', 'KH0000001','KM002', '2023-05-02 11:15:00', N'Đã thanh toán', 100000),
+    ('HD2305020002', 'NV002', 'KH0000014','KM002', '2023-05-02 16:45:00', N'Đã thanh toán', 50000),
+    ('HD2305100001', 'NV003', 'KH0000015','KM002', '2023-05-10 14:20:00', N'Đã thanh toán', 500000),
+    ('HD2305130001', 'NV003', 'KH0000016','KM002', '2023-05-13 16:00:00', N'Đã thanh toán', 1000000),
 
-	('HD2306010001', 'NV002', 'KH0000017', '2023-06-01 14:20:00', N'Đã thanh toán', 200000),
-    ('HD2306020001', 'NV004', 'KH0000018', '2023-06-02 16:00:00', N'Đã thanh toán', 100000),
-	('HD2306020002', 'NV004', 'KH0000004', '2023-06-02 16:05:00', N'Đã thanh toán', 300000),
-    ('HD2306020003', 'NV004', 'KH0000019', '2023-06-02 16:10:00', N'Đã thanh toán', 100000),
-    ('HD2306050001', 'NV002', 'KH0000020', '2023-06-05 17:00:00', N'Đã thanh toán', 50000),
-    ('HD2306100001', 'NV003', 'KH0000001', '2023-06-10 14:20:00', N'Đã thanh toán', 500000),
-    ('HD2306130001', 'NV003', 'KH0000020', '2023-06-13 16:00:00', N'Đã thanh toán', 50000),
+	('HD2306010001', 'NV002', 'KH0000017',NULL, '2023-06-01 14:20:00', N'Đã thanh toán', 200000),
+    ('HD2306020001', 'NV004', 'KH0000018',NULL, '2023-06-02 16:00:00', N'Đã thanh toán', 100000),
+	('HD2306020002', 'NV004', 'KH0000004',NULL, '2023-06-02 16:05:00', N'Đã thanh toán', 300000),
+    ('HD2306020003', 'NV004', 'KH0000019',NULL, '2023-06-02 16:10:00', N'Đã thanh toán', 100000),
+    ('HD2306050001', 'NV002', 'KH0000020',NULL, '2023-06-05 17:00:00', N'Đã thanh toán', 50000),
+    ('HD2306100001', 'NV003', 'KH0000001',NULL, '2023-06-10 14:20:00', N'Đã thanh toán', 500000),
+    ('HD2306130001', 'NV003', 'KH0000020',NULL, '2023-06-13 16:00:00', N'Đã thanh toán', 50000),
 
-	('HD2309100001', 'NV005', 'KH0000015', '2023-09-10 14:20:00', N'Đã thanh toán', 400000),
-    ('HD2309130001', 'NV005', 'KH0000016', '2023-09-13 16:00:00', N'Đã thanh toán', 1000000),
+	('HD2309100001', 'NV005', 'KH0000015',NULL, '2023-09-10 14:20:00', N'Đã thanh toán', 400000),
+    ('HD2309130001', 'NV005', 'KH0000016',NULL, '2023-09-13 16:00:00', N'Đã thanh toán', 1000000),
 
-	('HD2310020001', 'NV004', 'KH0000018', '2023-10-02 16:00:00', N'Đã thanh toán', 100000),
-	('HD2310050001', 'NV004', 'KH0000004', '2023-10-05 16:05:00', N'Đã thanh toán', 300000),
-    ('HD2310220001', 'NV004', 'KH0000019', '2023-10-22 16:10:00', N'Đã thanh toán', 100000),
-    ('HD2310230001', 'NV002', 'KH0000003', '2023-10-23 17:00:00', N'Đã thanh toán', 200000),
-    ('HD2310230002', 'NV003', 'KH0000001', '2023-10-23 14:20:00', N'Đã thanh toán', 500000),
-    ('HD2310250001', 'NV003', 'KH0000002', '2023-10-25 16:00:00', N'Đã thanh toán', 50000);
+	('HD2310020001', 'NV004', 'KH0000018',NULL, '2023-10-02 16:00:00', N'Đã thanh toán', 100000),
+	('HD2310050001', 'NV004', 'KH0000004',NULL, '2023-10-05 16:05:00', N'Đã thanh toán', 300000),
+    ('HD2310220001', 'NV004', 'KH0000019',NULL, '2023-10-22 16:10:00', N'Đã thanh toán', 100000),
+    ('HD2310230001', 'NV002', 'KH0000003',NULL, '2023-10-23 17:00:00', N'Đã thanh toán', 200000),
+    ('HD2310230002', 'NV003', 'KH0000001',NULL, '2023-10-23 14:20:00', N'Đã thanh toán', 500000),
+    ('HD2310250001', 'NV003', 'KH0000002',NULL, '2023-10-25 16:00:00', N'Đã thanh toán', 50000);
 
 INSERT INTO CHITIETHOADONBAN (MAHOADONBAN, MASANPHAM, SOLUONG, THANHTIEN)
 VALUES
