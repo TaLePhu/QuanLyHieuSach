@@ -6,9 +6,9 @@ public class Sach extends SanPham {
 	private int namXB;
 	private int soTrang;
 
-	public Sach(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, DanhMuc maDanhMuc, KeHang maKeHang,
-			KhuyenMai maKhuyenMai, String tinhTrang, String tacGia, String nhaXB, int namXB, int soTrang) {
-		super(maSP, tenSP, giaMua, soLuong, giaBan, maDanhMuc, maKeHang, maKhuyenMai, tinhTrang);
+	public Sach(String maSP, String tenSP, float giaMua, int soLuong, float giaBan,float thueVAT, DanhMuc maDanhMuc, KeHang maKeHang,
+			KhuyenMai maKhuyenMai,NhaCungCap maNhaCungCap, String tinhTrang, String tacGia, String nhaXB, int namXB, int soTrang) {
+		super(maSP, tenSP, giaMua, soLuong, giaBan,thueVAT,  maDanhMuc, maKeHang, maKhuyenMai,maNhaCungCap, tinhTrang);
 		this.tacGia = tacGia;
 		this.nhaXB = nhaXB;
 		this.namXB = namXB;
@@ -20,9 +20,9 @@ public class Sach extends SanPham {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sach(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, DanhMuc maDanhMuc, KeHang maKeHang,
-			KhuyenMai maKhuyenMai, String tinhTrang) {
-		super(maSP, tenSP, giaMua, soLuong, giaBan, maDanhMuc, maKeHang, maKhuyenMai, tinhTrang);
+	public Sach(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, float thueVAT, DanhMuc maDanhMuc, KeHang maKeHang,
+			KhuyenMai maKhuyenMai, NhaCungCap maNhaCungCap,String tinhTrang) {
+		super(maSP, tenSP, giaMua, soLuong, giaBan, thueVAT, maDanhMuc, maKeHang, maKhuyenMai, maNhaCungCap, tinhTrang);
 		// TODO Auto-generated constructor stub
 	}
 

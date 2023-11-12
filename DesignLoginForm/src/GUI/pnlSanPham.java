@@ -328,7 +328,20 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		String[] tblS = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Nhà xuất bản","Tác giả", "Năm xuất bản", "Số trang",
 				"Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Tình trạng" };
 				modelSach = new DefaultTableModel(tblS, 0);
-				tblSach = new JTable(modelSach);
+				tblSach = new JTable(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "Gi\u00E1 mua", "S\u1ED1 l\u01B0\u1EE3ng", "Gi\u00E1 b\u00E1n", "Nh\u00E0 xu\u1EA5t b\u1EA3n", "T\u00E1c gi\u1EA3", "N\u0103m xu\u1EA5t b\u1EA3n", "S\u1ED1 trang", "Thu\u1EBF  VAT", "M\u00E3 Danh m\u1EE5c", "M\u00E3 k\u1EC7 h\u00E0ng", "M\u00E3 khuy\u1EBFn m\u00E3i", "M\u00E3 nh\u00E0 cung c\u1EA5p", "T\u00ECnh tr\u1EA1ng"
+					}
+				) {
+					Class[] columnTypes = new Class[] {
+						Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Object.class, Object.class, Object.class, String.class, Object.class
+					};
+					public Class getColumnClass(int columnIndex) {
+						return columnTypes[columnIndex];
+					}
+				});
 				tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 				scrollPane.setViewportView(tblSach);
 		
@@ -587,7 +600,20 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		String[] tblVP = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Thương hiệu","Xuất xứ", "Màu sắc", "Chất liệu",
 				"Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Tình trạng" };
 				modelVPPham = new DefaultTableModel(tblVP, 0);
-				tblVanPhongPham = new JTable(modelVPPham);
+				tblVanPhongPham = new JTable(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "Gi\u00E1 mua", "S\u1ED1 l\u01B0\u1EE3ng", "Gi\u00E1 b\u00E1n", "Th\u01B0\u01A1ng hi\u1EC7u", "Xu\u1EA5t x\u1EE9", "M\u00E0u s\u1EAFc", "Ch\u1EA5t li\u1EC7u", "Thu\u1EBF VAT", "M\u00E3 Danh m\u1EE5c", "M\u00E3 k\u1EC7 h\u00E0ng", "M\u00E3 khuy\u1EBFn m\u00E3i", "M\u00E3 nh\u00E0 cung c\u1EA5p", "T\u00ECnh tr\u1EA1ng"
+					}
+				) {
+					Class[] columnTypes = new Class[] {
+						Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Object.class, Object.class, Object.class, String.class, Object.class
+					};
+					public Class getColumnClass(int columnIndex) {
+						return columnTypes[columnIndex];
+					}
+				});
 				tblVanPhongPham.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 				scrollPane_1.setViewportView(tblVanPhongPham);
 				

@@ -11,6 +11,7 @@ import connectDB.ConnectDB;
 import entity.DanhMuc;
 import entity.KeHang;
 import entity.KhuyenMai;
+import entity.NhaCungCap;
 import entity.VanPhongPham;
 import interfaces.I_VanPhongPham;
 
@@ -33,19 +34,22 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				float giaMua = rs.getFloat("GIAMUA");
 				int soLuong = rs.getInt("SOLUONG");
 				float giaBan = rs.getFloat("GIABAN");
+				float thueVAT = rs.getFloat("THUEVAT");
 				String maDanhMuc = rs.getString("MADANHMUC");
 				String maKeHang = rs.getString("MAKEHANG");
 				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String maNhaCungCap = rs.getNString("MANHACUNGCAP");
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
 				String thuongHieu = rs.getString("THUONGHIEU");
 				String xuatXu = rs.getString("XUATXU");
 				String mauSac = rs.getString("MAUSAC");
 				String chatLieu = rs.getString("CHATLIEU");
 				String tinhTrang = rs.getString("TINHTRANG");
 
-				VanPhongPham sp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, maDM, maKH, maKM, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu); 
+				VanPhongPham sp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu); 
 				dsSP.add(sp);
 
 			}
@@ -73,18 +77,21 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 					float giaMua = rs.getFloat("GIAMUA");
 					int soLuong = rs.getInt("SOLUONG");
 					float giaBan = rs.getFloat("GIABAN");
+					float thueVAT = rs.getFloat("THUEVAT");
+					String maDanhMuc = rs.getString("MADANHMUC");
+					String maKeHang = rs.getString("MAKEHANG");
+					String maKhuyenMai = rs.getString("MAKHUYENMAI");
+					String maNhaCungCap = rs.getNString("MANHACUNGCAP");
+					DanhMuc maDM = new DanhMuc(maDanhMuc);
+					KeHang maKH = new KeHang(maKeHang);
+					KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+					NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
 					String thuongHieu = rs.getString("THUONGHIEU");
 					String xuatXu = rs.getString("XUATXU");
 					String mauSac = rs.getString("MAUSAC");
 					String chatLieu = rs.getString("CHATLIEU");
-					String maDanhMuc = rs.getString("MADANHMUC");
-					String maKeHang = rs.getString("MAKEHANG");
-					String maKhuyenMai = rs.getString("MAKHUYENMAI");
-					DanhMuc maDM = new DanhMuc(maDanhMuc);
-					KeHang maKH = new KeHang(maKeHang);
-					KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
 					String tinhTrang = rs.getString("TINHTRANG");
-					vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, maDM, maKH, maKM, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu); 
+					vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu); 
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

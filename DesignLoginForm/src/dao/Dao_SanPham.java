@@ -11,6 +11,7 @@ import entity.DanhMuc;
 import entity.KeHang;
 import entity.KhachHang;
 import entity.KhuyenMai;
+import entity.NhaCungCap;
 import entity.SanPham;
 
 public class Dao_SanPham {
@@ -36,15 +37,18 @@ public class Dao_SanPham {
 				float giaMua = rs.getFloat("GIAMUA");
 				int soLuong = rs.getInt("SOLUONG");
 				float giaBan = rs.getFloat("GIABAN");
+				float thueVAT = rs.getFloat("THUEVAT");
 				String maDanhMuc = rs.getString("MADANHMUC");
 				String maKeHang = rs.getString("MAKEHANG");
 				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String maNhaCungCap = rs.getString("MANHACUNGCAP");
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
 				String tinhTrang = rs.getString("TINHTRANG");
 				
-				SanPham sp = new SanPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, maDM, maKH, maKM, tinhTrang);
+				SanPham sp = new SanPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang);
 				dsSP.add(sp);
 			}
 		} catch (SQLException e) {

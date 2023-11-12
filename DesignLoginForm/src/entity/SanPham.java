@@ -8,22 +8,26 @@ public class SanPham {
 	private float giaMua;
 	private int soLuong;
 	private float giaBan;
+	private float thueVAT;
 	private DanhMuc maDanhMuc;
 	private KeHang maKeHang;
 	private KhuyenMai maKhuyenMai;
+	private NhaCungCap maNhaCungCap;
 	private String tinhTrang;
 
-	public SanPham(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, DanhMuc maDanhMuc,
-			KeHang maKeHang, KhuyenMai maKhuyenMai, String tinhTrang) {
+	public SanPham(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, float thueVAT, DanhMuc maDanhMuc,
+			KeHang maKeHang, KhuyenMai maKhuyenMai, NhaCungCap maNhaCungCap, String tinhTrang) {
 		super();
 		this.maSP = maSP;
 		this.tenSP = tenSP;
 		this.giaMua = giaMua;
 		this.soLuong = soLuong;
 		this.giaBan = giaBan;
+		this.thueVAT = thueVAT;
 		this.maDanhMuc = maDanhMuc;
 		this.maKeHang = maKeHang;
 		this.maKhuyenMai = maKhuyenMai;
+		this.maNhaCungCap = maNhaCungCap;
 		this.tinhTrang = tinhTrang;
 	}
 
@@ -77,6 +81,14 @@ public class SanPham {
 		this.giaBan = giaBan;
 	}
 
+	public float getThueVAT() {
+		return thueVAT;
+	}
+
+	public void setThueVAT(float thueVAT) {
+		this.thueVAT = thueVAT;
+	}
+
 	public DanhMuc getMaDanhMuc() {
 		return maDanhMuc;
 	}
@@ -99,6 +111,14 @@ public class SanPham {
 
 	public void setMaKhuyenMai(KhuyenMai maKhuyenMai) {
 		this.maKhuyenMai = maKhuyenMai;
+	}
+
+	public NhaCungCap getMaNhaCungCap() {
+		return maNhaCungCap;
+	}
+
+	public void setMaNhaCungCap(NhaCungCap maNhaCungCap) {
+		this.maNhaCungCap = maNhaCungCap;
 	}
 
 	public String getTinhTrang() {
@@ -129,8 +149,11 @@ public class SanPham {
 	@Override
 	public String toString() {
 		return "SanPham [maSP=" + maSP + ", tenSP=" + tenSP + ", giaMua=" + giaMua + ", soLuong=" + soLuong
-				+ ", giaBan=" + giaBan + ", maDanhMuc=" + maDanhMuc + ", maKeHang=" + maKeHang + ", maKhuyenMai="
-				+ maKhuyenMai + ", tinhTrang=" + tinhTrang + "]";
+				+ ", giaBan=" + giaBan + ", thueVAT=" + thueVAT + ", maDanhMuc=" + maDanhMuc + ", maKeHang=" + maKeHang
+				+ ", maKhuyenMai=" + maKhuyenMai + ", maNhaCungCap=" + maNhaCungCap + ", tinhTrang=" + tinhTrang + "]";
 	}
+
+	
+
 
 }

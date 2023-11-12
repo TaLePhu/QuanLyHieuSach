@@ -10,6 +10,7 @@ import connectDB.ConnectDB;
 import entity.DanhMuc;
 import entity.KeHang;
 import entity.KhuyenMai;
+import entity.NhaCungCap;
 import entity.Sach;
 import interfaces.I_Sach;
 
@@ -38,15 +39,18 @@ public class Dao_Sach implements I_Sach {
 				String tacGia = rs.getString("TACGIA");
 				int namXB = rs.getInt("NAMXUATBAN");
 				int soTrang = rs.getInt("SOTRANG");
+				float thueVAT = rs.getFloat("THUEVAT");
 				String maDanhMuc = rs.getString("MADANHMUC");
 				String maKeHang = rs.getString("MAKEHANG");
 				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String maNhaCungCap = rs.getString("MANHACUNGCAP");
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
 				String tinhTrang = rs.getString("TINHTRANG");
 
-				Sach sp = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, maDM, maKH, maKM, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
+				Sach sp = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
 				dsSP.add(sp);
 
 			}
@@ -77,14 +81,17 @@ public class Dao_Sach implements I_Sach {
 				String tacGia = rs.getString("TACGIA");
 				int namXB = rs.getInt("NAMXUATBAN");
 				int soTrang = rs.getInt("SOTRANG");
+				float thueVAT = rs.getFloat("THUEVAT");
 				String maDanhMuc = rs.getString("MADANHMUC");
 				String maKeHang = rs.getString("MAKEHANG");
 				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String maNhaCungCap = rs.getString("MANHACUNGCAP");
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
 				String tinhTrang = rs.getString("TINHTRANG");
-				sach = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, maDM, maKH, maKM, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
+				sach = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
