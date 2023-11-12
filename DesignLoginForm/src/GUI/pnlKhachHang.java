@@ -36,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -75,49 +76,38 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			e.printStackTrace();
 		}
 		khachHang_dao = new Dao_KhachHang();
+
 		setBackground(Color.WHITE);
 		setBounds(0, 0, 1163, 763);
 		setLayout(null);
 
-		JPanel pnlTitle = new JPanel();
-		pnlTitle.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnlTitle.setBounds(10, 10, 1143, 56);
-		add(pnlTitle);
-		pnlTitle.setLayout(null);
-
-		JLabel lblTitle = new JLabel("QUẢN LÝ KHÁCH HÀNG");
-		lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
-		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setBounds(244, 0, 628, 56);
-		pnlTitle.add(lblTitle);
-
 		JPanel pnlInfo = new JPanel();
 		pnlInfo.setBorder(new TitledBorder(null, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		pnlInfo.setBounds(20, 76, 289, 677);
+		pnlInfo.setBounds(20, 10, 237, 743);
 		add(pnlInfo);
 		pnlInfo.setLayout(null);
 
 		JPanel pnlMaKH = new JPanel();
-		pnlMaKH.setBounds(10, 30, 270, 80);
+		pnlMaKH.setBounds(10, 30, 218, 80);
 		pnlInfo.add(pnlMaKH);
 		pnlMaKH.setLayout(null);
 
 		JLabel lblMaKH = new JLabel("Mã khách hàng:");
 		lblMaKH.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblMaKH.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMaKH.setBounds(10, 10, 200, 30);
+		lblMaKH.setBounds(10, 10, 138, 30);
 		pnlMaKH.add(lblMaKH);
 
 		txtMaKH = new JTextField();
 		txtMaKH.setEditable(false);
-		txtMaKH.setBounds(10, 40, 250, 30);
+		txtMaKH.setBounds(10, 40, 201, 30);
 		pnlMaKH.add(txtMaKH);
 		txtMaKH.setColumns(10);
 
 		JPanel pnlMaKH_1 = new JPanel();
 		pnlMaKH_1.setLayout(null);
-		pnlMaKH_1.setBounds(10, 120, 270, 80);
+		pnlMaKH_1.setBounds(10, 120, 218, 80);
 		pnlInfo.add(pnlMaKH_1);
 
 		JLabel lblTenKH = new JLabel("Tên khách hàng:");
@@ -128,28 +118,28 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 		txtTenKH = new JTextField();
 		txtTenKH.setColumns(10);
-		txtTenKH.setBounds(10, 40, 250, 30);
+		txtTenKH.setBounds(10, 40, 200, 30);
 		pnlMaKH_1.add(txtTenKH);
 
 		JPanel pnlNgaySinh = new JPanel();
-		pnlNgaySinh.setBounds(10, 210, 270, 80);
+		pnlNgaySinh.setBounds(10, 210, 218, 80);
 		pnlInfo.add(pnlNgaySinh);
 		pnlNgaySinh.setLayout(null);
 
 		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
 		lblNgaySinh.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNgaySinh.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNgaySinh.setBounds(10, 10, 137, 25);
+		lblNgaySinh.setBounds(10, 10, 106, 25);
 		pnlNgaySinh.add(lblNgaySinh);
 
 		jdNgaySinh = new JDateChooser();
 		jdNgaySinh.setDateFormatString("yyyy-MM-dd");
-		jdNgaySinh.setBounds(10, 45, 250, 35);
+		jdNgaySinh.setBounds(10, 45, 200, 35);
 		pnlNgaySinh.add(jdNgaySinh);
 
 		// giới tính
 		JPanel pnlGioi = new JPanel();
-		pnlGioi.setBounds(10, 300, 270, 45);
+		pnlGioi.setBounds(10, 300, 218, 70);
 		pnlInfo.add(pnlGioi);
 		pnlGioi.setLayout(null);
 
@@ -160,69 +150,71 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 		radNam = new JRadioButton("Nam");
 		radNam.setFont(new Font("Arial", Font.PLAIN, 18));
-		radNam.setBounds(102, 10, 74, 25);
+		radNam.setBounds(10, 39, 69, 25);
 		pnlGioi.add(radNam);
 
 		radNu = new JRadioButton("Nữ");
 		radNu.setFont(new Font("Arial", Font.PLAIN, 18));
-		radNu.setBounds(192, 10, 61, 25);
+		radNu.setBounds(114, 39, 61, 25);
 		pnlGioi.add(radNu);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(radNam);
 		group.add(radNu);
 
+		// panel số điện thoại
 		JPanel pnlSoDT = new JPanel();
 		pnlSoDT.setLayout(null);
-		pnlSoDT.setBounds(10, 355, 270, 80);
+		pnlSoDT.setBounds(10, 380, 218, 80);
 		pnlInfo.add(pnlSoDT);
 
 		JLabel lblSoDT = new JLabel("Số điện thoại:");
 		lblSoDT.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSoDT.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblSoDT.setBounds(10, 10, 200, 30);
+		lblSoDT.setBounds(10, 10, 119, 30);
 		pnlSoDT.add(lblSoDT);
 
 		txtSoDT = new JTextField();
 		txtSoDT.setColumns(10);
-		txtSoDT.setBounds(10, 43, 250, 30);
+		txtSoDT.setBounds(10, 43, 200, 30);
 		pnlSoDT.add(txtSoDT);
 
 		JPanel pnlEmail = new JPanel();
 		pnlEmail.setLayout(null);
-		pnlEmail.setBounds(10, 445, 270, 80);
+		pnlEmail.setBounds(10, 470, 218, 80);
 		pnlInfo.add(pnlEmail);
 
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEmail.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblEmail.setBounds(10, 0, 200, 30);
+		lblEmail.setBounds(10, 0, 99, 30);
 		pnlEmail.add(lblEmail);
 
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(10, 40, 250, 30);
+		txtEmail.setBounds(10, 40, 200, 30);
 		pnlEmail.add(txtEmail);
 
+		// panel Địa chỉ
 		JPanel pnlDiaChi = new JPanel();
 		pnlDiaChi.setLayout(null);
-		pnlDiaChi.setBounds(10, 546, 270, 80);
+		pnlDiaChi.setBounds(10, 560, 218, 80);
 		pnlInfo.add(pnlDiaChi);
 
 		JLabel lblDiaChi = new JLabel("Địa chỉ:");
 		lblDiaChi.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDiaChi.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblDiaChi.setBounds(10, 0, 200, 30);
+		lblDiaChi.setBounds(10, 0, 71, 30);
 		pnlDiaChi.add(lblDiaChi);
 
 		txtDiaChi = new JTextField();
 		txtDiaChi.setColumns(10);
-		txtDiaChi.setBounds(10, 40, 250, 30);
+		txtDiaChi.setBounds(10, 40, 200, 30);
 		pnlDiaChi.add(txtDiaChi);
 
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setBorder(new TitledBorder(null, "chức năng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlChucNang.setBounds(319, 76, 834, 228);
+		pnlChucNang.setBounds(260, 10, 893, 219);
 		add(pnlChucNang);
 		pnlChucNang.setLayout(null);
 		Image img_iconAdd = new ImageIcon(this.getClass().getResource("/icon_add_s.png")).getImage();
@@ -283,12 +275,12 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		JPanel pnlDSKH = new JPanel();
 		pnlDSKH.setBorder(new TitledBorder(null, "Danh s\u00E1ch kh\u00E1ch h\u00E0ng", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		pnlDSKH.setBounds(319, 321, 834, 432);
+		pnlDSKH.setBounds(260, 239, 893, 514);
 		add(pnlDSKH);
 		pnlDSKH.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 20, 814, 402);
+		scrollPane.setBounds(10, 20, 873, 484);
 		pnlDSKH.add(scrollPane);
 
 		// Create Table
@@ -298,6 +290,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 		table = new JTable(modelKH);
 		scrollPane.setViewportView(table);
+
 		// goi ham do data on table
 		DoDataOnTable();
 
@@ -478,8 +471,85 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			return temp;
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			return null; 
+			return null;
 		}
+
+	}
+
+	/*
+	 * kiểm tra data
+	 */
+	private boolean validData() {
+		String ten = txtTenKH.getText().trim();
+		String sdt = txtSoDT.getText().trim();
+		String email = txtEmail.getText().trim();
+		String diachi = txtDiaChi.getText().trim();
+		Date now = new Date();
+		Date ngaySinh = jdNgaySinh.getDate();
+		String gioi;
+
+		if (!(ten.matches("[\\p{L}\\p{M} ]+") && ten.length() > 0)) {
+			JOptionPane.showMessageDialog(this, "Tên  không được rỗng, là kí tự");
+			txtTenKH.requestFocus();
+			return false;
+		}
+
+		if (ngaySinh != null) {
+			if (ngaySinh.after(now)) {
+				JOptionPane.showMessageDialog(this, "Ngày sinh phải trước ngày hiện tại!!");
+				return false;
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "vui lòng chọn ngày sinh!!!");
+			return false;
+		}
+
+		if (!radNam.isSelected() && !radNu.isSelected()) {
+			JOptionPane.showMessageDialog(this, "vui lòng chọn giới!!!");
+			return false;
+		} else {
+			if (radNam.isSelected()) {
+				gioi = "Nam";
+			} else {
+				gioi = "Nữ";
+			}
+		}
+
+		if (sdt.length() > 0) {
+			try {
+//				int sdtInt = Integer.parseInt(sdt);
+//				if (sdtInt < 0) {
+//					JOptionPane.showMessageDialog(this, "số điện thoại có định dạng là số nguyên là 10 chữ số!!");
+//					return false;
+				if (!Pattern.matches("^\\d{10}$", sdt)) {
+					JOptionPane.showMessageDialog(this, "số điện thoại có định dạng là số nguyên là 10 chữ số!!");
+					return false;
+				}
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "vui lòng nhập lại số điện thoại đúng định dạng là 10 chữ số!!");
+				txtSoDT.requestFocus();
+				return false;
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "vui lòng nhập số điện thoại");
+			return false;
+		}
+
+		if (!email.matches(
+				"^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+				txtEmail.setText("Email sai cú pháp!!!");
+				txtEmail.requestFocus();
+				return false;
+			}
+
+		if (!(diachi.length() > 0)) {
+			JOptionPane.showMessageDialog(this, "Địa chỉ không được rỗng, là kí tự");
+			txtDiaChi.requestFocus();
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -521,27 +591,28 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 
 		if (o.equals(btnThem)) {
-			if(!txtMaKH.getText().isEmpty()) {
+			if (!txtMaKH.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "dang trong che do chinh sua !!!");
 				return;
 			}
-			
-			
-			
-			KhachHang kh = genarateOBJKH();
-			try {
-				if (!khachHang_dao.createKhachHang(kh)) {
-					JOptionPane.showInternalMessageDialog(null, "trung ma");
-					return;
-				} else {
-					clearTextField();
-					clearDataOnTalbe();
-					DoDataOnTable();
-					JOptionPane.showMessageDialog(this, "them khach hang thanh cong");
+
+			if (validData()) {
+				KhachHang kh = genarateOBJKH();
+				try {
+					if (!khachHang_dao.createKhachHang(kh)) {
+						JOptionPane.showInternalMessageDialog(null, "trung ma");
+						return;
+					} else {
+						clearTextField();
+						clearDataOnTalbe();
+						DoDataOnTable();
+						JOptionPane.showMessageDialog(this, "them khach hang thanh cong");
+					}
+				} catch (Exception e21) {
+					JOptionPane.showMessageDialog(null, e21.getMessage());
 				}
-			} catch (Exception e21) {
-				JOptionPane.showMessageDialog(null, e21.getMessage());
 			}
+
 		}
 
 	}
