@@ -5,9 +5,8 @@ public class VanPhongPham extends SanPham {
 	private String xuatXu;
 	private String mauSac, chatLieu;
 
-	public VanPhongPham(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, float thueVAT,DanhMuc maDanhMuc,
-			KeHang maKeHang, KhuyenMai maKhuyenMai, NhaCungCap maNhaCungCap, String tinhTrang, String thuongHieu, String xuatXu, String mauSac,
-			String chatLieu) {
+	public VanPhongPham(String maSP, String tenSP, float giaMua, int soLuong, float giaBan, String thuongHieu, String xuatXu, String mauSac,
+			String chatLieu, float thueVAT,DanhMuc maDanhMuc,KeHang maKeHang, KhuyenMai maKhuyenMai, NhaCungCap maNhaCungCap, String tinhTrang) {
 		super(maSP, tenSP, giaMua, soLuong, giaBan, thueVAT,maDanhMuc, maKeHang, maKhuyenMai, maNhaCungCap,tinhTrang);
 		this.thuongHieu = thuongHieu;
 		this.xuatXu = xuatXu;

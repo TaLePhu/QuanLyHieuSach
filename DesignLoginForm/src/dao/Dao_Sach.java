@@ -47,10 +47,10 @@ public class Dao_Sach implements I_Sach {
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
+				NhaCungCap maNCC = new NhaCungCap(maNhaCungCap);
 				String tinhTrang = rs.getString("TINHTRANG");
 
-				Sach sp = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
+				Sach sp = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, nhaXuatBan, tacGia, namXB, soTrang,thueVAT, maDM, maKH, maKM, maNCC, tinhTrang); 
 				dsSP.add(sp);
 
 			}
@@ -91,7 +91,7 @@ public class Dao_Sach implements I_Sach {
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
 				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
 				String tinhTrang = rs.getString("TINHTRANG");
-				sach = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang); 
+				sach = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, nhaXuatBan, tacGia, namXB, soTrang, thueVAT, maDM, maKH, maKM, nCC, tinhTrang); 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -34,6 +34,10 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				float giaMua = rs.getFloat("GIAMUA");
 				int soLuong = rs.getInt("SOLUONG");
 				float giaBan = rs.getFloat("GIABAN");
+				String thuongHieu = rs.getString("THUONGHIEU");
+				String xuatXu = rs.getString("XUATXU");
+				String mauSac = rs.getString("MAUSAC");
+				String chatLieu = rs.getString("CHATLIEU");
 				float thueVAT = rs.getFloat("THUEVAT");
 				String maDanhMuc = rs.getString("MADANHMUC");
 				String maKeHang = rs.getString("MAKEHANG");
@@ -42,14 +46,10 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				DanhMuc maDM = new DanhMuc(maDanhMuc);
 				KeHang maKH = new KeHang(maKeHang);
 				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
-				String thuongHieu = rs.getString("THUONGHIEU");
-				String xuatXu = rs.getString("XUATXU");
-				String mauSac = rs.getString("MAUSAC");
-				String chatLieu = rs.getString("CHATLIEU");
+				NhaCungCap maNCC = new NhaCungCap(maNhaCungCap);
 				String tinhTrang = rs.getString("TINHTRANG");
 
-				VanPhongPham sp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu); 
+				VanPhongPham sp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thuongHieu, xuatXu, mauSac, chatLieu, thueVAT, maDM, maKH, maKM, maNCC, tinhTrang); 
 				dsSP.add(sp);
 
 			}
@@ -77,6 +77,10 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 					float giaMua = rs.getFloat("GIAMUA");
 					int soLuong = rs.getInt("SOLUONG");
 					float giaBan = rs.getFloat("GIABAN");
+					String thuongHieu = rs.getString("THUONGHIEU");
+					String xuatXu = rs.getString("XUATXU");
+					String mauSac = rs.getString("MAUSAC");
+					String chatLieu = rs.getString("CHATLIEU");
 					float thueVAT = rs.getFloat("THUEVAT");
 					String maDanhMuc = rs.getString("MADANHMUC");
 					String maKeHang = rs.getString("MAKEHANG");
@@ -85,13 +89,9 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 					DanhMuc maDM = new DanhMuc(maDanhMuc);
 					KeHang maKH = new KeHang(maKeHang);
 					KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-					NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
-					String thuongHieu = rs.getString("THUONGHIEU");
-					String xuatXu = rs.getString("XUATXU");
-					String mauSac = rs.getString("MAUSAC");
-					String chatLieu = rs.getString("CHATLIEU");
+					NhaCungCap maNCC = new NhaCungCap(maNhaCungCap);
 					String tinhTrang = rs.getString("TINHTRANG");
-					vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu); 
+					vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thuongHieu, xuatXu, mauSac, chatLieu, thueVAT, maDM, maKH, maKM, maNCC, tinhTrang); 
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

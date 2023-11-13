@@ -6,8 +6,8 @@ public class Sach extends SanPham {
 	private int namXB;
 	private int soTrang;
 
-	public Sach(String maSP, String tenSP, float giaMua, int soLuong, float giaBan,float thueVAT, DanhMuc maDanhMuc, KeHang maKeHang,
-			KhuyenMai maKhuyenMai,NhaCungCap maNhaCungCap, String tinhTrang, String tacGia, String nhaXB, int namXB, int soTrang) {
+	public Sach(String maSP, String tenSP, float giaMua, int soLuong, float giaBan,String nhaXB, String tacGia, int namXB,
+			int soTrang, float thueVAT, DanhMuc maDanhMuc, KeHang maKeHang, KhuyenMai maKhuyenMai,NhaCungCap maNhaCungCap, String tinhTrang) {
 		super(maSP, tenSP, giaMua, soLuong, giaBan,thueVAT,  maDanhMuc, maKeHang, maKhuyenMai,maNhaCungCap, tinhTrang);
 		this.tacGia = tacGia;
 		this.nhaXB = nhaXB;
