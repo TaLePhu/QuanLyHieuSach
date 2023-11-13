@@ -27,7 +27,7 @@ public class pnlManHinhChinh extends JPanel{
 		lblNewLabel_1.setForeground(new Color(0, 0, 255));
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 40));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(230, 555, 751, 105);
+		lblNewLabel_1.setBounds(227, 612, 751, 105);
 		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
@@ -35,9 +35,5 @@ public class pnlManHinhChinh extends JPanel{
 		lblNewLabel.setBounds(10, 0, 1143, 753);
 		add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon(bgHome));
-		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(263, 659, 45, 13);
-		add(lblNewLabel_2);
 	}
 }

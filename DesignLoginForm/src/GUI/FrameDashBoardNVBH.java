@@ -208,9 +208,9 @@ public class FrameDashBoardNVBH extends JFrame implements ActionListener{
 				pnlMenu.add(pnlQLThongKe);
 				pnlQLThongKe.setLayout(null);
 
-				JLabel lblThongKe = new JLabel("Thống kê");
+				JLabel lblThongKe = new JLabel("Thống kê doanh thu");
 				lblThongKe.setHorizontalAlignment(SwingConstants.CENTER);
-				lblThongKe.setBounds(91, 5, 133, 50);
+				lblThongKe.setBounds(70, 5, 220, 50);
 				pnlQLThongKe.add(lblThongKe);
 				lblThongKe.setFont(new Font("Arial", Font.BOLD, 20));
 

@@ -212,5 +212,41 @@ public class Dao_KhuyenMai implements I_KhuyenMai{
 		}
 		return dsKM;
 	}
+	
+	public ArrayList<KhuyenMai> getKhuyenMaiTheoDoiTuongApDung(String doiTuong) {
+		ArrayList<KhuyenMai> dsKM = new ArrayList<KhuyenMai>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from KHUYENMAI where DOITUONGAPDUNG = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, doiTuong);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String tenKhuyenMai = rs.getString("TENKHUYENMAI");
+				int giaTriGiamGia = rs.getInt("GIATRIGIAMGIA");
+				Date ngayBatDau = rs.getDate("NGAYBATDAU");
+				Date ngayKetThuc = rs.getDate("NGAYKETTHUC");
+				String doiTuongApDung = rs.getString("DOITUONGAPDUNG");
+				String tinhTrang = rs.getString("TINHTRANG");
+
+				KhuyenMai km = new KhuyenMai(maKhuyenMai, tenKhuyenMai, giaTriGiamGia, ngayBatDau, ngayKetThuc, doiTuongApDung, tinhTrang);
+				dsKM.add(km);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsKM;
+	}
 
 }

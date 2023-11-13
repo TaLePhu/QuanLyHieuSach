@@ -243,11 +243,8 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
     	txtMa.setText("");
     	txtTen.setText("");
     	txtGiamGia.setText("");
-        Calendar currentDate = Calendar.getInstance();
-        jdNgayBatDau.setCalendar(currentDate);
-        Calendar nextDay = Calendar.getInstance();
-        nextDay.add(Calendar.DAY_OF_MONTH, 1);
-        jdNgayKetThuc.setCalendar(nextDay);
+        jdNgayBatDau.setCalendar(null);
+        jdNgayKetThuc.setCalendar(null);
     	cbDoiTuong.setSelectedIndex(0);
     	cbTinhTrang.setSelectedIndex(0);
     }
@@ -278,21 +275,21 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
                 return false;
             }
         }
-    	if (ngayBatDau == null || ngayKetThuc == null) {
-            txtMessage.setText("Vui lòng chọn ngày bắt đầu và ngày kết thúc!!");
-            return false;
-        }
-
-        Date currentDate = new Date();
-        if (ngayBatDau.before(currentDate)) {
-            txtMessage.setText("Ngày bắt đầu phải từ ngày hiện tại trở đi!!!");
-            return false;
-        }
-
-        if (ngayKetThuc.before(ngayBatDau)) {
-            txtMessage.setText("Ngày kết thúc phải sau ngày bắt đầu!!!");
-            return false;
-        }
+//    	if (ngayBatDau == null || ngayKetThuc == null) {
+//    		txtMessage.setText("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
+//            return false;
+//        }
+//
+//        Date currentDate = new Date();
+//        if (ngayBatDau.before(currentDate)) {
+//            txtMessage.setText("Ngày bắt đầu phải từ ngày hiện tại trở đi!!!");
+//            return false;
+//        }
+//
+//        if (ngayKetThuc.before(ngayBatDau)) {
+//            txtMessage.setText("Ngày kết thúc phải sau ngày bắt đầu!!!");
+//            return false;
+//        }
     	
     	    	
     	
@@ -303,10 +300,13 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
     	String maKM = phatSinhMaKM();
     	String tenKM = txtTen.getText().trim();
     	int giamGia = Integer.parseInt(txtGiamGia.getText().trim());
-    	java.util.Date utilNgayBatDau = jdNgayBatDau.getDate();
-        java.sql.Date ngayBatDau = new java.sql.Date(utilNgayBatDau.getTime());
+    	// Check if jdNgayBatDau is selected
+        java.util.Date utilNgayBatDau = jdNgayBatDau.getDate();
+        java.sql.Date ngayBatDau = (utilNgayBatDau != null) ? new java.sql.Date(utilNgayBatDau.getTime()) : null;
+
+        // Check if jdNgayKetThuc is selected
         java.util.Date utilNgayKetThuc = jdNgayKetThuc.getDate();
-        java.sql.Date ngayKetThuc = new java.sql.Date(utilNgayKetThuc.getTime());
+        java.sql.Date ngayKetThuc = (utilNgayKetThuc != null) ? new java.sql.Date(utilNgayKetThuc.getTime()) : null;
     	String doiTuongApDung = cbDoiTuong.getSelectedItem().toString();
     	String tinhTrang = cbTinhTrang.getSelectedItem().toString();
     	KhuyenMai km = new KhuyenMai(maKM, tenKM, giamGia, ngayBatDau, ngayKetThuc, doiTuongApDung, tinhTrang);

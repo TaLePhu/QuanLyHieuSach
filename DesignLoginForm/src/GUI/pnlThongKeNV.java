@@ -6,16 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,7 +29,6 @@ import dao.Dao_NhanVien;
 import entity.NhanVien;
 
 import javax.swing.JComboBox;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
@@ -41,6 +40,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.DefaultComboBoxModel;
 
 public class pnlThongKeNV extends JPanel implements ActionListener, MouseListener{
 	
@@ -59,8 +59,8 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 	private JTable tblHD, tblCTHD;
 	private JPopupMenu popupMenu;
 	private JMenuItem itXemChiTiet;
-	private Dao_NhanVien nhanVien_dao;
 	private NhanVien nvLogin;
+	private Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
 
 	public pnlThongKeNV() {
 		setBackground(new Color(255, 255, 255));
@@ -101,6 +101,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		pnNorth.add(lblLocTheo);
 		
 		cbLoc = new JComboBox<String>();
+		cbLoc.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Tuần trước", "Tháng trước", "Quý trước"}));
 		cbLoc.setPreferredSize(new Dimension(150, 30));
 		cbLoc.setBounds(142, 119, 150, 30);
 		pnNorth.add(cbLoc);
@@ -219,6 +220,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		}
 		getHDByNV(nvLogin);
 		
+		
 		tinhTongTien();
 		tinhSoHoaDon();
 		setMinMaxTotal();
@@ -228,6 +230,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		btnXuatBaoCao.addActionListener(this);
 		btnLoc.addActionListener(this);
 		tblHD.addMouseListener(this);
+		cbLoc.addActionListener(this);
 	}
 
 	@Override
@@ -306,7 +309,101 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 				}
 			  }
 		}else if(o.equals(btnLoc)) {
-			getHDByNVBW(nvLogin, csTu, csDen);
+			getHDByNVBW(nvLogin, csTu.getDate(), csDen.getDate());
+		}else if(o.equals(cbLoc)) {
+			String selectedOption = cbLoc.getSelectedItem().toString();
+			if(selectedOption.equals("Tuần trước")) {
+				Calendar cal = Calendar.getInstance();
+		        cal.add(Calendar.WEEK_OF_YEAR, -1);
+		        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+		        Date fromDate = (Date) cal.getTime();
+		        cal.add(Calendar.DAY_OF_WEEK, 6);
+		        Date toDate = (Date) cal.getTime();
+		        getHDByNVBW(nvLogin, fromDate, toDate);
+			}else if(selectedOption.equals("Tháng trước")) {
+				Calendar cal = Calendar.getInstance();
+			    cal.add(Calendar.MONTH, -1); // Move the calendar back by one month
+
+			    // Set the calendar to the first day of the month
+			    cal.set(Calendar.DAY_OF_MONTH, 1);
+			    Date fromDate = cal.getTime();
+
+			    // Set the calendar to the last day of the month
+			    cal.add(Calendar.MONTH, 1);
+			    cal.add(Calendar.DAY_OF_MONTH, -1);
+			    Date toDate = cal.getTime();
+
+			    getHDByNVBW(nvLogin, fromDate, toDate);
+			}
+			else if(selectedOption.equals("Quý trước")) {
+				Calendar cal = Calendar.getInstance();
+
+			    // Move the calendar back by one quarter
+			    cal.add(Calendar.MONTH, -3);
+			    int previousQuarter = (cal.get(Calendar.MONTH) / 3) + 1;
+
+			    // Set the calendar to the first day of the previous quarter
+			    cal.set(Calendar.MONTH, (previousQuarter - 1) * 3);
+			    cal.set(Calendar.DAY_OF_MONTH, 1);
+			    Date fromDate = cal.getTime();
+
+			    // Set the calendar to the last day of the previous quarter
+			    cal.add(Calendar.MONTH, 3);
+			    cal.add(Calendar.DAY_OF_MONTH, -1);
+			    Date toDate = cal.getTime();
+
+			    getHDByNVBW(nvLogin, fromDate, toDate);
+			}else if(selectedOption.equals("Tất cả")) {
+				getHDByNV(nvLogin);
+			}
+		}else if(o.equals(btnXuatBaoCao)) {
+			try {
+		        String selectedOption = cbLoc.getSelectedItem().toString();
+
+				NhanVien findNVLogin = nhanVien_dao.getTheoMaNV(nvLogin.getMaNhanVien());
+		        Date fromDate = null;
+		        Date toDate = null;
+
+		        if (selectedOption.equals("Tuần trước")) {
+		            Calendar cal = Calendar.getInstance();
+		            cal.add(Calendar.WEEK_OF_YEAR, -1);
+		            cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+		            fromDate = cal.getTime();
+		            cal.add(Calendar.DAY_OF_WEEK, 6);
+		            toDate = cal.getTime();
+		        } else if (selectedOption.equals("Tháng trước")) {
+		            Calendar cal = Calendar.getInstance();
+		            cal.add(Calendar.MONTH, -1);
+		            cal.set(Calendar.DAY_OF_MONTH, 1);
+		            fromDate = cal.getTime();
+		            cal.add(Calendar.MONTH, 1);
+		            cal.add(Calendar.DAY_OF_MONTH, -1);
+		            toDate = cal.getTime();
+		        } else if (selectedOption.equals("Quý trước")) {
+		            Calendar cal = Calendar.getInstance();
+		            cal.add(Calendar.MONTH, -3);
+		            cal.set(Calendar.DAY_OF_MONTH, 1);
+		            fromDate = cal.getTime();
+		            cal.add(Calendar.MONTH, 3);
+		            cal.add(Calendar.DAY_OF_MONTH, -1);
+		            toDate = cal.getTime();
+		        } else if (selectedOption.equals("Tất cả")) {
+		        	Calendar cal = Calendar.getInstance();
+		            cal.set(Calendar.YEAR, 2023);
+		            cal.set(Calendar.MONTH, Calendar.JANUARY);
+		            cal.set(Calendar.DAY_OF_MONTH, 1);
+		            fromDate = cal.getTime();
+
+		            // Set toDate to the current date
+		            toDate = new Date();
+		        }
+
+		        JOptionPane.showMessageDialog(null, "Đã xuất dữ liệu ra file excel thành công.");
+		        excelExport.ExcelExporter.exportTable(tblHD, fromDate, toDate, findNVLogin.getHoTenNhanVien(), "report.xls");
+
+		    } catch (IOException ex) {
+		        ex.printStackTrace();
+		    }
 		}
 		
 	}
@@ -360,8 +457,8 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 	}
 	
 	public void setMinMaxTotal() {
-	    double caoNhat = Double.MIN_VALUE;
-	    double thapNhat = Double.MAX_VALUE;
+	    double caoNhat = -99999999;
+	    double thapNhat = 99999999;
 
 	    for (int i = 0; i < modelHD.getRowCount(); i++) {
 	        double tongThanhTien = Double.parseDouble(modelHD.getValueAt(i, 3).toString());
@@ -378,10 +475,19 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 	    }
 
 	    // Đặt giá trị cho JTextField
-	    txtCaoNhat.setText(String.valueOf(caoNhat));
-	    txtThapNhat.setText(String.valueOf(thapNhat));
+	    if(caoNhat==-99999999) {
+	    	txtCaoNhat.setText("0");
+	    }else {
+	    	txtCaoNhat.setText(String.valueOf(caoNhat));
+	    }
+	    
+	    if(thapNhat==99999999) {
+	    	txtThapNhat.setText("0");
+	    }else {
+	    	txtThapNhat.setText(String.valueOf(thapNhat));
+	    }
 	}
-	public void getHDByNVBW(NhanVien nv, JDateChooser jdTu, JDateChooser jdDen) {
+	public void getHDByNVBW(NhanVien nv, Date fromDate, Date toDate) {
 	    try {
 	        ConnectDB.getInstance();
 	        Connection con = ConnectDB.getConnection();
@@ -395,8 +501,8 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 	        
 	        PreparedStatement pst = con.prepareStatement(sql);
 	        pst.setString(1, nv.getMaNhanVien());
-	        pst.setDate(2, new java.sql.Date(jdTu.getDate().getTime()));
-	        pst.setDate(3, new java.sql.Date(jdDen.getDate().getTime()));
+	        pst.setDate(2, new java.sql.Date(fromDate.getTime()));
+	        pst.setDate(3, new java.sql.Date(toDate.getTime()));
 	        DefaultTableModel dm=(DefaultTableModel) tblHD.getModel();
             dm.setRowCount(0);
 	        ResultSet rs = pst.executeQuery();
