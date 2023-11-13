@@ -6,11 +6,13 @@ import entity.VanPhongPham;
 
 public interface I_VanPhongPham {
 
-	public ArrayList<VanPhongPham> getAllSanPhamVanPhong();
+	public ArrayList<VanPhongPham> getAllVPP(String maVPP);
 
-	public VanPhongPham getTheoMaSPVanPhong(String maSPVanPhong);
+	public VanPhongPham getVPPTheoMa(String maVPP);
 
-	public boolean capnhatSPVanPhong(VanPhongPham v);
+	public boolean capnhatVPP(VanPhongPham vpp);
 
-	public boolean themSPVanPhong(VanPhongPham v);
+	public boolean themVPP(VanPhongPham vpp);
+	
+	public ArrayList<VanPhongPham> getListVPPTheoTen(String tenVPP);
 }

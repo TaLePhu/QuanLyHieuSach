@@ -12,6 +12,7 @@ import entity.DanhMuc;
 import entity.KeHang;
 import entity.KhuyenMai;
 import entity.NhaCungCap;
+import entity.Sach;
 import entity.VanPhongPham;
 import interfaces.I_VanPhongPham;
 
@@ -20,14 +21,16 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 	}
 	
 	//Lấy toàn bộ sản phẩm văn phòng phẩm
-	public ArrayList<VanPhongPham> getAllSanPhamVanPhong() {
-		ArrayList<VanPhongPham> dsSP = new ArrayList<VanPhongPham>();
+	public ArrayList<VanPhongPham> getAllVPP( String maVPP) {
+		ArrayList<VanPhongPham> dsVPP = new ArrayList<VanPhongPham>();
+		PreparedStatement sta = null;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Select * from SanPham where SOTRANG IS NULL";
-			Statement sta = con.createStatement();
-			ResultSet rs = sta.executeQuery(sql);
+			String sql = "Select * from SANPHAM where MASANPHAM LIKE ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, "%" + maVPP + "%");
+			ResultSet rs = sta.executeQuery();
 			while (rs.next()) {
 				String maSanPham = rs.getString("MASANPHAM");
 				String tenSanPham = rs.getString("TENSANPHAM");
@@ -39,29 +42,25 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				String mauSac = rs.getString("MAUSAC");
 				String chatLieu = rs.getString("CHATLIEU");
 				float thueVAT = rs.getFloat("THUEVAT");
-				String maDanhMuc = rs.getString("MADANHMUC");
-				String maKeHang = rs.getString("MAKEHANG");
-				String maKhuyenMai = rs.getString("MAKHUYENMAI");
-				String maNhaCungCap = rs.getNString("MANHACUNGCAP");
-				DanhMuc maDM = new DanhMuc(maDanhMuc);
-				KeHang maKH = new KeHang(maKeHang);
-				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-				NhaCungCap maNCC = new NhaCungCap(maNhaCungCap);
+				DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+				KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+				KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+				NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
 				String tinhTrang = rs.getString("TINHTRANG");
 
-				VanPhongPham sp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thuongHieu, xuatXu, mauSac, chatLieu, thueVAT, maDM, maKH, maKM, maNCC, tinhTrang); 
-				dsSP.add(sp);
+				VanPhongPham vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu);
+				dsVPP.add(vpp);
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dsSP;
+		return dsVPP;
 	}
 	
-	//tìm theo mã sản phẩm sách
+	//Tim VPP theo mã
 		@Override
-		public VanPhongPham getTheoMaSPVanPhong(String maSPVanPhong) {
+		public VanPhongPham getVPPTheoMa(String maVPP) {
 			VanPhongPham vpp = null;
 			PreparedStatement sta = null;
 			try {
@@ -69,7 +68,7 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				Connection con = ConnectDB.getConnection();
 				String sql = "Select * from SANPHAM where MASANPHAM = ?";
 				sta = con.prepareStatement(sql);
-				sta.setString(1, maSPVanPhong);
+				sta.setString(1, maVPP);
 				ResultSet rs = sta.executeQuery();
 				while (rs.next()) {
 					String maSanPham = rs.getString("MASANPHAM");
@@ -82,16 +81,12 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 					String mauSac = rs.getString("MAUSAC");
 					String chatLieu = rs.getString("CHATLIEU");
 					float thueVAT = rs.getFloat("THUEVAT");
-					String maDanhMuc = rs.getString("MADANHMUC");
-					String maKeHang = rs.getString("MAKEHANG");
-					String maKhuyenMai = rs.getString("MAKHUYENMAI");
-					String maNhaCungCap = rs.getNString("MANHACUNGCAP");
-					DanhMuc maDM = new DanhMuc(maDanhMuc);
-					KeHang maKH = new KeHang(maKeHang);
-					KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-					NhaCungCap maNCC = new NhaCungCap(maNhaCungCap);
+					DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+					KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+					KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+					NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
 					String tinhTrang = rs.getString("TINHTRANG");
-					vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thuongHieu, xuatXu, mauSac, chatLieu, thueVAT, maDM, maKH, maKM, maNCC, tinhTrang); 
+					vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -105,29 +100,30 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 			return vpp;
 		}
 		
-		//Thêm sản phẩm sách
+		//Thêm VPP
 		@Override
-		public boolean themSPVanPhong(VanPhongPham v) {
+		public boolean themVPP(VanPhongPham vpp) {
 			PreparedStatement sta = null;
 			int n=0;
 			try {
 				ConnectDB.getInstance();
 				Connection con = ConnectDB.getConnection();
-				String sql = "insert into SANPHAM values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				String sql = "insert into SANPHAM values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				sta = con.prepareStatement(sql);
-				sta.setString(1,v.getMaSP());
-				sta.setString(2, v.getTenSP());
-				sta.setFloat(3, v.getGiaMua());
-				sta.setInt(4, v.getSoLuong());
-				sta.setFloat(5, v.getGiaBan());
-				sta.setString(6, v.getThuongHieu());
-				sta.setString(7, v.getXuatXu());
-				sta.setString(8, v.getMauSac());
-				sta.setString(9, v.getChatLieu());
-				sta.setString(10, v.getMaDanhMuc().getMaDanhMuc());
-				sta.setString(11, v.getMaKeHang().getMaKeHang());
-				sta.setString(12, v.getMaKhuyenMai().getMaKhuyenMai());
-				sta.setString(13, v.getTinhTrang());
+				sta.setString(1,vpp.getMaSP());
+				sta.setString(2, vpp.getTenSP());
+				sta.setFloat(3, vpp.getGiaMua());
+				sta.setInt(4, vpp.getSoLuong());
+				sta.setFloat(5, vpp.getGiaBan());
+				sta.setString(6, vpp.getThuongHieu());
+				sta.setString(7, vpp.getXuatXu());
+				sta.setString(8, vpp.getMauSac());
+				sta.setString(9, vpp.getChatLieu());
+				sta.setString(10, vpp.getDanhMuc().getMaDanhMuc());
+				sta.setString(11, vpp.getKeHang().getMaKeHang());
+				sta.setString(12, vpp.getKhuyenMai().getMaKhuyenMai());
+				sta.setString(13, vpp.getNhaCungCap().getMaNhaCungCap());
+				sta.setString(14, vpp.getTinhTrang());
 				n = sta.executeUpdate();
 			}catch (SQLException e) {
 				e.printStackTrace();
@@ -140,29 +136,31 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 			}
 			return n>0;
 		}
-		//Cập nhật sản phẩm sách
+		//Cập nhật VPP
 		@Override
-		public boolean capnhatSPVanPhong(VanPhongPham v) {
+		public boolean capnhatVPP(VanPhongPham vpp) {
 			PreparedStatement sta = null;
 			int n=0;
 			try {
 				ConnectDB.getInstance();
 				Connection con = ConnectDB.getConnection();
 				String sql = "update SANPHAM set TENSANPHAM = ?, GIAMUA = ?, SOLUONG = ?, GIABAN = ?, THUONGHIEU = ?, XUATXU = ?, MAUSAC = ?, CHATLIEU = ?, MADANHMUC = ?,"
-						+ " MAKEHANG = ?, MAKHUYENMAI = ? TINHTRANG = ? where MASANPHAM = ?";
+						+ " MAKEHANG = ?, MAKHUYENMAI = ?, MANHACUNGCAP = ?, TINHTRANG = ? where MASANPHAM = ?";
 				sta = con.prepareStatement(sql);
-				sta.setString(1, v.getTenSP());
-				sta.setFloat(2, v.getGiaMua());
-				sta.setInt(3, v.getSoLuong());
-				sta.setFloat(4, v.getGiaBan());
-				sta.setString(5, v.getThuongHieu());
-				sta.setString(6, v.getXuatXu());
-				sta.setString(7, v.getMauSac());
-				sta.setString(8, v.getChatLieu());
-				sta.setString(9, v.getMaDanhMuc().getMaDanhMuc());
-				sta.setString(10, v.getMaKeHang().getMaKeHang());
-				sta.setString(11, v.getMaKhuyenMai().getMaKhuyenMai());
-				sta.setString(12, v.getTinhTrang());
+				sta.setString(1, vpp.getTenSP());
+				sta.setFloat(2, vpp.getGiaMua());
+				sta.setInt(3, vpp.getSoLuong());
+				sta.setFloat(4, vpp.getGiaBan());
+				sta.setString(5, vpp.getThuongHieu());
+				sta.setString(6, vpp.getXuatXu());
+				sta.setString(7, vpp.getMauSac());
+				sta.setString(8, vpp.getChatLieu());
+				sta.setString(9, vpp.getDanhMuc().getMaDanhMuc());
+				sta.setString(10, vpp.getKeHang().getMaKeHang());
+				sta.setString(11, vpp.getKhuyenMai().getMaKhuyenMai());
+				sta.setString(12, vpp.getNhaCungCap().getMaNhaCungCap());
+				sta.setString(13, vpp.getTinhTrang());
+				sta.setString(14,vpp.getMaSP());
 				n=sta.executeUpdate();
 			}catch (SQLException e) {
 				e.printStackTrace();
@@ -175,6 +173,48 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 			}
 			return n>0;
 			
+		}
+
+		@Override
+		public ArrayList<VanPhongPham> getListVPPTheoTen(String tenVPP) {
+			ArrayList<VanPhongPham> dsVPP = new ArrayList<VanPhongPham>();
+			PreparedStatement sta = null;
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "Select * from SANPHAM where TENSANPHAM LIKE ?";
+				sta = con.prepareStatement(sql);
+				sta.setString(1, "%" + tenVPP + "%");
+				ResultSet rs = sta.executeQuery();
+				while (rs.next()) {
+					String maSanPham = rs.getString("MASANPHAM");
+					String tenSanPham = rs.getString("TENSANPHAM");
+					float giaMua = rs.getFloat("GIAMUA");
+					int soLuong = rs.getInt("SOLUONG");
+					float giaBan = rs.getFloat("GIABAN");
+					String thuongHieu = rs.getString("THUONGHIEU");
+					String xuatXu = rs.getString("XUATXU");
+					String mauSac = rs.getString("MAUSAC");
+					String chatLieu = rs.getString("CHATLIEU");
+					float thueVAT = rs.getFloat("THUEVAT");
+					DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+					KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+					KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+					NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
+					String tinhTrang = rs.getString("TINHTRANG");
+					VanPhongPham vpp = new VanPhongPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu);
+					dsVPP.add(vpp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					sta.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return dsVPP;
 		}
 		
 

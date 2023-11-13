@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import entity.DanhMuc;
 import entity.KeHang;
 import entity.KhuyenMai;
 import entity.NhaCungCap;
+import entity.NhanVien;
 import entity.Sach;
 import interfaces.I_Sach;
 
@@ -21,14 +23,17 @@ public class Dao_Sach implements I_Sach {
 	}
 	//lấy toàn bộ sản phẩm sách
 	@Override
-	public ArrayList<Sach> getAllSanPhamSach() {
-		ArrayList<Sach> dsSP = new ArrayList<Sach>();
+	public ArrayList<Sach> getAllSach(String maSach) {
+		ArrayList<Sach> dsS = new ArrayList<Sach>();
+		PreparedStatement sta = null;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Select * from SanPham where SOTRANG > 0";
-			Statement sta = con.createStatement();
-			ResultSet rs = sta.executeQuery(sql);
+			String sql = "Select * from SANPHAM where MASANPHAM LIKE ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, "%" + maSach + "%");
+
+			ResultSet rs = sta.executeQuery();
 			while (rs.next()) {
 				String maSanPham = rs.getString("MASANPHAM");
 				String tenSanPham = rs.getString("TENSANPHAM");
@@ -40,28 +45,25 @@ public class Dao_Sach implements I_Sach {
 				int namXB = rs.getInt("NAMXUATBAN");
 				int soTrang = rs.getInt("SOTRANG");
 				float thueVAT = rs.getFloat("THUEVAT");
-				String maDanhMuc = rs.getString("MADANHMUC");
-				String maKeHang = rs.getString("MAKEHANG");
-				String maKhuyenMai = rs.getString("MAKHUYENMAI");
-				String maNhaCungCap = rs.getString("MANHACUNGCAP");
-				DanhMuc maDM = new DanhMuc(maDanhMuc);
-				KeHang maKH = new KeHang(maKeHang);
-				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-				NhaCungCap maNCC = new NhaCungCap(maNhaCungCap);
+
+				DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+				KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+				KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+				NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
 				String tinhTrang = rs.getString("TINHTRANG");
 
-				Sach sp = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, nhaXuatBan, tacGia, namXB, soTrang,thueVAT, maDM, maKH, maKM, maNCC, tinhTrang); 
-				dsSP.add(sp);
+				Sach s = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang);
+				dsS.add(s);
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dsSP;
+		return dsS;
 	}
 	//tìm theo mã sản phẩm sách
 	@Override
-	public Sach getTheoMaSPSach(String maSPSach) {
+	public Sach getSachTheoMa(String maSPSach) {
 		Sach sach = null;
 		PreparedStatement sta = null;
 		try {
@@ -82,16 +84,12 @@ public class Dao_Sach implements I_Sach {
 				int namXB = rs.getInt("NAMXUATBAN");
 				int soTrang = rs.getInt("SOTRANG");
 				float thueVAT = rs.getFloat("THUEVAT");
-				String maDanhMuc = rs.getString("MADANHMUC");
-				String maKeHang = rs.getString("MAKEHANG");
-				String maKhuyenMai = rs.getString("MAKHUYENMAI");
-				String maNhaCungCap = rs.getString("MANHACUNGCAP");
-				DanhMuc maDM = new DanhMuc(maDanhMuc);
-				KeHang maKH = new KeHang(maKeHang);
-				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
-				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
+				DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+				KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+				KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+				NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
 				String tinhTrang = rs.getString("TINHTRANG");
-				sach = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, nhaXuatBan, tacGia, namXB, soTrang, thueVAT, maDM, maKH, maKM, nCC, tinhTrang); 
+				sach = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -105,41 +103,15 @@ public class Dao_Sach implements I_Sach {
 		return sach;
 	}
 
-//	@Override
-//	public SanPham getSoLuongTheoMaSP(String maSP) {
-//		SanPham sp = null;
-//		PreparedStatement sta = null;
-//		try {
-//			ConnectDB.getInstance();
-//			Connection con = ConnectDB.getConnection();
-//			String sql = "SELECT SOLUONG FROM SanPham WHERE MASANPHAM = ?";
-//			sta = con.prepareStatement(sql);
-//			sta.setString(1, maSP);
-//			ResultSet rs = sta.executeQuery();
-//			while (rs.next()) {
-//				int soLuong = rs.getInt("SOLUONG");
-//				sp = new SanPham(maSP, soLuong);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				sta.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return sp;
-//	}
 	//Thêm sản phẩm sách
 	@Override
-	public boolean themSPSach(Sach s) {
+	public boolean themSach(Sach s) {
 		PreparedStatement sta = null;
 		int n=0;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "insert into SANPHAM values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into SANPHAM values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			sta = con.prepareStatement(sql);
 			sta.setString(1,s.getMaSP());
 			sta.setString(2, s.getTenSP());
@@ -150,10 +122,11 @@ public class Dao_Sach implements I_Sach {
 			sta.setString(7, s.getTacGia());
 			sta.setInt(8, s.getNamXB());
 			sta.setInt(9, s.getSoTrang());
-			sta.setString(10, s.getMaDanhMuc().getMaDanhMuc());
-			sta.setString(11, s.getMaKeHang().getMaKeHang());
-			sta.setString(12, s.getMaKhuyenMai().getMaKhuyenMai());
-			sta.setString(13, s.getTinhTrang());
+			sta.setString(10, s.getDanhMuc().getMaDanhMuc());
+			sta.setString(11, s.getKeHang().getMaKeHang());
+			sta.setString(12, s.getKhuyenMai().getMaKhuyenMai());
+			sta.setString(13, s.getNhaCungCap().getMaNhaCungCap());
+			sta.setString(14, s.getTinhTrang());
 			n = sta.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -168,14 +141,14 @@ public class Dao_Sach implements I_Sach {
 	}
 	//Cập nhật sản phẩm sách
 	@Override
-	public boolean capnhatSPSach(Sach s) {
+	public boolean capnhatSach(Sach s) {
 		PreparedStatement sta = null;
 		int n=0;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
 			String sql = "update SANPHAM set TENSANPHAM = ?, GIAMUA = ?, SOLUONG = ?, GIABAN = ?, NHAXUATBAN = ?, TACGIA = ?, NAMXUATBAN = ?, SOTRANG = ?, MADANHMUC = ?,"
-					+ " MAKEHANG = ?, MAKHUYENMAI = ? TINHTRANG = ? where MASANPHAM = ?";
+					+ " MAKEHANG = ?, MAKHUYENMAI = ?, MANHACUNGCAP = ?, TINHTRANG = ? where MASANPHAM = ?";
 			sta = con.prepareStatement(sql);
 			sta.setString(1, s.getTenSP());
 			sta.setFloat(2, s.getGiaMua());
@@ -185,10 +158,12 @@ public class Dao_Sach implements I_Sach {
 			sta.setString(6, s.getTacGia());
 			sta.setInt(7, s.getNamXB());
 			sta.setInt(8, s.getSoTrang());
-			sta.setString(9, s.getMaDanhMuc().getMaDanhMuc());
-			sta.setString(10, s.getMaKeHang().getMaKeHang());
-			sta.setString(11, s.getMaKhuyenMai().getMaKhuyenMai());
-			sta.setString(12, s.getTinhTrang());
+			sta.setString(9, s.getDanhMuc().getMaDanhMuc());
+			sta.setString(10, s.getKeHang().getMaKeHang());
+			sta.setString(11, s.getKhuyenMai().getMaKhuyenMai());
+			sta.setString(12, s.getNhaCungCap().getMaNhaCungCap());
+			sta.setString(13, s.getTinhTrang());
+			sta.setString(14, s.getMaSP());
 			n=sta.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -201,6 +176,94 @@ public class Dao_Sach implements I_Sach {
 		}
 		return n>0;
 		
+	}
+	@Override
+	public ArrayList<Sach> getListSachTheoTen(String tenSach) {
+		ArrayList<Sach> dsS = new ArrayList<Sach>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from SANPHAM where TENSANPHAM LIKE ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, "%" + tenSach + "%");
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maSanPham = rs.getString("MASANPHAM");
+				String tenSanPham = rs.getString("TENSANPHAM");
+				float giaMua = rs.getFloat("GIAMUA");
+				int soLuong = rs.getInt("SOLUONG");
+				float giaBan = rs.getFloat("GIABAN");
+				String nhaXuatBan = rs.getString("NHAXUATBAN");
+				String tacGia = rs.getString("TACGIA");
+				int namXB = rs.getInt("NAMXUATBAN");
+				int soTrang = rs.getInt("SOTRANG");
+				float thueVAT = rs.getFloat("THUEVAT");
+				DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+				KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+				KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+				NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
+				String tinhTrang = rs.getString("TINHTRANG");
+
+				Sach s = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang);
+				dsS.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsS;
+	}
+	@Override
+	public ArrayList<Sach> getListSachTheoTacGia(String tenTacGia) {
+		ArrayList<Sach> dsS = new ArrayList<Sach>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from SANPHAM where TACGIA LIKE ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, "%" + tenTacGia + "%");
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maSanPham = rs.getString("MASANPHAM");
+				String tenSanPham = rs.getString("TENSANPHAM");
+				float giaMua = rs.getFloat("GIAMUA");
+				int soLuong = rs.getInt("SOLUONG");
+				float giaBan = rs.getFloat("GIABAN");
+				String nhaXuatBan = rs.getString("NHAXUATBAN");
+				String tacGia = rs.getString("TACGIA");
+				int namXB = rs.getInt("NAMXUATBAN");
+				int soTrang = rs.getInt("SOTRANG");
+				float thueVAT = rs.getFloat("THUEVAT");
+				DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
+				KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
+				KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
+				NhaCungCap nhaCungCap = new NhaCungCap(rs.getString("MANHACUNGCAP"));
+				String tinhTrang = rs.getString("TINHTRANG");
+
+				Sach s = new Sach(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, danhMuc, keHang, khuyenMai, nhaCungCap, tinhTrang, tacGia, nhaXuatBan, namXB, soTrang);
+				dsS.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsS;
 	}
 	
 	

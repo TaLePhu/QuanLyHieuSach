@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import entity.Sach;
 
 public interface I_Sach {
-	public ArrayList<Sach> getAllSanPhamSach();
+	public ArrayList<Sach> getAllSach(String maSach);
 
-	public Sach getTheoMaSPSach(String maSPSach);
+	public Sach getSachTheoMa(String maSach);
 	
-	public boolean themSPSach(Sach s);
+	public boolean themSach(Sach s);
 	
-	public boolean capnhatSPSach(Sach s);
+	public boolean capnhatSach(Sach s);
+	
+	public ArrayList<Sach> getListSachTheoTen(String tenSach);
+	
+	public ArrayList<Sach> getListSachTheoTacGia(String tenTacGia);
 }
 

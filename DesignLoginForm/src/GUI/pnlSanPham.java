@@ -2,15 +2,18 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JTabbedPane;
 import javax.swing.border.TitledBorder;
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -18,8 +21,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import dao.Dao_DanhMuc;
+import dao.Dao_KeHang;
+import dao.Dao_KhuyenMai;
+import dao.Dao_NhaCungCap;
 import dao.Dao_Sach;
 import dao.Dao_VanPhongPham;
+import entity.DanhMuc;
+import entity.KeHang;
+import entity.KhuyenMai;
+import entity.NhaCungCap;
 import entity.Sach;
 import entity.VanPhongPham;
 
@@ -29,38 +40,57 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 public class pnlSanPham extends JPanel implements ActionListener {
-	private JTextField txtMaSP;
-	private JTextField txtTenSP;
-	private JTextField txtGiaMua;
-	private JTextField txtGiaBan;
-	private JTextField txtSoLuong;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField txtMaSach;
+	private JTextField txtTenSach;
+	private JTextField txtGiaMuaSach;
+	private JTextField txtGiaBanSach;
+	private JTextField txtSoLuongSach;
 	private JTextField txtTacGia;
 	private JTextField txtNhaXuatBan;
 	private JTextField txtNamXB;
 	private JTextField txtSoTrang;
-	private JComboBox<String> cbTinhTrang;
-	private JComboBox<String> cbMaDanhMuc;
-	private JComboBox<String> cbMaKeHang;
-	private JComboBox<String> cbMaKhuyenMai;
-	private JTextField txtTimKiemSP;
+	private JComboBox<String> cbTinhTrangSach;
+	private JComboBox<String> cbMaKeHangSach;
+	private JComboBox<String> cbMaKhuyenMaiSach;
+	private JComboBox<String> cbMaDanhMucSach;
+	private JComboBox<String> cbMaNhaCungCapSach;
+	private JComboBox<String> cbTinhTrangVPP;
+	private JComboBox<String> cbMaKeHangVPP;
+	private JComboBox<String> cbMaDanhMucVPP;
+	private JComboBox<String> cbMaKhuyenMaiVPP;
+	private JComboBox<String> cbMaNhaCungCapVPP;
+	 
+	private JTextField txtTimKiemSach;
 	private JTable tblSach;
-	private JTextField txtMaSP_1;
-	private JTextField txtTenSP_1;
-	private JTextField txtGiaMua_1;
-	private JTextField txtGiaBan_1;
-	private JTextField txtSoLuong_1;
-	private JTextField textField_15;
-	private JTextField textField_16;
-	private JTextField textField_17;
-	private JTextField textField_18;
+	private JTextField txtMaVanPhongPham;
+	private JTextField txtTenVanPhongPham;
+	private JTextField txtGiaMuaVPP;
+	private JTextField txtGiaBanVPP;
+	private JTextField txtSoLuongVPP;
+	private JTextField txtThuongHieu;
+	private JTextField txtXuatXu;
+	private JTextField txtMauSac;
+	private JTextField txtChatLieu;
 	private JTable tblVanPhongPham;
-	private JTextField txtTimKiem_1;
+	private JTextField txtTimKiemVPP;
 	private DefaultTableModel modelSach;
 	private DefaultTableModel modelVPPham;
 	private Dao_Sach sach_dao = new Dao_Sach();
 	private Dao_VanPhongPham vpPham_dao = new Dao_VanPhongPham();
-	private JTextField txtThueVAT;
-	private JTextField txtThueVAT_1;
+	private Dao_KeHang keHang_dao = new Dao_KeHang();
+	private Dao_KhuyenMai khuyenMai_dao = new Dao_KhuyenMai();
+	private Dao_DanhMuc danhMuc_dao = new Dao_DanhMuc();
+	private Dao_NhaCungCap nhaCungCap_dao = new Dao_NhaCungCap();
+	private JTextField txtThueVATSach;
+	private JTextField txtThueVATVPP;
+	
+	private JButton btnLamMoiSach, btnThemSach, btnCapNhatSach, btnTimKiemSach, btnLamMoiVPP, btnThemVPP, btnCapNhatVPP, btnTimKiemVPP;
+	private JTextField txtMessageSach;
+	private JTextField txtMessageVPP;
 
 	/**
 	 * Create the panel.
@@ -95,27 +125,27 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblMaSP.setBounds(90, 5, 128, 22);
 		pnlMaSP.add(lblMaSP);
 		
-		txtMaSP = new JTextField();
-		txtMaSP.setEnabled(false);
-		txtMaSP.setEditable(false);
-		txtMaSP.setBounds(10, 35, 282, 24);
-		pnlMaSP.add(txtMaSP);
-		txtMaSP.setColumns(10);
+		txtMaSach = new JTextField();
+		txtMaSach.setEnabled(false);
+		txtMaSach.setEditable(false);
+		txtMaSach.setBounds(10, 35, 282, 24);
+		pnlMaSP.add(txtMaSach);
+		txtMaSach.setColumns(10);
 		
-		JPanel pnlTenSP = new JPanel();
-		pnlTenSP.setLayout(null);
-		pnlTenSP.setBounds(10, 100, 302, 65);
-		pnlThongTin.add(pnlTenSP);
+		JPanel pnlTenSach = new JPanel();
+		pnlTenSach.setLayout(null);
+		pnlTenSach.setBounds(10, 100, 302, 65);
+		pnlThongTin.add(pnlTenSach);
 		
 		JLabel lblTenSP = new JLabel("Tên Sản Phẩm: ");
 		lblTenSP.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblTenSP.setBounds(88, 5, 139, 22);
-		pnlTenSP.add(lblTenSP);
+		pnlTenSach.add(lblTenSP);
 		
-		txtTenSP = new JTextField();
-		txtTenSP.setColumns(10);
-		txtTenSP.setBounds(10, 35, 282, 24);
-		pnlTenSP.add(txtTenSP);
+		txtTenSach = new JTextField();
+		txtTenSach.setColumns(10);
+		txtTenSach.setBounds(10, 35, 282, 24);
+		pnlTenSach.add(txtTenSach);
 		
 		JPanel pnlGiaMua = new JPanel();
 		pnlGiaMua.setLayout(null);
@@ -127,10 +157,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblGiaMua.setBounds(110, 5, 87, 22);
 		pnlGiaMua.add(lblGiaMua);
 		
-		txtGiaMua = new JTextField();
-		txtGiaMua.setColumns(10);
-		txtGiaMua.setBounds(10, 35, 282, 24);
-		pnlGiaMua.add(txtGiaMua);
+		txtGiaMuaSach = new JTextField();
+		txtGiaMuaSach.setColumns(10);
+		txtGiaMuaSach.setBounds(10, 35, 282, 24);
+		pnlGiaMua.add(txtGiaMuaSach);
 		
 		JPanel pnlGiaBan = new JPanel();
 		pnlGiaBan.setLayout(null);
@@ -142,11 +172,11 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblGiaBan.setBounds(111, 5, 87, 22);
 		pnlGiaBan.add(lblGiaBan);
 		
-		txtGiaBan = new JTextField();
-		txtGiaBan.setEditable(false);
-		txtGiaBan.setColumns(10);
-		txtGiaBan.setBounds(10, 35, 282, 24);
-		pnlGiaBan.add(txtGiaBan);
+		txtGiaBanSach = new JTextField();
+		txtGiaBanSach.setEditable(false);
+		txtGiaBanSach.setColumns(10);
+		txtGiaBanSach.setBounds(10, 35, 282, 24);
+		pnlGiaBan.add(txtGiaBanSach);
 		
 		JPanel pnlSoLuong = new JPanel();
 		pnlSoLuong.setLayout(null);
@@ -158,10 +188,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblSoLuong.setBounds(105, 5, 99, 22);
 		pnlSoLuong.add(lblSoLuong);
 		
-		txtSoLuong = new JTextField();
-		txtSoLuong.setColumns(10);
-		txtSoLuong.setBounds(10, 35, 282, 24);
-		pnlSoLuong.add(txtSoLuong);
+		txtSoLuongSach = new JTextField();
+		txtSoLuongSach.setColumns(10);
+		txtSoLuongSach.setBounds(10, 35, 282, 24);
+		pnlSoLuong.add(txtSoLuongSach);
 		
 		JPanel pnlTinhTrang = new JPanel();
 		pnlTinhTrang.setLayout(null);
@@ -173,9 +203,9 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblTinhTrang.setBounds(103, 5, 99, 22);
 		pnlTinhTrang.add(lblTinhTrang);
 		
-		JComboBox cbTinhTrang = new JComboBox();
-		cbTinhTrang.setBounds(10, 35, 282, 24);
-		pnlTinhTrang.add(cbTinhTrang);
+		cbTinhTrangSach = new JComboBox();
+		cbTinhTrangSach.setBounds(10, 35, 282, 24);
+		pnlTinhTrang.add(cbTinhTrangSach);
 		
 		JPanel pnlMa_1 = new JPanel();
 		pnlMa_1.setLayout(null);
@@ -187,20 +217,18 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblMaKeHang.setBounds(28, 10, 116, 22);
 		pnlMa_1.add(lblMaKeHang);
 		
-		JComboBox cbMaKeHang = new JComboBox();
-		cbMaKeHang.setModel(new DefaultComboBoxModel(new String[] {"KH001", "KH002", "KH003", "KH004", "KH005", "KH006", "KH007", "KH008"}));
-		cbMaKeHang.setBounds(10, 35, 138, 24);
-		pnlMa_1.add(cbMaKeHang);
+		cbMaKeHangSach = new JComboBox();
+		cbMaKeHangSach.setBounds(10, 35, 138, 24);
+		pnlMa_1.add(cbMaKeHangSach);
 		
 		JLabel lblMaDanhMuc = new JLabel("Mã Danh Mục: ");
 		lblMaDanhMuc.setBounds(166, 10, 136, 22);
 		pnlMa_1.add(lblMaDanhMuc);
 		lblMaDanhMuc.setFont(new Font("Arial", Font.PLAIN, 18));
 		
-		JComboBox cbMaDanhMuc_1 = new JComboBox();
-		cbMaDanhMuc_1.setBounds(158, 35, 138, 24);
-		pnlMa_1.add(cbMaDanhMuc_1);
-		cbMaDanhMuc_1.setModel(new DefaultComboBoxModel(new String[] {"DM001", "DM002", "DM003", "DM004", "DM005", "DM006", "DM007", "DM008"}));
+		cbMaDanhMucSach = new JComboBox();
+		cbMaDanhMucSach.setBounds(158, 35, 138, 24);
+		pnlMa_1.add(cbMaDanhMucSach);
 		
 		JPanel pnlMa_2 = new JPanel();
 		pnlMa_2.setLayout(null);
@@ -212,18 +240,18 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlMa_2.add(lblMaKhuyenMai);
 		lblMaKhuyenMai.setFont(new Font("Arial", Font.PLAIN, 18));
 		
-		JComboBox cbMaKhuyenMai_1 = new JComboBox();
-		cbMaKhuyenMai_1.setBounds(10, 35, 138, 24);
-		pnlMa_2.add(cbMaKhuyenMai_1);
+		cbMaKhuyenMaiSach = new JComboBox<String>();
+		cbMaKhuyenMaiSach.setBounds(10, 35, 138, 24);
+		pnlMa_2.add(cbMaKhuyenMaiSach);
 		
 		JLabel lblmaNCC = new JLabel("Mã NCC: ");
 		lblmaNCC.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblmaNCC.setBounds(184, 10, 96, 22);
 		pnlMa_2.add(lblmaNCC);
 		
-		JComboBox cbMaNCC = new JComboBox();
-		cbMaNCC.setBounds(158, 35, 138, 24);
-		pnlMa_2.add(cbMaNCC);
+		cbMaNhaCungCapSach = new JComboBox<String>();
+		cbMaNhaCungCapSach.setBounds(158, 35, 138, 24);
+		pnlMa_2.add(cbMaNhaCungCapSach);
 		
 		JPanel pnlThueVAT = new JPanel();
 		pnlThueVAT.setLayout(null);
@@ -235,10 +263,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblThueVAT.setBounds(105, 10, 99, 22);
 		pnlThueVAT.add(lblThueVAT);
 		
-		txtThueVAT = new JTextField();
-		txtThueVAT.setColumns(10);
-		txtThueVAT.setBounds(10, 35, 282, 24);
-		pnlThueVAT.add(txtThueVAT);
+		txtThueVATSach = new JTextField();
+		txtThueVATSach.setColumns(10);
+		txtThueVATSach.setBounds(10, 35, 282, 24);
+		pnlThueVAT.add(txtThueVATSach);
 		
 		JPanel pnlThongTinSach = new JPanel();
 		pnlThongTinSach.setBorder(new TitledBorder(null, "Th\u00F4ng tin S\u00E1ch: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -253,43 +281,55 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		JLabel lblTacGia = new JLabel("Tác Giả:");
 		lblTacGia.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblTacGia.setBounds(20, 20, 77, 22);
+		lblTacGia.setBounds(23, 10, 77, 22);
 		pnlChiTiet.add(lblTacGia);
 		
 		txtTacGia = new JTextField();
 		txtTacGia.setColumns(10);
-		txtTacGia.setBounds(178, 20, 200, 24);
+		txtTacGia.setBounds(178, 8, 200, 24);
 		pnlChiTiet.add(txtTacGia);
 		
 		JLabel lblNhaXuatBan = new JLabel("Nhà Xuất Bản:");
 		lblNhaXuatBan.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNhaXuatBan.setBounds(20, 64, 132, 22);
+		lblNhaXuatBan.setBounds(23, 42, 132, 22);
 		pnlChiTiet.add(lblNhaXuatBan);
 		
 		txtNhaXuatBan = new JTextField();
 		txtNhaXuatBan.setColumns(10);
-		txtNhaXuatBan.setBounds(178, 64, 200, 24);
+		txtNhaXuatBan.setBounds(178, 42, 200, 24);
 		pnlChiTiet.add(txtNhaXuatBan);
 		
 		JLabel lblNamXB = new JLabel("Năm Xuất Bản: ");
 		lblNamXB.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNamXB.setBounds(418, 18, 132, 22);
+		lblNamXB.setBounds(418, 10, 132, 22);
 		pnlChiTiet.add(lblNamXB);
 		
 		txtNamXB = new JTextField();
 		txtNamXB.setColumns(10);
-		txtNamXB.setBounds(576, 18, 200, 24);
+		txtNamXB.setBounds(576, 8, 200, 24);
 		pnlChiTiet.add(txtNamXB);
 		
 		JLabel lblSoTrang = new JLabel("Số Trang: ");
 		lblSoTrang.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblSoTrang.setBounds(418, 64, 96, 22);
+		lblSoTrang.setBounds(418, 42, 96, 22);
 		pnlChiTiet.add(lblSoTrang);
 		
 		txtSoTrang = new JTextField();
 		txtSoTrang.setColumns(10);
-		txtSoTrang.setBounds(576, 64, 200, 24);
+		txtSoTrang.setBounds(576, 44, 200, 24);
 		pnlChiTiet.add(txtSoTrang);
+		
+		txtMessageSach = new JTextField();
+		txtMessageSach.setBounds(21, 74, 755, 26);
+		pnlChiTiet.add(txtMessageSach);
+		txtMessageSach.setColumns(10);
+		txtMessageSach.setToolTipText("");
+		txtMessageSach.setFont(new Font("Arial", Font.ITALIC, 10));
+		txtMessageSach.setBackground(new Color(240, 240, 240));
+		txtMessageSach.setText("");
+		txtMessageSach.setBorder(null);
+		txtMessageSach.setEditable(false);
+		txtMessageSach.setBounds(24, 107, 1094, 19);
 		
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setBorder(new TitledBorder(null, "Ch\u1EE9c N\u0103ng: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -297,42 +337,42 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlSach.add(pnlChucNang);
 		pnlChucNang.setLayout(null);
 		
-		JButton btnLamMoi = new JButton("Làm mới");
-		btnLamMoi.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnLamMoi.setBounds(32, 27, 160, 56);
-		pnlChucNang.add(btnLamMoi);
+		btnLamMoiSach = new JButton("Làm mới");
+		btnLamMoiSach.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnLamMoiSach.setBounds(32, 27, 160, 56);
+		pnlChucNang.add(btnLamMoiSach);
 		Image img_iconLamMoi = new ImageIcon(this.getClass().getResource("/update.png")).getImage();
-		btnLamMoi.setIcon(new ImageIcon(img_iconLamMoi));
+		btnLamMoiSach.setIcon(new ImageIcon(img_iconLamMoi));
 		
-		JButton btnThem = new JButton("Thêm");
-		btnThem.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnThem.setBounds(32, 93, 337, 56);
-		pnlChucNang.add(btnThem);
+		btnThemSach = new JButton("Thêm");
+		btnThemSach.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnThemSach.setBounds(32, 93, 337, 56);
+		pnlChucNang.add(btnThemSach);
 		Image img_iconthem = new ImageIcon(this.getClass().getResource("/add.png")).getImage();
-		btnThem.setIcon(new ImageIcon(img_iconthem));
+		btnThemSach.setIcon(new ImageIcon(img_iconthem));
 		
-		JButton btnCapNhat = new JButton("Cập Nhật");
-		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnCapNhat.setBounds(209, 27, 160, 56);
-		pnlChucNang.add(btnCapNhat);
+		btnCapNhatSach = new JButton("Cập Nhật");
+		btnCapNhatSach.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCapNhatSach.setBounds(209, 27, 160, 56);
+		pnlChucNang.add(btnCapNhatSach);
 		Image img_iconCapNhat = new ImageIcon(this.getClass().getResource("/update2.png")).getImage();
-		btnCapNhat.setIcon(new ImageIcon(img_iconCapNhat));
+		btnCapNhatSach.setIcon(new ImageIcon(img_iconCapNhat));
 		
 		JLabel lblTimKiemSP = new JLabel("Tìm kiếm sản phẩm theo mã:");
 		lblTimKiemSP.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTimKiemSP.setBounds(441, 59, 231, 22);
 		pnlChucNang.add(lblTimKiemSP);
 		
-		txtTimKiemSP = new JTextField();
-		txtTimKiemSP.setColumns(10);
-		txtTimKiemSP.setBounds(441, 91, 231, 24);
-		pnlChucNang.add(txtTimKiemSP);
+		txtTimKiemSach = new JTextField();
+		txtTimKiemSach.setColumns(10);
+		txtTimKiemSach.setBounds(441, 91, 231, 24);
+		pnlChucNang.add(txtTimKiemSach);
 		
-		JButton btnTimKiemSP = new JButton("");
-		btnTimKiemSP.setBounds(698, 59, 68, 56);
-		pnlChucNang.add(btnTimKiemSP);
+		btnTimKiemSach = new JButton("");
+		btnTimKiemSach.setBounds(698, 59, 68, 56);
+		pnlChucNang.add(btnTimKiemSach);
 		Image img_iconTimKiem = new ImageIcon(this.getClass().getResource("/find.png")).getImage();
-		btnTimKiemSP.setIcon(new ImageIcon(img_iconTimKiem));
+		btnTimKiemSach.setIcon(new ImageIcon(img_iconTimKiem));
 		
 		JPanel pnlDsSP = new JPanel();
 		pnlDsSP.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EA3n ph\u1EA9m: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -353,6 +393,14 @@ public class pnlSanPham extends JPanel implements ActionListener {
 				tblSach = new JTable(modelSach);
 				tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 				scrollPane.setViewportView(tblSach);
+				
+		tblSach.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int r = tblSach.getSelectedRow();
+			fillForm(r);
+			}
+		});		
 		
 		JPanel pnlVanPhongPham = new JPanel();
 		pnlVanPhongPham.setLayout(null);
@@ -374,12 +422,12 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblMaSP_1.setBounds(90, 5, 128, 22);
 		pnlMaSP_1.add(lblMaSP_1);
 		
-		txtMaSP_1 = new JTextField();
-		txtMaSP_1.setEnabled(false);
-		txtMaSP_1.setEditable(false);
-		txtMaSP_1.setColumns(10);
-		txtMaSP_1.setBounds(10, 35, 282, 24);
-		pnlMaSP_1.add(txtMaSP_1);
+		txtMaVanPhongPham = new JTextField();
+		txtMaVanPhongPham.setEnabled(false);
+		txtMaVanPhongPham.setEditable(false);
+		txtMaVanPhongPham.setColumns(10);
+		txtMaVanPhongPham.setBounds(10, 35, 282, 24);
+		pnlMaSP_1.add(txtMaVanPhongPham);
 		
 		JPanel pnlTenSP_1 = new JPanel();
 		pnlTenSP_1.setLayout(null);
@@ -391,10 +439,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblTenSP_1.setBounds(88, 5, 139, 22);
 		pnlTenSP_1.add(lblTenSP_1);
 		
-		txtTenSP_1 = new JTextField();
-		txtTenSP_1.setColumns(10);
-		txtTenSP_1.setBounds(10, 35, 282, 24);
-		pnlTenSP_1.add(txtTenSP_1);
+		txtTenVanPhongPham = new JTextField();
+		txtTenVanPhongPham.setColumns(10);
+		txtTenVanPhongPham.setBounds(10, 35, 282, 24);
+		pnlTenSP_1.add(txtTenVanPhongPham);
 		
 		JPanel pnlGiaMua_1 = new JPanel();
 		pnlGiaMua_1.setLayout(null);
@@ -406,10 +454,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblGiaMua_1.setBounds(110, 5, 87, 22);
 		pnlGiaMua_1.add(lblGiaMua_1);
 		
-		txtGiaMua_1 = new JTextField();
-		txtGiaMua_1.setColumns(10);
-		txtGiaMua_1.setBounds(10, 35, 282, 24);
-		pnlGiaMua_1.add(txtGiaMua_1);
+		txtGiaMuaVPP = new JTextField();
+		txtGiaMuaVPP.setColumns(10);
+		txtGiaMuaVPP.setBounds(10, 35, 282, 24);
+		pnlGiaMua_1.add(txtGiaMuaVPP);
 		
 		JPanel pnlGiaBan_1 = new JPanel();
 		pnlGiaBan_1.setLayout(null);
@@ -421,10 +469,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblGiaBan_1.setBounds(111, 5, 87, 22);
 		pnlGiaBan_1.add(lblGiaBan_1);
 		
-		txtGiaBan_1 = new JTextField();
-		txtGiaBan_1.setColumns(10);
-		txtGiaBan_1.setBounds(10, 35, 282, 24);
-		pnlGiaBan_1.add(txtGiaBan_1);
+		txtGiaBanVPP = new JTextField();
+		txtGiaBanVPP.setColumns(10);
+		txtGiaBanVPP.setBounds(10, 35, 282, 24);
+		pnlGiaBan_1.add(txtGiaBanVPP);
 		
 		JPanel pnlSoLuong_1 = new JPanel();
 		pnlSoLuong_1.setLayout(null);
@@ -436,11 +484,11 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblSoLuong_1.setBounds(105, 5, 99, 22);
 		pnlSoLuong_1.add(lblSoLuong_1);
 		
-		txtSoLuong_1 = new JTextField();
-		txtSoLuong_1.setEditable(false);
-		txtSoLuong_1.setColumns(10);
-		txtSoLuong_1.setBounds(10, 35, 282, 24);
-		pnlSoLuong_1.add(txtSoLuong_1);
+		txtSoLuongVPP = new JTextField();
+		txtSoLuongVPP.setEditable(false);
+		txtSoLuongVPP.setColumns(10);
+		txtSoLuongVPP.setBounds(10, 35, 282, 24);
+		pnlSoLuong_1.add(txtSoLuongVPP);
 		
 		JPanel pnlTinhTrang_1 = new JPanel();
 		pnlTinhTrang_1.setLayout(null);
@@ -452,9 +500,9 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblTinhTrang_1.setBounds(103, 5, 99, 22);
 		pnlTinhTrang_1.add(lblTinhTrang_1);
 		
-		JComboBox cbTinhTrang_1 = new JComboBox();
-		cbTinhTrang_1.setBounds(10, 35, 282, 24);
-		pnlTinhTrang_1.add(cbTinhTrang_1);
+		cbTinhTrangVPP = new JComboBox();
+		cbTinhTrangVPP.setBounds(10, 35, 282, 24);
+		pnlTinhTrang_1.add(cbTinhTrangVPP);
 		
 		JPanel pnlMa_3 = new JPanel();
 		pnlMa_3.setLayout(null);
@@ -466,19 +514,18 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblMaKeHang_1.setBounds(28, 10, 116, 22);
 		pnlMa_3.add(lblMaKeHang_1);
 		
-		JComboBox cbMaKeHang_1 = new JComboBox();
-		cbMaKeHang_1.setModel(new DefaultComboBoxModel(new String[] {"KH001", "KH002", "KH003", "KH004", "KH005", "KH006", "KH007", "KH008"}));
-		cbMaKeHang_1.setBounds(10, 35, 138, 24);
-		pnlMa_3.add(cbMaKeHang_1);
+		cbMaKeHangVPP = new JComboBox();
+		cbMaKeHangVPP.setBounds(10, 35, 138, 24);
+		pnlMa_3.add(cbMaKeHangVPP);
 		
 		JLabel lblMaDanhMuc_1 = new JLabel("Mã Danh Mục: ");
 		lblMaDanhMuc_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblMaDanhMuc_1.setBounds(166, 10, 136, 22);
 		pnlMa_3.add(lblMaDanhMuc_1);
 		
-		JComboBox cbMaDanhMuc_1_1 = new JComboBox();
-		cbMaDanhMuc_1_1.setBounds(158, 35, 138, 24);
-		pnlMa_3.add(cbMaDanhMuc_1_1);
+		cbMaDanhMucVPP = new JComboBox();
+		cbMaDanhMucVPP.setBounds(158, 35, 138, 24);
+		pnlMa_3.add(cbMaDanhMucVPP);
 		
 		JPanel pnlMa_4 = new JPanel();
 		pnlMa_4.setLayout(null);
@@ -490,18 +537,18 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblMaKhuyenMai_1.setBounds(20, 10, 138, 22);
 		pnlMa_4.add(lblMaKhuyenMai_1);
 		
-		JComboBox cbKhuyenMai_1 = new JComboBox();
-		cbKhuyenMai_1.setBounds(10, 35, 138, 24);
-		pnlMa_4.add(cbKhuyenMai_1);
+		cbMaKhuyenMaiVPP = new JComboBox();
+		cbMaKhuyenMaiVPP.setBounds(10, 35, 138, 24);
+		pnlMa_4.add(cbMaKhuyenMaiVPP);
 		
 		JLabel lblMaNCC_1 = new JLabel("Mã NCC: ");
 		lblMaNCC_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblMaNCC_1.setBounds(184, 10, 96, 22);
 		pnlMa_4.add(lblMaNCC_1);
 		
-		JComboBox cbMaNCC_1 = new JComboBox();
-		cbMaNCC_1.setBounds(158, 35, 138, 24);
-		pnlMa_4.add(cbMaNCC_1);
+		cbMaNhaCungCapVPP = new JComboBox();
+		cbMaNhaCungCapVPP.setBounds(158, 35, 138, 24);
+		pnlMa_4.add(cbMaNhaCungCapVPP);
 		
 		JPanel pnlThueVAT_1 = new JPanel();
 		pnlThueVAT_1.setLayout(null);
@@ -513,10 +560,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		lblThueVAT_1.setBounds(105, 10, 99, 22);
 		pnlThueVAT_1.add(lblThueVAT_1);
 		
-		txtThueVAT_1 = new JTextField();
-		txtThueVAT_1.setColumns(10);
-		txtThueVAT_1.setBounds(10, 35, 282, 24);
-		pnlThueVAT_1.add(txtThueVAT_1);
+		txtThueVATVPP = new JTextField();
+		txtThueVATVPP.setColumns(10);
+		txtThueVATVPP.setBounds(10, 35, 282, 24);
+		pnlThueVAT_1.add(txtThueVATVPP);
 		
 		JPanel pnlThongTinVanPhongPham = new JPanel();
 		pnlThongTinVanPhongPham.setLayout(null);
@@ -531,43 +578,55 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		JLabel lblNewLabel_2_4 = new JLabel("Thương Hiệu:");
 		lblNewLabel_2_4.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_4.setBounds(20, 20, 111, 22);
+		lblNewLabel_2_4.setBounds(20, 10, 111, 22);
 		pnlChiTiet_1.add(lblNewLabel_2_4);
 		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBounds(178, 20, 200, 24);
-		pnlChiTiet_1.add(textField_15);
+		txtThuongHieu = new JTextField();
+		txtThuongHieu.setColumns(10);
+		txtThuongHieu.setBounds(178, 10, 200, 24);
+		pnlChiTiet_1.add(txtThuongHieu);
 		
 		JLabel lblNewLabel_2_1_2 = new JLabel("Xuất xứ:");
 		lblNewLabel_2_1_2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2.setBounds(20, 64, 132, 22);
+		lblNewLabel_2_1_2.setBounds(20, 48, 132, 22);
 		pnlChiTiet_1.add(lblNewLabel_2_1_2);
 		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
-		textField_16.setBounds(178, 64, 200, 24);
-		pnlChiTiet_1.add(textField_16);
+		txtXuatXu = new JTextField();
+		txtXuatXu.setColumns(10);
+		txtXuatXu.setBounds(178, 44, 200, 24);
+		pnlChiTiet_1.add(txtXuatXu);
 		
 		JLabel lblNewLabel_2_2_1 = new JLabel("Màu Sắc: ");
 		lblNewLabel_2_2_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_2_1.setBounds(418, 18, 132, 22);
+		lblNewLabel_2_2_1.setBounds(418, 10, 132, 22);
 		pnlChiTiet_1.add(lblNewLabel_2_2_1);
 		
-		textField_17 = new JTextField();
-		textField_17.setColumns(10);
-		textField_17.setBounds(576, 18, 200, 24);
-		pnlChiTiet_1.add(textField_17);
+		txtMauSac = new JTextField();
+		txtMauSac.setColumns(10);
+		txtMauSac.setBounds(576, 10, 200, 24);
+		pnlChiTiet_1.add(txtMauSac);
 		
 		JLabel lblNewLabel_2_3_1 = new JLabel("Chất liệu: ");
 		lblNewLabel_2_3_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_3_1.setBounds(418, 64, 96, 22);
+		lblNewLabel_2_3_1.setBounds(418, 48, 96, 22);
 		pnlChiTiet_1.add(lblNewLabel_2_3_1);
 		
-		textField_18 = new JTextField();
-		textField_18.setColumns(10);
-		textField_18.setBounds(576, 64, 200, 24);
-		pnlChiTiet_1.add(textField_18);
+		txtChatLieu = new JTextField();
+		txtChatLieu.setColumns(10);
+		txtChatLieu.setBounds(576, 44, 200, 24);
+		pnlChiTiet_1.add(txtChatLieu);
+		
+		txtMessageVPP = new JTextField();
+		txtMessageVPP.setBounds(20, 76, 756, 24);
+		pnlChiTiet_1.add(txtMessageVPP);
+		txtMessageVPP.setColumns(10);
+		txtMessageVPP.setToolTipText("");
+		txtMessageVPP.setFont(new Font("Arial", Font.ITALIC, 10));
+		txtMessageVPP.setBackground(new Color(240, 240, 240));
+		txtMessageVPP.setText("");
+		txtMessageVPP.setBorder(null);
+		txtMessageVPP.setEditable(false);
+		txtMessageVPP.setBounds(24, 107, 1094, 19);
 		
 		JPanel pnlChucNang_1 = new JPanel();
 		pnlChucNang_1.setLayout(null);
@@ -575,42 +634,42 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlChucNang_1.setBounds(335, 167, 813, 175);
 		pnlVanPhongPham.add(pnlChucNang_1);
 		
-		JButton btnLamMoi_1 = new JButton("Làm mới");
-		btnLamMoi_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnLamMoi_1.setBounds(32, 27, 160, 56);
-		pnlChucNang_1.add(btnLamMoi_1);
+		btnLamMoiVPP = new JButton("Làm mới");
+		btnLamMoiVPP.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnLamMoiVPP.setBounds(32, 27, 160, 56);
+		pnlChucNang_1.add(btnLamMoiVPP);
 		Image img_iconLamMoi_1 = new ImageIcon(this.getClass().getResource("/update.png")).getImage();
-		btnLamMoi_1.setIcon(new ImageIcon(img_iconLamMoi_1));
+		btnLamMoiVPP.setIcon(new ImageIcon(img_iconLamMoi_1));
 		
-		JButton btnThem_2 = new JButton("Thêm");
-		btnThem_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnThem_2.setBounds(32, 93, 337, 56);
-		pnlChucNang_1.add(btnThem_2);
+		btnThemVPP = new JButton("Thêm");
+		btnThemVPP.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnThemVPP.setBounds(32, 93, 337, 56);
+		pnlChucNang_1.add(btnThemVPP);
 		Image img_iconthem_2 = new ImageIcon(this.getClass().getResource("/add.png")).getImage();
-		btnThem_2.setIcon(new ImageIcon(img_iconthem_2));
+		btnThemVPP.setIcon(new ImageIcon(img_iconthem_2));
 		
-		JButton btnCapNhat_1 = new JButton("Cập Nhật");
-		btnCapNhat_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnCapNhat_1.setBounds(209, 27, 160, 56);
-		pnlChucNang_1.add(btnCapNhat_1);
+		btnCapNhatVPP = new JButton("Cập Nhật");
+		btnCapNhatVPP.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCapNhatVPP.setBounds(209, 27, 160, 56);
+		pnlChucNang_1.add(btnCapNhatVPP);
 		Image img_iconCapNhat_1 = new ImageIcon(this.getClass().getResource("/update2.png")).getImage();
-		btnCapNhat_1.setIcon(new ImageIcon(img_iconCapNhat_1));
+		btnCapNhatVPP.setIcon(new ImageIcon(img_iconCapNhat_1));
 		
 		JLabel lblTimKiemSP_1 = new JLabel("Tìm kiếm thông tin sản phẩm:");
 		lblTimKiemSP_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTimKiemSP_1.setBounds(441, 59, 231, 22);
 		pnlChucNang_1.add(lblTimKiemSP_1);
 		
-		txtTimKiem_1 = new JTextField();
-		txtTimKiem_1.setColumns(10);
-		txtTimKiem_1.setBounds(441, 91, 231, 24);
-		pnlChucNang_1.add(txtTimKiem_1);
+		txtTimKiemVPP = new JTextField();
+		txtTimKiemVPP.setColumns(10);
+		txtTimKiemVPP.setBounds(441, 91, 231, 24);
+		pnlChucNang_1.add(txtTimKiemVPP);
 		
-		JButton btnTimKiem_1 = new JButton("");
-		btnTimKiem_1.setBounds(698, 59, 68, 56);
-		pnlChucNang_1.add(btnTimKiem_1);
+		btnTimKiemVPP = new JButton("");
+		btnTimKiemVPP.setBounds(698, 59, 68, 56);
+		pnlChucNang_1.add(btnTimKiemVPP);
 		Image img_iconTimKiem_1 = new ImageIcon(this.getClass().getResource("/find.png")).getImage();
-		btnTimKiem_1.setIcon(new ImageIcon(img_iconTimKiem_1));
+		btnTimKiemVPP.setIcon(new ImageIcon(img_iconTimKiem_1));
 		
 		
 		JPanel pnlDsSP_1 = new JPanel();
@@ -632,97 +691,252 @@ public class pnlSanPham extends JPanel implements ActionListener {
 				tblVanPhongPham.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 				scrollPane_1.setViewportView(tblVanPhongPham);
 				
+		napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
+		napDuLieuVPPTuCSDL(vpPham_dao.getAllVPP("VPP"));
+		napComboBoxMaKeHang(keHang_dao.getAllKeHang());
+		napComboBoxMaDanhMuc(danhMuc_dao.getAllDanhMuc());
+		napComboBoxMaNhaCungCap(nhaCungCap_dao.getAllNhaCungCap());
+		napComboBoxMaKhuyenMai(khuyenMai_dao.getKhuyenMaiTheoDoiTuongApDung("Sản phẩm"));
 				
 				
-		loadDataSach(sach_dao.getAllSanPhamSach());	
-		loadDataVPPham(vpPham_dao.getAllSanPhamVanPhong());
-				
-		btnThem.addActionListener(this);
-		btnThem_2.addActionListener(this);
-		btnLamMoi.addActionListener(this);
-		btnLamMoi_1.addActionListener(this);
-		btnLamMoi_1.addActionListener(this);
-		btnCapNhat.addActionListener(this);
-		btnCapNhat_1.addActionListener(this);
-		btnTimKiemSP.addActionListener(this);
-		btnTimKiem_1.addActionListener(this);
+		
+		btnThemSach.addActionListener(this);
+		btnThemVPP.addActionListener(this);
+		btnLamMoiSach.addActionListener(this);
+		btnLamMoiVPP.addActionListener(this);
+		btnCapNhatSach.addActionListener(this);
+		btnCapNhatVPP.addActionListener(this);
+		btnTimKiemSach.addActionListener(this);
+		btnTimKiemVPP.addActionListener(this);
+	}
+	
+	public void napDuLieuSachTuCSDL(ArrayList<Sach> ds) {
+		DefaultTableModel dm = (DefaultTableModel) tblSach.getModel();
+		dm.getDataVector().removeAllElements();
+		for (Sach s : ds) {
+			modelSach.addRow(new Object[] {s.getMaSP(),s.getTenSP(),s.getGiaMua(),s.getSoLuong(),s.getGiaBan(),s.getNhaXB(),s.getTacGia(),s.getNamXB(),s.getSoTrang(),s.getThueVAT(),s.getDanhMuc().getMaDanhMuc(),s.getKeHang().getMaKeHang(),s.getKhuyenMai().getMaKhuyenMai(),s.getNhaCungCap().getMaNhaCungCap(),s.getTinhTrang()});
+		}
+	}
+	
+	public void napDuLieuVPPTuCSDL(ArrayList<VanPhongPham> ds) {
+		DefaultTableModel dm = (DefaultTableModel) tblVanPhongPham.getModel();
+		dm.getDataVector().removeAllElements();
+		for (VanPhongPham v : ds) {
+			modelVPPham.addRow(new Object[] {v.getMaSP(),v.getTenSP(),v.getGiaMua(),v.getSoLuong(),v.getGiaBan(),v.getThuongHieu(),v.getXuatXu(),v.getMauSac(),v.getChatLieu(),v.getThueVAT(),v.getDanhMuc().getMaDanhMuc(),v.getKeHang().getMaKeHang(),v.getKhuyenMai().getMaKhuyenMai(),v.getNhaCungCap().getMaNhaCungCap(),v.getTinhTrang()});
+		}
+	}
+	
+	public void napComboBoxMaKeHang(ArrayList<KeHang> ds) {
+		int n = ds.size();
+		String items[] = new String[n];
+		int i = 0;
+		for (KeHang kh : ds) {
+			items[i] = kh.getMaKeHang() + "";
+			i++;
+		}
+		cbMaKeHangSach.setModel(new DefaultComboBoxModel<String>(items));
+		cbMaKeHangVPP.setModel(new DefaultComboBoxModel<String>(items));
+	}
+	public void napComboBoxMaDanhMuc(ArrayList<DanhMuc> ds) {
+		int n = ds.size();
+		String items[] = new String[n];
+		int i = 0;
+		for (DanhMuc danhMuc : ds) {
+			items[i] = danhMuc.getMaDanhMuc() + "";
+			i++;
+		}
+		cbMaDanhMucSach.setModel(new DefaultComboBoxModel<String>(items));
+		cbMaDanhMucVPP.setModel(new DefaultComboBoxModel<String>(items));
+	}
+	
+	public void napComboBoxMaNhaCungCap(ArrayList<NhaCungCap> ds) {
+		int n = ds.size();
+		String items[] = new String[n];
+		int i = 0;
+		for (NhaCungCap ncc : ds) {
+			items[i] = ncc.getMaNhaCungCap() + "";
+			i++;
+		}
+		cbMaNhaCungCapSach.setModel(new DefaultComboBoxModel<String>(items));
+		cbMaDanhMucVPP.setModel(new DefaultComboBoxModel<String>(items));
+	}
+	
+	public void napComboBoxMaKhuyenMai(ArrayList<KhuyenMai> ds) {
+		int n = ds.size();
+		String items[] = new String[n+1];
+		items[0] = " ";
+	    int i = 1;
+		for (KhuyenMai km : ds) {
+			items[i] = km.getMaKhuyenMai() + "";
+			i++;
+		}
+		cbMaKhuyenMaiSach.setModel(new DefaultComboBoxModel<String>(items));
+		cbMaKhuyenMaiVPP.setModel(new DefaultComboBoxModel<String>(items));
 	}
 	
 	
-	private void XoaTrangSach() {
-		txtMaSP.setText("");
-		txtTenSP.setText("");
-		txtGiaMua.setText("");
-		txtGiaBan.setText("");
-		txtSoLuong.setText("");
+	private void xoaTrangSach() {
+		txtMaSach.setText("");
+		txtTenSach.setText("");
+		txtGiaMuaSach.setText("");
+		txtSoLuongSach.setText("");
+		txtGiaBanSach.setText("");
 		txtNhaXuatBan.setText("");
 		txtTacGia.setText("");
 		txtNamXB.setText("");
 		txtSoTrang.setText("");
-		cbMaDanhMuc.setSelectedIndex(0);
-		cbMaKeHang.setSelectedIndex(0);
-		cbMaKhuyenMai.setSelectedIndex(0);
-		cbTinhTrang.setSelectedIndex(0);
+		txtThueVATSach.setText("");
+		cbMaDanhMucSach.setSelectedIndex(0);
+		cbMaKeHangSach.setSelectedIndex(0);
+		cbMaKhuyenMaiSach.setSelectedIndex(0);
+		cbMaNhaCungCapSach.setSelectedIndex(0);
+		cbTinhTrangSach.setSelectedIndex(0);
+		txtTenSach.requestFocus();
 	}
 	
-	//hàm load dữ liệu lên tab sách
-	public void loadDataSach(ArrayList<Sach> ds) {
-		DefaultTableModel dm = (DefaultTableModel) tblSach.getModel();
-		dm.getDataVector().removeAllElements();
-		for (Sach s : ds) {
-			modelSach.addRow(new Object[] {
-		            getValueOrDefault(s.getMaSP(), "x"),
-		            getValueOrDefault(s.getTenSP(), "x"),
-		            getValueOrDefault(s.getGiaMua(), "x"),
-		            getValueOrDefault(s.getSoLuong(), "x"),
-		            getValueOrDefault(s.getGiaBan(), "x"),
-		            getValueOrDefault(s.getNhaXB(), "x"),
-		            getValueOrDefault(s.getTacGia(), "x"),
-		            getValueOrDefault(s.getNamXB(), "x"),
-		            getValueOrDefault(s.getSoTrang(), "x"),
-		            getValueOrDefault(s.getThueVAT(), "x"),
-		            getValueOrDefault(s.getMaDanhMuc().getMaDanhMuc(), "x"),
-		            getValueOrDefault(s.getMaKeHang().getMaKeHang(), "x"),
-		            getValueOrDefault(s.getMaKhuyenMai().getMaKhuyenMai(), "x"),
-		            getValueOrDefault(s.getMaNhaCungCap().getMaNhaCungCap(), "x"),
-		            getValueOrDefault(s.getTinhTrang(), "x")
-		        });
+	private boolean validDateSach() {
+		return true;
+	}
+	
+	private String phatSinhMaSach() {
+		String prefix = "S";
+    	return prefix + String.format("%04d", modelSach.getRowCount()+ 1);
+	}
+	
+	private Sach revertSachFromFields() {
+		String maSach = "";
+		String tenSach= txtTenSach.getText().trim();
+		float giaMua = Float.parseFloat(txtGiaMuaSach.getText().trim());
+		int soLuong = Integer.parseInt(txtSoLuongSach.getText().trim());
+		float giaBan = Float.parseFloat(txtGiaBanSach.getText().trim());
+		String nhaXuatBan= txtNhaXuatBan.getText().trim();
+		String tacGia= txtTacGia.getText().trim();
+		int namXuatBan = Integer.parseInt(txtNamXB.getText().trim());
+		int soTrang = Integer.parseInt(txtSoTrang.getText().trim());
+		float thueVAT = Float.parseFloat(txtThueVATSach.getText().trim());
+		DanhMuc dm = new DanhMuc( (String) cbMaDanhMucSach.getSelectedItem());
+		KeHang km = new KeHang( (String) cbMaKeHangSach.getSelectedItem());
+		String maKhuyenMai = (String) cbMaKhuyenMaiSach.getSelectedItem();
+		KhuyenMai khuyenMai;
+	    if (maKhuyenMai.isEmpty()) {
+	        khuyenMai = null;  
+	    } else {
+	        khuyenMai = new KhuyenMai(maKhuyenMai);
+	    }
+		khuyenMai= new KhuyenMai( maKhuyenMai);
+		NhaCungCap ncc = new NhaCungCap( (String) cbMaNhaCungCapSach.getSelectedItem());
+		String tinhTrang = (String) cbTinhTrangSach.getSelectedItem();
+		maSach = phatSinhMaSach();
+		Sach s = new Sach(maSach, tenSach, giaMua, soLuong, giaBan, thueVAT, dm, km, khuyenMai, ncc, tinhTrang, tacGia, nhaXuatBan, namXuatBan, soTrang);
+		return s;
+	}
+	
+	private void updateSach() {
+		int r = tblSach.getSelectedRow();
+		if (r == -1) {
+			JOptionPane.showMessageDialog(null, "Bạn chưa chọn dòng để cập nhật thông tin");
+		} else {
+			if (validDateSach()) {
+					String maSach = txtMaSach.getText().trim();
+					String tenSach= txtTenSach.getText().trim();
+					float giaMua = Float.parseFloat(txtGiaMuaSach.getText().trim());
+					int soLuong = Integer.parseInt(txtSoLuongSach.getText().trim());
+					float giaBan = Float.parseFloat(txtGiaBanSach.getText().trim());
+					String nhaXuatBan= txtNhaXuatBan.getText().trim();
+					String tacGia= txtTacGia.getText().trim();
+					int namXuatBan = Integer.parseInt(txtNamXB.getText().trim());
+					int soTrang = Integer.parseInt(txtSoTrang.getText().trim());
+					float thueVAT = Float.parseFloat(txtThueVATSach.getText().trim());
+					DanhMuc dm = new DanhMuc( (String) cbMaDanhMucSach.getSelectedItem());
+					KeHang km = new KeHang( (String) cbMaKeHangSach.getSelectedItem());
+					KhuyenMai khuyenMai = new KhuyenMai( (String) cbMaKhuyenMaiSach.getSelectedItem());
+					NhaCungCap ncc = new NhaCungCap( (String) cbMaNhaCungCapSach.getSelectedItem());
+					String tinhTrang = (String) cbTinhTrangSach.getSelectedItem();
+					Sach newSach = new Sach(maSach, tenSach, giaMua, soLuong, giaBan, thueVAT, dm, km, khuyenMai, ncc, tinhTrang, tacGia, nhaXuatBan, namXuatBan, soTrang);
+				if (!sach_dao.capnhatSach(newSach)) {
+					System.out.println(newSach);
+					JOptionPane.showMessageDialog(this, "Lỗi không thể cập nhật");
+					tblSach.clearSelection();
+				} else {
+					
+					JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+				}
+			}
 		}
 	}
+	
+	public void fillForm(int r) {
+		txtMaSach.setText(tblSach.getValueAt(r, 0).toString());
+		txtTenSach.setText(tblSach.getValueAt(r, 1).toString());
+		txtGiaMuaSach.setText(tblSach.getValueAt(r, 2).toString());
+		txtSoLuongSach.setText(tblSach.getValueAt(r, 3).toString());
+		txtGiaBanSach.setText(tblSach.getValueAt(r, 4).toString());
+		txtNhaXuatBan.setText(tblSach.getValueAt(r, 5).toString());
+		txtTacGia.setText(tblSach.getValueAt(r, 6).toString());
+		txtNamXB.setText(tblSach.getValueAt(r, 7).toString());
+		txtSoTrang.setText(tblSach.getValueAt(r, 8).toString());
+		txtThueVATSach.setText(tblSach.getValueAt(r, 9).toString());
+		cbMaDanhMucSach.setSelectedItem(tblSach.getValueAt(r, 10).toString());
+		cbMaKeHangSach.setSelectedItem(tblSach.getValueAt(r, 11).toString());
+		// Check for null before calling toString()
+	    Object maKMObject = tblSach.getValueAt(r, 12);
+	    String maKM = (maKMObject != null) ? maKMObject.toString() : "";
 
-	//hàm lấy giá trị mặc định nếu là null
-	private Object getValueOrDefault(Object value, Object defaultValue) {
-	    return (value != null) ? value : defaultValue;
+	    if (maKM.isEmpty()) {
+	        cbMaKhuyenMaiSach.setSelectedItem("KM001");
+	    } else {
+	        cbMaKhuyenMaiSach.setSelectedItem(maKM);
+	    }
+		cbMaNhaCungCapSach.setSelectedItem(tblSach.getValueAt(r, 13).toString());
+		cbTinhTrangSach.setSelectedItem(tblSach.getValueAt(r, 14).toString());
 	}
 	
-	//hàm load dữ liệu lên tab văn phòng phẩm
-	public void loadDataVPPham(ArrayList<VanPhongPham> ds) {
-		DefaultTableModel dm = (DefaultTableModel) tblVanPhongPham.getModel();
-		dm.getDataVector().removeAllElements();
-		for (VanPhongPham vpp : ds) {
-			modelVPPham.addRow(new Object[] {
-		            getValueOrDefault(vpp.getMaSP(), "x"),
-		            getValueOrDefault(vpp.getTenSP(), "x"),
-		            getValueOrDefault(vpp.getGiaMua(), "x"),
-		            getValueOrDefault(vpp.getSoLuong(), "x"),
-		            getValueOrDefault(vpp.getGiaBan(), "x"),
-		            getValueOrDefault(vpp.getThuongHieu(), "x"),
-		            getValueOrDefault(vpp.getXuatXu(), "x"),
-		            getValueOrDefault(vpp.getMauSac(), "x"),
-		            getValueOrDefault(vpp.getChatLieu(), "x"),
-		            getValueOrDefault(vpp.getThueVAT(), "x"),
-		            getValueOrDefault(vpp.getMaDanhMuc().getMaDanhMuc(), "x"),
-		            getValueOrDefault(vpp.getMaKeHang().getMaKeHang(), "x"),
-		            getValueOrDefault(vpp.getMaKhuyenMai().getMaKhuyenMai(), "x"),
-		            getValueOrDefault(vpp.getMaNhaCungCap().getMaNhaCungCap(), "x"),
-		            getValueOrDefault(vpp.getTinhTrang(), "x")
-		        });
+	public void timSachTheoTen() {
+		String ten = txtTimKiemSach.getText().trim();
+
+		if (ten.isEmpty() || ten.trim() == "") {
+			napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
+			xoaTrangSach();
+		} else {
+			ArrayList<Sach> sachList = sach_dao.getListSachTheoTen(ten);
+			if (sachList.size() > 0) {
+				napDuLieuSachTuCSDL(sachList);
+				xoaTrangSach();
+			} else {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy!");
+			}
 		}
 	}
+	
+	
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o = e.getSource();
+		if(o.equals(btnThemSach)) {
+			if (validDateSach()) {
+				Sach s = revertSachFromFields();
+				if (!sach_dao.themSach(s)) {
+					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
+				} else {
+					napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
+					tblSach.clearSelection();
+//					txtMessage.setText("");
+				}
+			}	
+		}else if(o.equals(btnCapNhatSach)) {
+			updateSach();
+			napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
+			tblSach.clearSelection();
+		}else if(o.equals(btnLamMoiSach)) {
+			xoaTrangSach();
+			napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
+			tblSach.clearSelection();
+		}else if(o.equals(btnTimKiemSach)) {
+			timSachTheoTen();
+		}
+	
+	
 	}
 }
