@@ -13,6 +13,7 @@ import java.util.Date;
 import connectDB.ConnectDB;
 import entity.HoaDonBan;
 import entity.KhachHang;
+import entity.KhuyenMai;
 import entity.NhanVien;
 
 public class Dao_HoaDonBan {
@@ -35,12 +36,11 @@ public class Dao_HoaDonBan {
 				String maNV = rs.getString("MANHANVIEN");
 				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
 				String trangThai = rs.getString("TRANGTHAI");
-				float tienKhachDua = rs.getFloat("TIENKHACHDUA");
-				float vat = rs.getFloat("THUEVAT");
-				float tienThua = rs.getFloat("TIENTHUA");
+				String maKM = rs.getString("MAKHUYENMAI");
 				KhachHang kh = new KhachHang(maKH);
 				NhanVien nv = new NhanVien(maNV);
-				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, ngay, trangThai, vat, tienKhachDua, tongThanhTien, tienThua); 
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
 				dsHD.add(hd);
 			}
 		} catch (Exception e) {
@@ -56,19 +56,16 @@ public class Dao_HoaDonBan {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "insert into HOADONBAN values(?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into HOADONBAN values(?,?,?,?,?,?,?)";
 			stmt = con.prepareStatement(sql);
 			//stmt = con.prepareStatement("insert into HOADONBAN values(?,?,?,?,?,?,?,?,?)");
 			stmt.setString(1, hd.getMaHDBan());
 			stmt.setString(2, hd.getMaNV().getMaNhanVien());
 			stmt.setString(3, hd.getMaKH().getMaKhachhang());
-			
-			stmt.setDate(4, (java.sql.Date) hd.getNgayGD());
-			stmt.setString(5, hd.getTrangThai());
-			stmt.setFloat(6, hd.getThueVAT());
-			stmt.setFloat(7, hd.getTienKhachDua());
-			stmt.setFloat(8, hd.getTongThanhTien());
-			stmt.setFloat(9, hd.getTienThua());
+			stmt.setString(4, hd.getMaKM().getMaKhuyenMai());
+			stmt.setDate(5, (java.sql.Date) hd.getNgayGD());
+			stmt.setString(6, hd.getTrangThai());
+			stmt.setFloat(7, hd.getTongThanhTien());
 			n = stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,12 +149,11 @@ public class Dao_HoaDonBan {
 				String maNV = rs.getString("MANHANVIEN");
 				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
 				String trangThai = rs.getString("TRANGTHAI");
-				float tienKhachDua = rs.getFloat("TIENKHACHDUA");
-				float vat = rs.getFloat("THUEVAT");
-				float tienThua = rs.getFloat("TIENTHUA");
+				String maKM = rs.getString("MAKHUYENMAI");
 				KhachHang kh = new KhachHang(maKH);
 				NhanVien nv = new NhanVien(maNV);
-				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, ngay, trangThai, vat, tienKhachDua, tongThanhTien, tienThua); 
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
 				dsHD.add(hd);
 			}
 		} catch (SQLException e) {

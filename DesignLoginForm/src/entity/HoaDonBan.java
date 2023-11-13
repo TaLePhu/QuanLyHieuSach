@@ -7,26 +7,24 @@ public class HoaDonBan {
 	private String maHDBan;
 	private NhanVien maNV;
 	private KhachHang maKH;
+	private KhuyenMai maKM;
 	private Date ngayGD;
 	private String trangThai;
-	private float thueVAT;
-	private float tienKhachDua;
 	private float tongThanhTien;
-	private float tienThua;
 
-	public HoaDonBan(String maHDBan, NhanVien maNV, KhachHang maKH, Date ngayGD, String trangThai, float thueVAT,
-			float tienKhachDua, float tongThanhTien, float tienThua) {
+	
+	public HoaDonBan(String maHDBan, NhanVien maNV, KhachHang maKH, KhuyenMai maKM, Date ngayGD, String trangThai,
+			float tongThanhTien) {
 		super();
 		this.maHDBan = maHDBan;
 		this.maNV = maNV;
 		this.maKH = maKH;
+		this.maKM = maKM;
 		this.ngayGD = ngayGD;
 		this.trangThai = trangThai;
-		this.thueVAT = thueVAT;
-		this.tienKhachDua = tienKhachDua;
 		this.tongThanhTien = tongThanhTien;
-		this.tienThua = tienThua;
 	}
+
 	public HoaDonBan() {
 		// TODO Auto-generated constructor stub
 	}	
@@ -35,6 +33,8 @@ public class HoaDonBan {
 		super();
 		this.maHDBan = maHDBan;
 	}
+
+	
 
 	public String getMaHDBan() {
 		return maHDBan;
@@ -60,6 +60,14 @@ public class HoaDonBan {
 		this.maKH = maKH;
 	}
 
+	public KhuyenMai getMaKM() {
+		return maKM;
+	}
+
+	public void setMaKM(KhuyenMai maKM) {
+		this.maKM = maKM;
+	}
+
 	public Date getNgayGD() {
 		return ngayGD;
 	}
@@ -76,36 +84,12 @@ public class HoaDonBan {
 		this.trangThai = trangThai;
 	}
 
-	public float getThueVAT() {
-		return thueVAT;
-	}
-
-	public void setThueVAT(float thueVAT) {
-		this.thueVAT = thueVAT;
-	}
-
-	public float getTienKhachDua() {
-		return tienKhachDua;
-	}
-
-	public void setTienKhachDua(float tienKhachDua) {
-		this.tienKhachDua = tienKhachDua;
-	}
-
 	public float getTongThanhTien() {
 		return tongThanhTien;
 	}
 
 	public void setTongThanhTien(float tongThanhTien) {
 		this.tongThanhTien = tongThanhTien;
-	}
-
-	public float getTienThua() {
-		return tienThua;
-	}
-
-	public void setTienThua(float tienThua) {
-		this.tienThua = tienThua;
 	}
 
 	@Override
@@ -127,9 +111,10 @@ public class HoaDonBan {
 
 	@Override
 	public String toString() {
-		return "HoaDonBan [maHDBan=" + maHDBan + ", maNV=" + maNV + ", maKH=" + maKH + ", ngayGD=" + ngayGD
-				+ ", trangThai=" + trangThai + ", thueVAT=" + thueVAT + ", tienKhachDua=" + tienKhachDua
-				+ ", tongThanhTien=" + tongThanhTien + ", tienThua=" + tienThua + "]";
+		return "HoaDonBan [maHDBan=" + maHDBan + ", maNV=" + maNV + ", maKH=" + maKH + ", maKM=" + maKM + ", ngayGD="
+				+ ngayGD + ", trangThai=" + trangThai + ", tongThanhTien=" + tongThanhTien + "]";
 	}
+
+	
 
 }
