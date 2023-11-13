@@ -178,7 +178,8 @@ VALUES
     ('KM003', N'Khuyến mãi nhân ngày Sách thế giới', 20, '2023-04-23', '2023-04-23', N'Hóa đơn', N'Sắp diễn ra'),
 	('KM004', N'Khuyến mãi 20%', 20, NULL, NULL, N'Sản phẩm', N'Đang diễn ra'),
 	('KM005', N'Khuyến mãi 10%', 10, NULL, NULL, N'Sản phẩm', N'Đang diễn ra'),
-	('KM006', N'Khuyến mãi 5%', 5, NULL, NULL, N'Sản phẩm', N'Đang diễn ra');
+	('KM006', N'Khuyến mãi 5%', 5, NULL, NULL, N'Sản phẩm', N'Đang diễn ra'),
+	('KM007', N'Khuyến mãi 5%', 5, NULL, NULL, N'Hóa đơn', N'Đang diễn ra');
 
 INSERT INTO DANHMUC (MADANHMUC, TENDANHMUC)
 VALUES
