@@ -117,7 +117,7 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
 		txtMessage = new JTextField();
 		txtMessage.setToolTipText("");
 		txtMessage.setForeground(Color.RED);
-		txtMessage.setFont(new Font("Arial", Font.ITALIC, 10));
+		txtMessage.setFont(new Font("Arial", Font.ITALIC, 14));
 		txtMessage.setEditable(false);
 		txtMessage.setColumns(10);
 		txtMessage.setBorder(null);
@@ -380,6 +380,7 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
 				if (!khuyenMai_dao.them(km)) {
 					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
 				} else {
+					JOptionPane.showMessageDialog(this, "Thêm mới khuyến mãi thành công.");
 					napDuLieuTuCSDL(khuyenMai_dao.getAllKhuyenMai());
 					tblKhuyenMai.clearSelection();
 					txtMessage.setText("");
@@ -389,11 +390,13 @@ public class pnlKhuyenMai extends JPanel implements ActionListener{
 			update();
 	        napDuLieuTuCSDL(khuyenMai_dao.getAllKhuyenMai());
 	        tblKhuyenMai.clearSelection();
+	        txtMessage.setText("");
 			
 		}else if(o.equals(btnTaoMoi)) {
 			xoaTrang();
 	        napDuLieuTuCSDL(khuyenMai_dao.getAllKhuyenMai());
 	        tblKhuyenMai.clearSelection();
+	        txtMessage.setText("");
 			
 		}else if(o.equals(btnTim)) {
 			timKMTheoTen();

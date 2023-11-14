@@ -630,6 +630,7 @@ public class FrameDashBoard extends JFrame implements ActionListener{
 		if (o.equals(btnDangXuat)) {
 			if (JOptionPane.showConfirmDialog(this, "Đăng xuất?", "Cảnh báo",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				taiKhoanLogin = null;
 				setVisible(false);
 				new FrameLogin().setVisible(true);
 			}

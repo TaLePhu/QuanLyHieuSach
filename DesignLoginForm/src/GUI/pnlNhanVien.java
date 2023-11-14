@@ -203,7 +203,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		
 		txtMessage = new JTextField();
 		txtMessage.setToolTipText("");
-		txtMessage.setFont(new Font("Arial", Font.ITALIC, 10));
+		txtMessage.setFont(new Font("Arial", Font.ITALIC, 14));
 		txtMessage.setBackground(new Color(240, 240, 240));
 		txtMessage.setText("");
 		txtMessage.setForeground(new Color(255, 0, 0));
@@ -343,7 +343,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		txtMessageTK.setToolTipText("");
 		txtMessageTK.setText("");
 		txtMessageTK.setForeground(Color.RED);
-		txtMessageTK.setFont(new Font("Arial", Font.ITALIC, 10));
+		txtMessageTK.setFont(new Font("Arial", Font.ITALIC, 14));
 		txtMessageTK.setColumns(10);
 		txtMessageTK.setBackground(UIManager.getColor("Button.background"));
 		txtMessageTK.setBounds(24, 107, 1094, 19);
@@ -710,6 +710,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 				if (!nhanVien_dao.them(nv)) {
 					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
 				} else {
+					JOptionPane.showMessageDialog(this, "Thêm nhân viên mới thành công.");
 					napDuLieuNhanVienTuCSDL(nhanVien_dao.getAllNhanVien());
 					tblNhanVien.clearSelection();
 					txtMessage.setText("");
@@ -718,11 +719,14 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		}else if(o.equals(btnCapNhat)) {
 			update();
 	        napDuLieuNhanVienTuCSDL(nhanVien_dao.getAllNhanVien());
+	        tblNhanVien.clearSelection();
+	        txtMessage.setText("");
 			
 		}else if(o.equals(btnTaoMoi)) {
 			xoaTrangNhanVien();
 	        napDuLieuNhanVienTuCSDL(nhanVien_dao.getAllNhanVien());
 	        tblNhanVien.clearSelection();
+	        txtMessage.setText("");
 			
 		}else if(o.equals(btnTim)) {
 			timTheoSDT();
@@ -739,8 +743,10 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 				if (!taiKhoan_dao.them(tk)) {
 					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
 				} else {
+					JOptionPane.showMessageDialog(this, "Thêm tài khoản mới thành công!");
 					napDuLieuTaiKhoanTuCSDL(taiKhoan_dao.getAllTaiKhoan());
 					tblTaiKhoan.clearSelection();
+					txtMessageTK.setText("");
 
 				}
 			}
@@ -748,6 +754,9 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 		}else if(o.equals(btnCapNhatTK)) {
 			try {
 				updateTaiKhoan();
+				napDuLieuTaiKhoanTuCSDL(taiKhoan_dao.getAllTaiKhoan());
+				tblTaiKhoan.clearSelection();
+				txtMessageTK.setText("");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -757,6 +766,8 @@ public class pnlNhanVien extends JPanel implements ActionListener{
 			xoaTrangTaiKhoan();
 	        napDuLieuTaiKhoanTuCSDL(taiKhoan_dao.getAllTaiKhoan());
 	        tblTaiKhoan.clearSelection();
+	        txtMessageTK.setText("");
+	        napComboBoxMaNhanVien(nhanVien_dao.getAllNhanVien());
 			
 		}else if(o.equals(btnTimTK)) {
 			String hoTen = txtTimTK.getText().trim();

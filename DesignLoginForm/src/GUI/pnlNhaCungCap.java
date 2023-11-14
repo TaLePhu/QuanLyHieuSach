@@ -130,7 +130,7 @@ public class pnlNhaCungCap extends JPanel implements ActionListener{
 		txtMessage = new JTextField();
 		txtMessage.setToolTipText("");
 		txtMessage.setForeground(Color.RED);
-		txtMessage.setFont(new Font("Arial", Font.ITALIC, 10));
+		txtMessage.setFont(new Font("Arial", Font.ITALIC, 14));
 		txtMessage.setColumns(10);
 		txtMessage.setBorder(null);
 		txtMessage.setEditable(false);
@@ -345,6 +345,7 @@ public class pnlNhaCungCap extends JPanel implements ActionListener{
 				if (!nhaCungCap_dao.them(ncc)) {
 					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
 				} else {
+					JOptionPane.showMessageDialog(this, "Thêm mới nhà cung cấp thành công");
 					napDuLieuTuCSDL(nhaCungCap_dao.getAllNhaCungCap());
 					tblNhaCungCap.clearSelection();
 					txtMessage.setText("");
@@ -359,6 +360,7 @@ public class pnlNhaCungCap extends JPanel implements ActionListener{
 			xoaTrang();
 	        napDuLieuTuCSDL(nhaCungCap_dao.getAllNhaCungCap());
 	        tblNhaCungCap.clearSelection();
+	        txtMessage.setText("");
 			
 		}else if(o.equals(btnTim)) {
 			timNCCTheoTen();
