@@ -530,7 +530,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnTimSP.setIcon(new ImageIcon("img/find16.png"));
 		btnTimTheoMaHD.setIcon(new ImageIcon("img/find16.png"));
 
-		lblNgayLap = new JLabel("Mã hóa đơn");
+		lblNgayLap = new JLabel("Tìm theo ngày");
 		lblNgayLap.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNgayLap.setBounds(560, 20, 100, 20);
 		pnlBorderDSHD.add(lblNgayLap);
@@ -599,6 +599,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnHuyHD.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 		btnInHD_DS.addActionListener(this);
+		btnTimTheoNgay.addActionListener(this);
 		table.addMouseListener(this);
 
 		//txtMaSP.getDocument().addDocumentListener(this);
@@ -1124,6 +1125,24 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				txtMaHD.setText(ma);
 			}
 		}
+		else if(o.equals(btnTimTheoMaHD)) {
+			String maTim = txtMaHD_T.getText();
+			if (maTim.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập mã hóa đơn muốn tìm");	
+
+			} 
+			else {
+				ArrayList<HoaDonBan> ds = dao_HoaDonBan.getHDTheoMa(maTim);
+				if (ds.size()==0) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+				}
+				else {
+					napDuLieuHDTuCSDL(ds);
+				}
+
+			}
+		}
+		
 
 	}
 

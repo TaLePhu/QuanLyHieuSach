@@ -234,4 +234,42 @@ public class Dao_HoaDonBan {
 		}
 		return n>0;
 	}
+	
+	public ArrayList<HoaDonBan> getHDTheoNgay(Timestamp ngay) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from HOADONBAN where NGAYGIAODICH = ?";
+			sta = con.prepareStatement(sql);
+			sta.setTimestamp(1, ngay);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maHD = rs.getString("MAHOADONBAN");
+				Timestamp ngayGD = rs.getTimestamp("NGAYGIAODICH");
+				String maKH = rs.getString("MAKHACHHANG");
+				String maNV = rs.getString("MANHANVIEN");
+				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
+				String trangThai = rs.getString("TRANGTHAI");
+				String maKM = rs.getString("MAKHUYENMAI");
+				KhachHang kh = new KhachHang(maKH);
+				NhanVien nv = new NhanVien(maNV);
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngayGD, trangThai, tongThanhTien); 
+				dsHD.add(hd);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsHD;
+	}
 }
