@@ -458,7 +458,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		JPanel pnlDSHD = new JPanel();
 		pnlDSHD.setLayout(null);
-		tabbedPane.addTab("Hóa đơn nhập", null, pnlDSHD, null);
+		tabbedPane.addTab("Danh sách hóa đơn", null, pnlDSHD, null);
 
 		JLabel lblMaHD_T = new JLabel("Mã hóa đơn");
 		lblMaHD_T.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -556,7 +556,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnXemChiTiet.setIcon(new ImageIcon("img/thanhToan.png"));
 
-		btnTaoMoi_N = new JButton("Tọa mới");
+		btnTaoMoi_N = new JButton("Tạo mới");
 		btnTaoMoi_N.setBounds(700, 100, 200, 60);
 		pnlBorderDSHD.add(btnTaoMoi_N);
 		btnTaoMoi_N.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -715,7 +715,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		else {
 			ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma);
 			if (ds.size()==0) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy mã khuyến mãi");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy mã sản phẩm");
 			}
 			else {
 				for (SanPham t : ds) {
@@ -735,7 +735,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		else {
 			ArrayList<KhachHang> ds = dao_KhachHang.getKHTheoSDT(sdt);
 			if (ds.size()==0) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy mã khuyến mãi");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy số điện thoại khách hàng");
 			}
 			else {
 				for (KhachHang t : ds) {
@@ -751,6 +751,15 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	//Kiểm tra tiền khách đưa: tiền nhập vào là số thực và lớn hơn 0
 	public boolean validDataTKD() {
 		String tienKD = txtTienKhachDua.getText().trim();
+		String maKH = txtMaKH.getText().trim();
+		if(model.getRowCount() ==0) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập sản phẩm khách hàng mua");
+			return false;
+		}
+		if(txtSDTKhachHang.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại để tìm thông tin khách hàng");
+			return false;
+		}
 		if(tienKD.length() > 0) {
 			try {
 				float x = Float.parseFloat(tienKD);
@@ -846,8 +855,79 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		}
 		else if(o.equals(btnThanhToan)) {
 			int r = tableHD.getSelectedRow();
-			if(modelHD.getValueAt(r,5).toString().equals("Tạm in") && !txtTienKhachDua.getText().isEmpty()) {
-				String tt = "Đã thanh toán";
+			if(r<0) {
+				if(validDataTKD()) {
+					phatsinhma();
+					String trangThai = "Đã thanh toán";
+					int soLuongTon = 0;
+					int soLuongConLai = 0; //sau khi thanh toán
+
+					float tienKD = Float.parseFloat(txtTienKhachDua.getText());
+					float tienTL = tienKD - tongThanhTien;
+					txtTienThua.setText(tienTL + "");
+					txtKhuyenMai.setText(km+"");
+
+					Date dateNgayLapHD = dcrNgayLap.getDate();
+					Timestamp sqlNgayLapHD = new Timestamp(dateNgayLapHD.getTime());
+
+					String maHD = txtMaHD.getText();
+					String maNV = txtMaNhanVien.getText();
+					NhanVien nv = new NhanVien(maNV);
+					String maKH = txtMaKH.getText();
+					KhachHang kh = new KhachHang(maKH);
+					HoaDonBan hd = new HoaDonBan(maHD, nv, kh, khuyenMai, sqlNgayLapHD, trangThai, tongThanhTien);
+					try {
+						if(!dao_HoaDonBan.createHoaDon(hd)) {
+							JOptionPane.showMessageDialog(this,"Trùng mã - Kiểm trả lại");
+						}else {
+							int flag = 0;
+							for(int i = 0; i < model.getRowCount();i++) {
+								String maSP = model.getValueAt(i, 1).toString();
+								//String soLB = model.getValueAt(i, 3).toString();
+								//String thanhTien = model.getValueAt(i, 6).toString();
+								int soL = Integer.parseInt(model.getValueAt(i, 3).toString());
+								float TT = Float.parseFloat(model.getValueAt(i, 6).toString());
+								SanPham sp = new SanPham(maSP);
+								ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
+								for (SanPham sanPham : ds) {
+									soLuongTon = sanPham.getSoLuong();
+								}
+								ChiTietHoaDonBan cthd = new ChiTietHoaDonBan(hd, sp, soL, TT);
+								if(!dao_ChiTietHoaDonBan.createCTHoaDon(cthd)) {
+									JOptionPane.showMessageDialog(this,"Lỗi lưu chi tiết hóa đơn");
+								}
+								else {
+
+								}
+								soLuongConLai = soLuongTon - soL;
+								if(!dao_SanPham.update(maSP,soLuongConLai)) {
+									JOptionPane.showMessageDialog(this,"Cập nhật số lượng thất bại");
+								}
+								else {
+								}
+								flag = 1;
+
+							}
+							if(flag == 1) {
+								JOptionPane.showMessageDialog(this,"Thanh toán thành công");
+								
+							}else {
+								JOptionPane.showMessageDialog(this,"Thanh toán thất bại");
+								
+							}
+
+						}
+
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return;
+			}
+			String ttt = modelHD.getValueAt(r, 5).toString(); 
+			if("Tạm in".equals(ttt)) {
+				//String tt = "Đã thanh toán";
 				String ma = txtMaHD.getText();
 				float tienKD = Float.parseFloat(txtTienKhachDua.getText());
 				float tienTL = tienKD - tongThanhTien;
@@ -858,73 +938,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				}else {
 					JOptionPane.showMessageDialog(this,"Thanh toán hóa đơn tạm thất bại");
 				}
-				return;
-			}
-			phatsinhma();
-			if(validDataTKD()) {
-				String trangThai = "Đã thanh toán";
-				int soLuongTon = 0;
-				int soLuongConLai = 0; //sau khi thanh toán
-
-				float tienKD = Float.parseFloat(txtTienKhachDua.getText());
-				float tienTL = tienKD - tongThanhTien;
-				txtTienThua.setText(tienTL + "");
-				txtKhuyenMai.setText(km+"");
-
-				Date dateNgayLapHD = dcrNgayLap.getDate();
-				Timestamp sqlNgayLapHD = new Timestamp(dateNgayLapHD.getTime());
-
-				String maHD = txtMaHD.getText();
-				String maNV = txtMaNhanVien.getText();
-				NhanVien nv = new NhanVien(maNV);
-				String maKH = txtMaKH.getText();
-				KhachHang kh = new KhachHang(maKH);
-				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, khuyenMai, sqlNgayLapHD, trangThai, tongThanhTien);
-				try {
-					if(!dao_HoaDonBan.createHoaDon(hd)) {
-						JOptionPane.showMessageDialog(this,"Trùng mã - Kiểm trả lại");
-					}else {
-						int flag = 0;
-						for(int i = 0; i < model.getRowCount();i++) {
-							String maSP = model.getValueAt(i, 1).toString();
-							//String soLB = model.getValueAt(i, 3).toString();
-							//String thanhTien = model.getValueAt(i, 6).toString();
-							int soL = Integer.parseInt(model.getValueAt(i, 3).toString());
-							float TT = Float.parseFloat(model.getValueAt(i, 6).toString());
-							SanPham sp = new SanPham(maSP);
-							ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
-							for (SanPham sanPham : ds) {
-								soLuongTon = sanPham.getSoLuong();
-							}
-							ChiTietHoaDonBan cthd = new ChiTietHoaDonBan(hd, sp, soL, TT);
-							if(!dao_ChiTietHoaDonBan.createCTHoaDon(cthd)) {
-								JOptionPane.showMessageDialog(this,"Lỗi lưu chi tiết hóa đơn");
-							}
-							else {
-
-							}
-							soLuongConLai = soLuongTon - soL;
-							if(!dao_SanPham.update(maSP,soLuongConLai)) {
-								JOptionPane.showMessageDialog(this,"Cập nhật số lượng thất bại");
-							}
-							else {
-							}
-							flag = 1;
-
-						}
-						if(flag == 1) {
-							JOptionPane.showMessageDialog(this,"Thanh toán thành công");
-						}else {
-							JOptionPane.showMessageDialog(this,"Thanh toán thất bại");
-						}
-
-					}
-
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+				
 			}
 		}
 		else if(o.equals(btnThemSP)) {
@@ -935,7 +949,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				int soL = Integer.parseInt(soLuong);
 				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma);
 				for (SanPham sp : ds) {
-					thanhTien = (float) (sp.getGiaBan()*soL + sp.getGiaBan()*soL*sp.getThueVAT());
+					thanhTien = (float) (sp.getGiaBan()*soL);
 					tongThanhTien += thanhTien;
 					model.addRow(new Object[] {++stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),sp.getThueVAT(),thanhTien + ""});
 					txtTongTien.setText(tongThanhTien + "");
@@ -1003,7 +1017,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				int soL = Integer.parseInt(soLuong);
 				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma );
 				for (SanPham sp : ds) {
-					thanhTien = (float) (sp.getGiaBan()*soL + sp.getGiaBan()*soL*sp.getThueVAT());
+					thanhTien = (float) (sp.getGiaBan()*soL);
 					tongThanhTien = TTSX +thanhTien;
 					model.addRow(new Object[] {++stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),sp.getThueVAT(),thanhTien + ""});
 					txtTongTien.setText(tongThanhTien + "");
