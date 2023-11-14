@@ -11,6 +11,7 @@ import connectDB.ConnectDB;
 
 import entity.KhachHang;
 import entity.NhaCungCap;
+import entity.NhanVien;
 
 public class Dao_KhachHang {
 	// get all data on table
@@ -156,5 +157,40 @@ public class Dao_KhachHang {
 		}
 		return dsKH;
 	}
+	
+	
+	public KhachHang getTheoMaKH(String maKH) {
+		KhachHang kh = null;
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from KHACHHANG where MAKHACHHANG = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, maKH);
 
+			ResultSet rs = sta.executeQuery();
+			while (rs.next()) {
+				String ma = rs.getString("MAKHACHHANG");
+				String ten = rs.getString("HOTENKHACHHANG");
+
+				Date ngaySinh = rs.getDate("NGAYSINH");
+				String diaChi = rs.getString("DIACHI");
+				String soDT = rs.getString("SODIENTHOAI");
+				Boolean gioiTinh = rs.getBoolean("GIOITINH");
+				String email = rs.getString("EMAIL");
+				kh = new KhachHang(ma, ten, diaChi, ngaySinh, soDT, email, gioiTinh);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return kh;
+	}
 }

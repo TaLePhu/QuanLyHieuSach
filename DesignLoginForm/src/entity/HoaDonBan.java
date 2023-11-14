@@ -1,5 +1,6 @@
 package entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,12 +9,12 @@ public class HoaDonBan {
 	private NhanVien maNV;
 	private KhachHang maKH;
 	private KhuyenMai maKM;
-	private Date ngayGD;
+	private Timestamp ngayGD;
 	private String trangThai;
 	private float tongThanhTien;
 
 	
-	public HoaDonBan(String maHDBan, NhanVien maNV, KhachHang maKH, KhuyenMai maKM, Date ngayGD, String trangThai,
+	public HoaDonBan(String maHDBan, NhanVien maNV, KhachHang maKH, KhuyenMai maKM, Timestamp ngayGD, String trangThai,
 			float tongThanhTien) {
 		super();
 		this.maHDBan = maHDBan;
@@ -68,11 +69,13 @@ public class HoaDonBan {
 		this.maKM = maKM;
 	}
 
-	public Date getNgayGD() {
+	
+
+	public Timestamp getNgayGD() {
 		return ngayGD;
 	}
 
-	public void setNgayGD(Date ngayGD) {
+	public void setNgayGD(Timestamp ngayGD) {
 		this.ngayGD = ngayGD;
 	}
 

@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,7 +33,7 @@ public class Dao_HoaDonBan {
 			ResultSet rs = sta.executeQuery(sql);
 			while (rs.next()) {
 				String maHD = rs.getString("MAHOADONBAN");
-				Date ngay = rs.getDate("NGAYGIAODICH");
+				Timestamp ngay = rs.getTimestamp("NGAYGIAODICH");
 				String maKH = rs.getString("MAKHACHHANG");
 				String maNV = rs.getString("MANHANVIEN");
 				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
@@ -40,7 +42,7 @@ public class Dao_HoaDonBan {
 				KhachHang kh = new KhachHang(maKH);
 				NhanVien nv = new NhanVien(maNV);
 				KhuyenMai km = new KhuyenMai(maKM);
-				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien);
 				dsHD.add(hd);
 			}
 		} catch (Exception e) {
@@ -63,7 +65,9 @@ public class Dao_HoaDonBan {
 			stmt.setString(2, hd.getMaNV().getMaNhanVien());
 			stmt.setString(3, hd.getMaKH().getMaKhachhang());
 			stmt.setString(4, hd.getMaKM().getMaKhuyenMai());
-			stmt.setDate(5, (java.sql.Date) hd.getNgayGD());
+			LocalDateTime currentDateTime = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(currentDateTime);
+			stmt.setTimestamp(5, timestamp);
 			stmt.setString(6, hd.getTrangThai());
 			stmt.setFloat(7, hd.getTongThanhTien());
 			n = stmt.executeUpdate();
@@ -144,7 +148,7 @@ public class Dao_HoaDonBan {
 
 			while (rs.next()) {
 				String maHD = rs.getString("MAHOADONBAN");
-				Date ngay = rs.getDate("NGAYGIAODICH");
+				Timestamp ngay = rs.getTimestamp("NGAYGIAODICH");
 				String maKH = rs.getString("MAKHACHHANG");
 				String maNV = rs.getString("MANHANVIEN");
 				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
@@ -166,5 +170,68 @@ public class Dao_HoaDonBan {
 			}
 		}
 		return dsHD;
+	}
+	
+	// tìm hóa đơn theo mã
+	public ArrayList<HoaDonBan> getHDTheoMa(String ma) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from HOADONBAN where MAHOADONBAN = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1,ma);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maHD = rs.getString("MAHOADONBAN");
+				Timestamp ngay = rs.getTimestamp("NGAYGIAODICH");
+				String maKH = rs.getString("MAKHACHHANG");
+				String maNV = rs.getString("MANHANVIEN");
+				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
+				String trangThai = rs.getString("TRANGTHAI");
+				String maKM = rs.getString("MAKHUYENMAI");
+				KhachHang kh = new KhachHang(maKH);
+				NhanVien nv = new NhanVien(maNV);
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
+				dsHD.add(hd);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsHD;
+	}
+	
+	public boolean capNhat(String ma,String trangT) {
+		PreparedStatement sta = null;
+		int n=0;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "update HOADONBAN set TRANGTHAI = ? where MAHOADONBAN = ?";
+			sta = con.prepareStatement(sql);
+			
+			sta.setString(1, trangT);
+			sta.setString(2, ma);
+			n=sta.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n>0;
 	}
 }

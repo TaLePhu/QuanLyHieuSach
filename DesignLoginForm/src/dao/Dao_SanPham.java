@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import entity.KeHang;
 import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.NhaCungCap;
+import entity.NhanVien;
 import entity.SanPham;
 
 public class Dao_SanPham {
@@ -86,5 +88,48 @@ public class Dao_SanPham {
 			}
 		}
 		return n>0;
+	}
+	
+	public SanPham getTheoMa(String maSP) {
+		SanPham sp = null;
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from SANPHAM where MASANPHAM = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, maSP);
+
+			ResultSet rs = sta.executeQuery();
+			while (rs.next()) {
+				String maSanPham = rs.getString("MASANPHAM");
+				String tenSanPham = rs.getString("TENSANPHAM");
+				float giaMua = rs.getFloat("GIAMUA");
+				int soLuong = rs.getInt("SOLUONG");
+				float giaBan = rs.getFloat("GIABAN");
+				float thueVAT = rs.getFloat("THUEVAT");
+				String maDanhMuc = rs.getString("MADANHMUC");
+				String maKeHang = rs.getString("MAKEHANG");
+				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String maNhaCungCap = rs.getString("MANHACUNGCAP");
+				DanhMuc maDM = new DanhMuc(maDanhMuc);
+				KeHang maKH = new KeHang(maKeHang);
+				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
+				String tinhTrang = rs.getString("TINHTRANG");
+				
+				sp = new SanPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return sp;
 	}
 }
