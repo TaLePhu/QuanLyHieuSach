@@ -129,167 +129,167 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		JPanel pnlThongTin = new JPanel();
 		pnlThongTin.setBorder(new TitledBorder(null, "Th\u00F4ng tin:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlThongTin.setBounds(10, 10, 322, 716);
+		pnlThongTin.setBounds(10, 10, 262, 716);
 		pnlSach.add(pnlThongTin);
 		pnlThongTin.setLayout(null);
 		
 		JPanel pnlMaSP = new JPanel();
-		pnlMaSP.setBounds(10, 22, 302, 65);
+		pnlMaSP.setBounds(10, 22, 240, 65);
 		pnlThongTin.add(pnlMaSP);
 		pnlMaSP.setLayout(null);
 		
 		JLabel lblMaSP = new JLabel("Mã Sản Phẩm: ");
 		lblMaSP.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaSP.setBounds(90, 5, 128, 22);
+		lblMaSP.setBounds(10, 5, 128, 22);
 		pnlMaSP.add(lblMaSP);
 		
 		txtMaSach = new JTextField();
 		txtMaSach.setEnabled(false);
 		txtMaSach.setEditable(false);
-		txtMaSach.setBounds(10, 35, 282, 24);
+		txtMaSach.setBounds(10, 35, 220, 24);
 		pnlMaSP.add(txtMaSach);
 		txtMaSach.setColumns(10);
 		
 		JPanel pnlTenSach = new JPanel();
 		pnlTenSach.setLayout(null);
-		pnlTenSach.setBounds(10, 100, 302, 65);
+		pnlTenSach.setBounds(10, 100, 240, 65);
 		pnlThongTin.add(pnlTenSach);
 		
 		JLabel lblTenSP = new JLabel("Tên Sản Phẩm: ");
 		lblTenSP.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblTenSP.setBounds(88, 5, 139, 22);
+		lblTenSP.setBounds(10, 5, 139, 22);
 		pnlTenSach.add(lblTenSP);
 		
 		txtTenSach = new JTextField();
 		txtTenSach.setColumns(10);
-		txtTenSach.setBounds(10, 35, 282, 24);
+		txtTenSach.setBounds(10, 35, 220, 24);
 		pnlTenSach.add(txtTenSach);
 		
 		JPanel pnlGiaMua = new JPanel();
 		pnlGiaMua.setLayout(null);
-		pnlGiaMua.setBounds(10, 178, 302, 65);
+		pnlGiaMua.setBounds(10, 178, 240, 65);
 		pnlThongTin.add(pnlGiaMua);
 		
 		JLabel lblGiaMua = new JLabel("Giá Mua: ");
 		lblGiaMua.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblGiaMua.setBounds(110, 5, 87, 22);
+		lblGiaMua.setBounds(10, 5, 87, 22);
 		pnlGiaMua.add(lblGiaMua);
 		
 		txtGiaMuaSach = new JTextField();
 		txtGiaMuaSach.setColumns(10);
-		txtGiaMuaSach.setBounds(10, 35, 282, 24);
+		txtGiaMuaSach.setBounds(10, 35, 220, 24);
 		pnlGiaMua.add(txtGiaMuaSach);
 		
 		JPanel pnlGiaBan = new JPanel();
 		pnlGiaBan.setLayout(null);
-		pnlGiaBan.setBounds(10, 256, 302, 65);
+		pnlGiaBan.setBounds(10, 256, 240, 65);
 		pnlThongTin.add(pnlGiaBan);
 		
 		JLabel lblGiaBan = new JLabel("Giá Bán: ");
 		lblGiaBan.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblGiaBan.setBounds(111, 5, 87, 22);
+		lblGiaBan.setBounds(10, 5, 87, 22);
 		pnlGiaBan.add(lblGiaBan);
 		
 		txtGiaBanSach = new JTextField();
 		txtGiaBanSach.setEditable(false);
 		txtGiaBanSach.setColumns(10);
-		txtGiaBanSach.setBounds(10, 35, 282, 24);
+		txtGiaBanSach.setBounds(10, 35, 220, 24);
 		pnlGiaBan.add(txtGiaBanSach);
 		
 		JPanel pnlSoLuong = new JPanel();
 		pnlSoLuong.setLayout(null);
-		pnlSoLuong.setBounds(10, 334, 302, 65);
+		pnlSoLuong.setBounds(10, 334, 240, 65);
 		pnlThongTin.add(pnlSoLuong);
 		
 		JLabel lblSoLuong = new JLabel("Số Lượng: ");
 		lblSoLuong.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblSoLuong.setBounds(105, 5, 99, 22);
+		lblSoLuong.setBounds(10, 5, 99, 22);
 		pnlSoLuong.add(lblSoLuong);
 		
 		txtSoLuongSach = new JTextField();
 		txtSoLuongSach.setColumns(10);
-		txtSoLuongSach.setBounds(10, 35, 282, 24);
+		txtSoLuongSach.setBounds(10, 35, 220, 24);
 		pnlSoLuong.add(txtSoLuongSach);
 		
 		JPanel pnlTinhTrang = new JPanel();
 		pnlTinhTrang.setLayout(null);
-		pnlTinhTrang.setBounds(10, 412, 302, 65);
+		pnlTinhTrang.setBounds(10, 412, 240, 65);
 		pnlThongTin.add(pnlTinhTrang);
 		
 		JLabel lblTinhTrang = new JLabel("Tinh Trạng: ");
 		lblTinhTrang.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblTinhTrang.setBounds(103, 5, 99, 22);
+		lblTinhTrang.setBounds(10, 5, 99, 22);
 		pnlTinhTrang.add(lblTinhTrang);
 		
 		cbTinhTrangSach = new JComboBox();
 		cbTinhTrangSach.setModel(new DefaultComboBoxModel(new String[] {"Đang bán", "Ngưng bán"}));
-		cbTinhTrangSach.setBounds(10, 35, 282, 24);
+		cbTinhTrangSach.setBounds(10, 35, 220, 24);
 		pnlTinhTrang.add(cbTinhTrangSach);
 		
 		JPanel pnlMa_1 = new JPanel();
 		pnlMa_1.setLayout(null);
-		pnlMa_1.setBounds(10, 490, 302, 65);
+		pnlMa_1.setBounds(10, 490, 240, 65);
 		pnlThongTin.add(pnlMa_1);
 		
 		JLabel lblMaKeHang = new JLabel("Mã Kệ Hàng: ");
 		lblMaKeHang.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaKeHang.setBounds(28, 10, 116, 22);
+		lblMaKeHang.setBounds(10, 10, 116, 22);
 		pnlMa_1.add(lblMaKeHang);
 		
 		cbMaKeHangSach = new JComboBox();
-		cbMaKeHangSach.setBounds(10, 35, 138, 24);
+		cbMaKeHangSach.setBounds(10, 35, 100, 24);
 		pnlMa_1.add(cbMaKeHangSach);
 		
 		JLabel lblMaDanhMuc = new JLabel("Mã Danh Mục: ");
-		lblMaDanhMuc.setBounds(166, 10, 136, 22);
+		lblMaDanhMuc.setBounds(122, 10, 122, 22);
 		pnlMa_1.add(lblMaDanhMuc);
 		lblMaDanhMuc.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		cbMaDanhMucSach = new JComboBox();
-		cbMaDanhMucSach.setBounds(158, 35, 138, 24);
+		cbMaDanhMucSach.setBounds(130, 35, 100, 24);
 		pnlMa_1.add(cbMaDanhMucSach);
 		
 		JPanel pnlMa_2 = new JPanel();
 		pnlMa_2.setLayout(null);
-		pnlMa_2.setBounds(10, 568, 302, 65);
+		pnlMa_2.setBounds(10, 568, 240, 65);
 		pnlThongTin.add(pnlMa_2);
 		
 		JLabel lblMaKhuyenMai = new JLabel("Mã Khuyến Mãi: ");
-		lblMaKhuyenMai.setBounds(20, 10, 138, 22);
+		lblMaKhuyenMai.setBounds(5, 10, 134, 22);
 		pnlMa_2.add(lblMaKhuyenMai);
 		lblMaKhuyenMai.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		cbMaKhuyenMaiSach = new JComboBox<String>();
-		cbMaKhuyenMaiSach.setBounds(10, 35, 138, 24);
+		cbMaKhuyenMaiSach.setBounds(10, 35, 100, 24);
 		pnlMa_2.add(cbMaKhuyenMaiSach);
 		
 		JLabel lblmaNCC = new JLabel("Mã NCC: ");
 		lblmaNCC.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblmaNCC.setBounds(184, 10, 96, 22);
+		lblmaNCC.setBounds(140, 10, 96, 22);
 		pnlMa_2.add(lblmaNCC);
 		
 		cbMaNhaCungCapSach = new JComboBox<String>();
-		cbMaNhaCungCapSach.setBounds(158, 35, 138, 24);
+		cbMaNhaCungCapSach.setBounds(130, 35, 100, 24);
 		pnlMa_2.add(cbMaNhaCungCapSach);
 		
 		JPanel pnlThueVAT = new JPanel();
 		pnlThueVAT.setLayout(null);
-		pnlThueVAT.setBounds(10, 646, 302, 65);
+		pnlThueVAT.setBounds(10, 646, 240, 65);
 		pnlThongTin.add(pnlThueVAT);
 		
 		JLabel lblThueVAT = new JLabel("Thuế VAT: ");
 		lblThueVAT.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblThueVAT.setBounds(105, 10, 99, 22);
+		lblThueVAT.setBounds(10, 10, 99, 22);
 		pnlThueVAT.add(lblThueVAT);
 		
 		txtThueVATSach = new JTextField();
 		txtThueVATSach.setColumns(10);
-		txtThueVATSach.setBounds(10, 35, 282, 24);
+		txtThueVATSach.setBounds(10, 35, 220, 24);
 		pnlThueVAT.add(txtThueVATSach);
 		
 		JPanel pnlThongTinSach = new JPanel();
 		pnlThongTinSach.setBorder(new TitledBorder(null, "Th\u00F4ng tin S\u00E1ch: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlThongTinSach.setBounds(335, 10, 813, 147);
+		pnlThongTinSach.setBounds(275, 10, 875, 147);
 		pnlSach.add(pnlThongTinSach);
 		pnlThongTinSach.setLayout(null);
 		
@@ -352,7 +352,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setBorder(new TitledBorder(null, "Ch\u1EE9c N\u0103ng: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlChucNang.setBounds(335, 167, 813, 175);
+		pnlChucNang.setBounds(275, 167, 875, 175);
 		pnlSach.add(pnlChucNang);
 		pnlChucNang.setLayout(null);
 		
@@ -395,14 +395,14 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		JPanel pnlDsSP = new JPanel();
 		pnlDsSP.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EA3n ph\u1EA9m: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlDsSP.setBounds(335, 352, 813, 374);
+		pnlDsSP.setBounds(275, 352, 875, 374);
 		pnlSach.add(pnlDsSP);
 		pnlDsSP.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 21, 793, 343);
+		scrollPane.setBounds(4, 21, 865, 343);
 		pnlDsSP.add(scrollPane);
 		
 //		tblSach = new JTable();
@@ -410,7 +410,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 				"Thuế VAT","Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Mã nhà cung cấp" , "Tình trạng" };
 				modelSach = new DefaultTableModel(tblS, 0);
 				tblSach = new JTable(modelSach);
-				tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+				tblSach.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				scrollPane.setViewportView(tblSach);
 				
 		tblSach.addMouseListener(new MouseAdapter() {
@@ -428,151 +428,151 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		JPanel pnlThongTin_1 = new JPanel();
 		pnlThongTin_1.setLayout(null);
 		pnlThongTin_1.setBorder(new TitledBorder(null, "Th\u00F4ng tin:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlThongTin_1.setBounds(10, 10, 322, 716);
+		pnlThongTin_1.setBounds(10, 10, 262, 716);
 		pnlVanPhongPham.add(pnlThongTin_1);
 		
 		JPanel pnlMaSP_1 = new JPanel();
 		pnlMaSP_1.setLayout(null);
-		pnlMaSP_1.setBounds(10, 22, 302, 65);
+		pnlMaSP_1.setBounds(10, 22, 240, 65);
 		pnlThongTin_1.add(pnlMaSP_1);
 		
 		JLabel lblMaSP_1 = new JLabel("Mã Sản Phẩm: ");
 		lblMaSP_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaSP_1.setBounds(90, 5, 128, 22);
+		lblMaSP_1.setBounds(10, 5, 128, 22);
 		pnlMaSP_1.add(lblMaSP_1);
 		
 		txtMaVanPhongPham = new JTextField();
 		txtMaVanPhongPham.setEnabled(false);
 		txtMaVanPhongPham.setEditable(false);
 		txtMaVanPhongPham.setColumns(10);
-		txtMaVanPhongPham.setBounds(10, 35, 282, 24);
+		txtMaVanPhongPham.setBounds(10, 35, 220, 24);
 		pnlMaSP_1.add(txtMaVanPhongPham);
 		
 		JPanel pnlTenSP_1 = new JPanel();
 		pnlTenSP_1.setLayout(null);
-		pnlTenSP_1.setBounds(10, 100, 302, 65);
+		pnlTenSP_1.setBounds(10, 100, 240, 65);
 		pnlThongTin_1.add(pnlTenSP_1);
 		
 		JLabel lblTenSP_1 = new JLabel("Tên Sản Phẩm: ");
 		lblTenSP_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblTenSP_1.setBounds(88, 5, 139, 22);
+		lblTenSP_1.setBounds(10, 5, 139, 22);
 		pnlTenSP_1.add(lblTenSP_1);
 		
 		txtTenVanPhongPham = new JTextField();
 		txtTenVanPhongPham.setColumns(10);
-		txtTenVanPhongPham.setBounds(10, 35, 282, 24);
+		txtTenVanPhongPham.setBounds(10, 35, 220, 24);
 		pnlTenSP_1.add(txtTenVanPhongPham);
 		
 		JPanel pnlGiaMua_1 = new JPanel();
 		pnlGiaMua_1.setLayout(null);
-		pnlGiaMua_1.setBounds(10, 178, 302, 65);
+		pnlGiaMua_1.setBounds(10, 178, 240, 65);
 		pnlThongTin_1.add(pnlGiaMua_1);
 		
 		JLabel lblGiaMua_1 = new JLabel("Giá Mua: ");
 		lblGiaMua_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblGiaMua_1.setBounds(110, 5, 87, 22);
+		lblGiaMua_1.setBounds(10, 5, 87, 22);
 		pnlGiaMua_1.add(lblGiaMua_1);
 		
 		txtGiaMuaVPP = new JTextField();
 		txtGiaMuaVPP.setColumns(10);
-		txtGiaMuaVPP.setBounds(10, 35, 282, 24);
+		txtGiaMuaVPP.setBounds(10, 35, 220, 24);
 		pnlGiaMua_1.add(txtGiaMuaVPP);
 		
 		JPanel pnlGiaBan_1 = new JPanel();
 		pnlGiaBan_1.setLayout(null);
-		pnlGiaBan_1.setBounds(10, 256, 302, 65);
+		pnlGiaBan_1.setBounds(10, 256, 240, 65);
 		pnlThongTin_1.add(pnlGiaBan_1);
 		
 		JLabel lblGiaBan_1 = new JLabel("Giá Bán: ");
 		lblGiaBan_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblGiaBan_1.setBounds(111, 5, 87, 22);
+		lblGiaBan_1.setBounds(10, 5, 87, 22);
 		pnlGiaBan_1.add(lblGiaBan_1);
 		
 		txtGiaBanVPP = new JTextField();
 		txtGiaBanVPP.setColumns(10);
 		txtGiaBanVPP.setEditable(false);
-		txtGiaBanVPP.setBounds(10, 35, 282, 24);
+		txtGiaBanVPP.setBounds(10, 35, 220, 24);
 		pnlGiaBan_1.add(txtGiaBanVPP);
 		
 		JPanel pnlSoLuong_1 = new JPanel();
 		pnlSoLuong_1.setLayout(null);
-		pnlSoLuong_1.setBounds(10, 334, 302, 65);
+		pnlSoLuong_1.setBounds(10, 334, 240, 65);
 		pnlThongTin_1.add(pnlSoLuong_1);
 		
 		JLabel lblSoLuong_1 = new JLabel("Số Lượng: ");
 		lblSoLuong_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblSoLuong_1.setBounds(105, 5, 99, 22);
+		lblSoLuong_1.setBounds(10, 5, 99, 22);
 		pnlSoLuong_1.add(lblSoLuong_1);
 		
 		txtSoLuongVPP = new JTextField();
 		txtSoLuongVPP.setColumns(10);
-		txtSoLuongVPP.setBounds(10, 35, 282, 24);
+		txtSoLuongVPP.setBounds(10, 35, 220, 24);
 		pnlSoLuong_1.add(txtSoLuongVPP);
 		
 		JPanel pnlTinhTrang_1 = new JPanel();
 		pnlTinhTrang_1.setLayout(null);
-		pnlTinhTrang_1.setBounds(10, 412, 302, 65);
+		pnlTinhTrang_1.setBounds(10, 412, 240, 65);
 		pnlThongTin_1.add(pnlTinhTrang_1);
 		
 		JLabel lblTinhTrang_1 = new JLabel("Tinh Trạng: ");
 		lblTinhTrang_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblTinhTrang_1.setBounds(103, 5, 99, 22);
+		lblTinhTrang_1.setBounds(10, 5, 99, 22);
 		pnlTinhTrang_1.add(lblTinhTrang_1);
 		
 		cbTinhTrangVPP = new JComboBox();
 		cbTinhTrangVPP.setModel(new DefaultComboBoxModel(new String[] {"Đang bán", "Ngưng bán"}));
-		cbTinhTrangVPP.setBounds(10, 35, 282, 24);
+		cbTinhTrangVPP.setBounds(10, 35, 220, 24);
 		pnlTinhTrang_1.add(cbTinhTrangVPP);
 		
 		JPanel pnlMa_3 = new JPanel();
 		pnlMa_3.setLayout(null);
-		pnlMa_3.setBounds(10, 490, 302, 65);
+		pnlMa_3.setBounds(10, 490, 240, 65);
 		pnlThongTin_1.add(pnlMa_3);
 		
 		JLabel lblMaKeHang_1 = new JLabel("Mã Kệ Hàng: ");
 		lblMaKeHang_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaKeHang_1.setBounds(28, 10, 116, 22);
+		lblMaKeHang_1.setBounds(10, 10, 116, 22);
 		pnlMa_3.add(lblMaKeHang_1);
 		
 		cbMaKeHangVPP = new JComboBox();
-		cbMaKeHangVPP.setBounds(10, 35, 138, 24);
+		cbMaKeHangVPP.setBounds(10, 35, 100, 24);
 		pnlMa_3.add(cbMaKeHangVPP);
 		
 		JLabel lblMaDanhMuc_1 = new JLabel("Mã Danh Mục: ");
 		lblMaDanhMuc_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaDanhMuc_1.setBounds(166, 10, 136, 22);
+		lblMaDanhMuc_1.setBounds(122, 10, 122, 22);
 		pnlMa_3.add(lblMaDanhMuc_1);
 		
 		cbMaDanhMucVPP = new JComboBox();
-		cbMaDanhMucVPP.setBounds(158, 35, 138, 24);
+		cbMaDanhMucVPP.setBounds(130, 35, 100, 24);
 		pnlMa_3.add(cbMaDanhMucVPP);
 		
 		JPanel pnlMa_4 = new JPanel();
 		pnlMa_4.setLayout(null);
-		pnlMa_4.setBounds(10, 568, 302, 65);
+		pnlMa_4.setBounds(10, 568, 240, 65);
 		pnlThongTin_1.add(pnlMa_4);
 		
 		JLabel lblMaKhuyenMai_1 = new JLabel("Mã Khuyến Mãi: ");
 		lblMaKhuyenMai_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaKhuyenMai_1.setBounds(20, 10, 138, 22);
+		lblMaKhuyenMai_1.setBounds(5, 10, 134, 22);
 		pnlMa_4.add(lblMaKhuyenMai_1);
 		
 		cbMaKhuyenMaiVPP = new JComboBox();
-		cbMaKhuyenMaiVPP.setBounds(10, 35, 138, 24);
+		cbMaKhuyenMaiVPP.setBounds(10, 35, 100, 24);
 		pnlMa_4.add(cbMaKhuyenMaiVPP);
 		
 		JLabel lblMaNCC_1 = new JLabel("Mã NCC: ");
 		lblMaNCC_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMaNCC_1.setBounds(184, 10, 96, 22);
+		lblMaNCC_1.setBounds(140, 10, 96, 22);
 		pnlMa_4.add(lblMaNCC_1);
 		
 		cbMaNhaCungCapVPP = new JComboBox();
-		cbMaNhaCungCapVPP.setBounds(158, 35, 138, 24);
+		cbMaNhaCungCapVPP.setBounds(130, 35, 100, 24);
 		pnlMa_4.add(cbMaNhaCungCapVPP);
 		
 		JPanel pnlThueVAT_1 = new JPanel();
 		pnlThueVAT_1.setLayout(null);
-		pnlThueVAT_1.setBounds(10, 646, 302, 65);
+		pnlThueVAT_1.setBounds(10, 646, 240, 65);
 		pnlThongTin_1.add(pnlThueVAT_1);
 		
 		JLabel lblThueVAT_1 = new JLabel("Thuế VAT:");
@@ -582,13 +582,13 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		txtThueVATVPP = new JTextField();
 		txtThueVATVPP.setColumns(10);
-		txtThueVATVPP.setBounds(10, 35, 282, 24);
+		txtThueVATVPP.setBounds(10, 35, 220, 24);
 		pnlThueVAT_1.add(txtThueVATVPP);
 		
 		JPanel pnlThongTinVanPhongPham = new JPanel();
 		pnlThongTinVanPhongPham.setLayout(null);
 		pnlThongTinVanPhongPham.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin V\u0103n Ph\u00F2ng Ph\u1EA9m: ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlThongTinVanPhongPham.setBounds(335, 10, 813, 147);
+		pnlThongTinVanPhongPham.setBounds(275, 10, 875, 147);
 		pnlVanPhongPham.add(pnlThongTinVanPhongPham);
 		
 		JPanel pnlChiTiet_1 = new JPanel();
@@ -651,7 +651,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		JPanel pnlChucNang_1 = new JPanel();
 		pnlChucNang_1.setLayout(null);
 		pnlChucNang_1.setBorder(new TitledBorder(null, "Ch\u1EE9c N\u0103ng: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlChucNang_1.setBounds(335, 167, 813, 175);
+		pnlChucNang_1.setBounds(275, 167, 875, 175);
 		pnlVanPhongPham.add(pnlChucNang_1);
 		
 		btnLamMoiVPP = new JButton("Làm mới");
@@ -695,20 +695,20 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		JPanel pnlDsSP_1 = new JPanel();
 		pnlDsSP_1.setLayout(null);
 		pnlDsSP_1.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EA3n ph\u1EA9m: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlDsSP_1.setBounds(335, 352, 813, 374);
+		pnlDsSP_1.setBounds(275, 352, 875, 374);
 		pnlVanPhongPham.add(pnlDsSP_1);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setBounds(10, 21, 793, 343);
+		scrollPane_1.setBounds(4, 21, 865, 343);
 		pnlDsSP_1.add(scrollPane_1);
 		
 		String[] tblVP = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Giá mua", "Số lượng", "Giá bán", "Thương hiệu","Xuất xứ", "Màu sắc", "Chất liệu",
 				"Thuế VAT","Mã Danh mục", "Mã kệ hàng","Mã khuyến mãi", "Mã nhà cung cấp", "Tình trạng" };
 				modelVPPham = new DefaultTableModel(tblVP, 0);
 				tblVanPhongPham = new JTable(modelVPPham);
-				tblVanPhongPham.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+				tblVanPhongPham.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				scrollPane_1.setViewportView(tblVanPhongPham);
 				tblVanPhongPham.addMouseListener(new MouseAdapter() {
 					@Override
