@@ -44,6 +44,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final float inc = (float) 1.35;
 	private JTextField txtMaSach;
 	private JTextField txtTenSach;
 	private JTextField txtGiaMuaSach;
@@ -80,7 +81,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 	private DefaultTableModel modelSach;
 	private DefaultTableModel modelVPPham;
 	private Dao_Sach sach_dao = new Dao_Sach();
-	private Dao_VanPhongPham vpPham_dao = new Dao_VanPhongPham();
+	private Dao_VanPhongPham vanPhongPham_dao = new Dao_VanPhongPham();
 	private Dao_KeHang keHang_dao = new Dao_KeHang();
 	private Dao_KhuyenMai khuyenMai_dao = new Dao_KhuyenMai();
 	private Dao_DanhMuc danhMuc_dao = new Dao_DanhMuc();
@@ -204,6 +205,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlTinhTrang.add(lblTinhTrang);
 		
 		cbTinhTrangSach = new JComboBox();
+		cbTinhTrangSach.setModel(new DefaultComboBoxModel(new String[] {"Đang bán", "Ngưng bán"}));
 		cbTinhTrangSach.setBounds(10, 35, 282, 24);
 		pnlTinhTrang.add(cbTinhTrangSach);
 		
@@ -320,16 +322,16 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlChiTiet.add(txtSoTrang);
 		
 		txtMessageSach = new JTextField();
-		txtMessageSach.setBounds(21, 74, 755, 26);
+		txtMessageSach.setBounds(23, 74, 753, 26);
 		pnlChiTiet.add(txtMessageSach);
 		txtMessageSach.setColumns(10);
-		txtMessageSach.setToolTipText("");
-		txtMessageSach.setFont(new Font("Arial", Font.ITALIC, 10));
-		txtMessageSach.setBackground(new Color(240, 240, 240));
-		txtMessageSach.setText("");
 		txtMessageSach.setBorder(null);
 		txtMessageSach.setEditable(false);
-		txtMessageSach.setBounds(24, 107, 1094, 19);
+		txtMessageSach.setToolTipText("");
+		txtMessageSach.setFont(new Font("Arial", Font.ITALIC, 14));
+		txtMessageSach.setBackground(new Color(240, 240, 240));
+		txtMessageSach.setText("");
+		txtMessageSach.setForeground(new Color(255, 0, 0));
 		
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setBorder(new TitledBorder(null, "Ch\u1EE9c N\u0103ng: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -358,7 +360,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		Image img_iconCapNhat = new ImageIcon(this.getClass().getResource("/update2.png")).getImage();
 		btnCapNhatSach.setIcon(new ImageIcon(img_iconCapNhat));
 		
-		JLabel lblTimKiemSP = new JLabel("Tìm kiếm sản phẩm theo mã:");
+		JLabel lblTimKiemSP = new JLabel("Tìm kiếm theo tên sách:");
 		lblTimKiemSP.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTimKiemSP.setBounds(441, 59, 231, 22);
 		pnlChucNang.add(lblTimKiemSP);
@@ -471,6 +473,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		
 		txtGiaBanVPP = new JTextField();
 		txtGiaBanVPP.setColumns(10);
+		txtGiaBanVPP.setEditable(false);
 		txtGiaBanVPP.setBounds(10, 35, 282, 24);
 		pnlGiaBan_1.add(txtGiaBanVPP);
 		
@@ -485,7 +488,6 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlSoLuong_1.add(lblSoLuong_1);
 		
 		txtSoLuongVPP = new JTextField();
-		txtSoLuongVPP.setEditable(false);
 		txtSoLuongVPP.setColumns(10);
 		txtSoLuongVPP.setBounds(10, 35, 282, 24);
 		pnlSoLuong_1.add(txtSoLuongVPP);
@@ -501,6 +503,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlTinhTrang_1.add(lblTinhTrang_1);
 		
 		cbTinhTrangVPP = new JComboBox();
+		cbTinhTrangVPP.setModel(new DefaultComboBoxModel(new String[] {"Đang bán", "Ngưng bán"}));
 		cbTinhTrangVPP.setBounds(10, 35, 282, 24);
 		pnlTinhTrang_1.add(cbTinhTrangVPP);
 		
@@ -617,16 +620,16 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlChiTiet_1.add(txtChatLieu);
 		
 		txtMessageVPP = new JTextField();
-		txtMessageVPP.setBounds(20, 76, 756, 24);
+		txtMessageVPP.setBounds(20, 78, 756, 22);
 		pnlChiTiet_1.add(txtMessageVPP);
 		txtMessageVPP.setColumns(10);
-		txtMessageVPP.setToolTipText("");
-		txtMessageVPP.setFont(new Font("Arial", Font.ITALIC, 10));
-		txtMessageVPP.setBackground(new Color(240, 240, 240));
-		txtMessageVPP.setText("");
 		txtMessageVPP.setBorder(null);
 		txtMessageVPP.setEditable(false);
-		txtMessageVPP.setBounds(24, 107, 1094, 19);
+		txtMessageVPP.setToolTipText("");
+		txtMessageVPP.setFont(new Font("Arial", Font.ITALIC, 14));
+		txtMessageVPP.setBackground(new Color(240, 240, 240));
+		txtMessageVPP.setText("");
+		txtMessageVPP.setForeground(new Color(255, 0, 0));
 		
 		JPanel pnlChucNang_1 = new JPanel();
 		pnlChucNang_1.setLayout(null);
@@ -655,14 +658,14 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		Image img_iconCapNhat_1 = new ImageIcon(this.getClass().getResource("/update2.png")).getImage();
 		btnCapNhatVPP.setIcon(new ImageIcon(img_iconCapNhat_1));
 		
-		JLabel lblTimKiemSP_1 = new JLabel("Tìm kiếm thông tin sản phẩm:");
+		JLabel lblTimKiemSP_1 = new JLabel("Tìm kiếm theo tên văn phòng phẩm:");
 		lblTimKiemSP_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTimKiemSP_1.setBounds(441, 59, 231, 22);
+		lblTimKiemSP_1.setBounds(413, 61, 275, 22);
 		pnlChucNang_1.add(lblTimKiemSP_1);
 		
 		txtTimKiemVPP = new JTextField();
 		txtTimKiemVPP.setColumns(10);
-		txtTimKiemVPP.setBounds(441, 91, 231, 24);
+		txtTimKiemVPP.setBounds(413, 91, 275, 24);
 		pnlChucNang_1.add(txtTimKiemVPP);
 		
 		btnTimKiemVPP = new JButton("");
@@ -690,9 +693,18 @@ public class pnlSanPham extends JPanel implements ActionListener {
 				tblVanPhongPham = new JTable(modelVPPham);
 				tblVanPhongPham.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 				scrollPane_1.setViewportView(tblVanPhongPham);
+		
 				
+				tblVanPhongPham.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						int r = tblVanPhongPham.getSelectedRow();
+						fillFormVPP(r);
+						}
+					});		
+		
 		napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
-		napDuLieuVPPTuCSDL(vpPham_dao.getAllVPP("VPP"));
+		napDuLieuVPPTuCSDL(vanPhongPham_dao.getAllVPP("VPP"));
 		napComboBoxMaKeHang(keHang_dao.getAllKeHang());
 		napComboBoxMaDanhMuc(danhMuc_dao.getAllDanhMuc());
 		napComboBoxMaNhaCungCap(nhaCungCap_dao.getAllNhaCungCap());
@@ -758,13 +770,13 @@ public class pnlSanPham extends JPanel implements ActionListener {
 			i++;
 		}
 		cbMaNhaCungCapSach.setModel(new DefaultComboBoxModel<String>(items));
-		cbMaDanhMucVPP.setModel(new DefaultComboBoxModel<String>(items));
+		cbMaNhaCungCapVPP.setModel(new DefaultComboBoxModel<String>(items));
 	}
 	
 	public void napComboBoxMaKhuyenMai(ArrayList<KhuyenMai> ds) {
 		int n = ds.size();
 		String items[] = new String[n+1];
-		items[0] = " ";
+		items[0] = "";
 	    int i = 1;
 		for (KhuyenMai km : ds) {
 			items[i] = km.getMaKhuyenMai() + "";
@@ -795,6 +807,116 @@ public class pnlSanPham extends JPanel implements ActionListener {
 	}
 	
 	private boolean validDateSach() {
+		String tenSach = txtTenSach.getText().trim();
+		String giaMuaSachStr = txtGiaMuaSach.getText().trim();
+		String soLuongSachStr = txtSoLuongSach.getText().trim();
+		String tacGia = txtTacGia.getText().trim();
+		String thueVATStr = txtThueVATSach.getText().trim();
+		String nXB = txtNhaXuatBan.getText().trim();
+		String namXBStr = txtNamXB.getText().trim();
+		String soTrangStr = txtSoTrang.getText().trim();
+		if(tenSach.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập tên cuốn sách.");
+			txtTenSach.requestFocus();
+			return false;
+		}
+		if(giaMuaSachStr.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập giá mua.");
+			txtGiaMuaSach.requestFocus();
+			return false;
+		}else {
+			try {
+                float giaMua = Float.parseFloat(giaMuaSachStr);
+                if (giaMua <= 0) {
+                    txtMessageSach.setText("Giá mua phải là số lớn hơn 0!!!");
+                    txtGiaMuaSach.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtGiaMuaSach.setText("Giá mua không hợp lệ. Vui lòng nhập số lớn hơn 0!!!");
+                return false;
+            }
+		}
+		if(soLuongSachStr.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập số lượng sách.");
+			txtSoLuongSach.requestFocus();
+			return false;
+		}else {
+			try {
+                int soLuong = Integer.parseInt(soLuongSachStr);
+                if (soLuong <= 0) {
+                    txtMessageSach.setText("Số lượng phải là số nguyên lớn hơn 0!!!");
+                    txtSoLuongSach.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtSoLuongSach.setText("Số lượng không hợp lệ. Vui lòng nhập số nguyên lớn hơn 0!!!");
+                return false;
+            }
+		}if(thueVATStr.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập thuế giá trị gia tăng.");
+			txtThueVATSach.requestFocus();
+			return false;
+		}else {
+			try {
+                float thueVAT = Float.parseFloat(thueVATStr);
+                if (thueVAT < 0||thueVAT>=0.11) {
+                    txtMessageSach.setText("Giá trị VAT phải phải nằm trong khoảng từ 0 -> 0.1!!!");
+                    txtThueVATSach.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtThueVATSach.setText("Giá trị VAT không hợp lệ. Vui lòng nhập số nằm trong khoảng từ 0 -> 1!!!");
+                return false;
+            }
+		}
+		if(tacGia.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập tên tác giả.");
+			txtTacGia.requestFocus();
+			return false;
+		}if(nXB.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập tên nhà xuất bản.");
+			txtNhaXuatBan.requestFocus();
+			return false;
+		}if(namXBStr.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập năm xuất bản sách.");
+			txtNamXB.requestFocus();
+			return false;
+		}else {
+			try {
+		        int namXB = Integer.parseInt(namXBStr);
+		        int namHienTai = java.time.Year.now().getValue();
+
+		        if (namXB < 0 || namXB > namHienTai) {
+		            txtMessageSach.setText("Năm xuất bản phải là số nguyên dương và nhỏ hơn năm hiện tại.");
+		            txtNamXB.requestFocus();
+		            return false;
+		        }
+		    } catch (NumberFormatException e) {
+		    	txtMessageSach.setText("Năm xuất bản không hợp lệ.");
+		    	txtNamXB.requestFocus();
+		        return false;
+		    }
+		}
+		if(soTrangStr.equals("")) {
+			txtMessageSach.setText("Vui lòng nhập số trang.");
+			txtSoTrang.requestFocus();
+			return false;
+		}else {
+			try {
+                int soTrang = Integer.parseInt(soTrangStr);
+                if (soTrang <= 0) {
+                    txtMessageSach.setText("Số trang phải là số nguyên lớn hơn 0!!!");
+                    txtSoTrang.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtSoTrang.setText("Số trang không hợp lệ. Vui lòng nhập số nguyên lớn hơn 0!!!");
+                return false;
+            }
+		}
+		
+		
 		return true;
 	}
 	
@@ -808,26 +930,32 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		String tenSach= txtTenSach.getText().trim();
 		float giaMua = Float.parseFloat(txtGiaMuaSach.getText().trim());
 		int soLuong = Integer.parseInt(txtSoLuongSach.getText().trim());
-		float giaBan = Float.parseFloat(txtGiaBanSach.getText().trim());
+		float giaBan = 0;
 		String nhaXuatBan= txtNhaXuatBan.getText().trim();
 		String tacGia= txtTacGia.getText().trim();
 		int namXuatBan = Integer.parseInt(txtNamXB.getText().trim());
 		int soTrang = Integer.parseInt(txtSoTrang.getText().trim());
 		float thueVAT = Float.parseFloat(txtThueVATSach.getText().trim());
 		DanhMuc dm = new DanhMuc( (String) cbMaDanhMucSach.getSelectedItem());
-		KeHang km = new KeHang( (String) cbMaKeHangSach.getSelectedItem());
+		KeHang kh = new KeHang( (String) cbMaKeHangSach.getSelectedItem());
 		String maKhuyenMai = (String) cbMaKhuyenMaiSach.getSelectedItem();
-		KhuyenMai khuyenMai;
-	    if (maKhuyenMai.isEmpty()) {
-	        khuyenMai = null;  
-	    } else {
+	    KhuyenMai khuyenMai = null;
+	    int ptKhuyenMai = 0;
+	    if (maKhuyenMai != null && !maKhuyenMai.isEmpty()) {
 	        khuyenMai = new KhuyenMai(maKhuyenMai);
+	        String maKhuyenMaiValue = khuyenMai.getMaKhuyenMai();
+	        if (maKhuyenMaiValue != null) {
+	            KhuyenMai findKhuyenMai = khuyenMai_dao.getKhuyenMaiTheoMa(maKhuyenMaiValue);
+	            if (findKhuyenMai != null) {
+	                ptKhuyenMai = findKhuyenMai.getGiaTriGiamGia();
+	            }
+	        }
 	    }
-		khuyenMai= new KhuyenMai( maKhuyenMai);
 		NhaCungCap ncc = new NhaCungCap( (String) cbMaNhaCungCapSach.getSelectedItem());
 		String tinhTrang = (String) cbTinhTrangSach.getSelectedItem();
 		maSach = phatSinhMaSach();
-		Sach s = new Sach(maSach, tenSach, giaMua, soLuong, giaBan, thueVAT, dm, km, khuyenMai, ncc, tinhTrang, tacGia, nhaXuatBan, namXuatBan, soTrang);
+		giaBan = (giaMua * inc) - (giaMua * inc * thueVAT) - (((giaMua * inc) - (giaMua * inc * thueVAT)) * ptKhuyenMai / 100);
+		Sach s = new Sach(maSach, tenSach, giaMua, soLuong, giaBan, thueVAT, dm, kh, khuyenMai, ncc, tinhTrang, tacGia, nhaXuatBan, namXuatBan, soTrang);
 		return s;
 	}
 	
@@ -841,20 +969,32 @@ public class pnlSanPham extends JPanel implements ActionListener {
 					String tenSach= txtTenSach.getText().trim();
 					float giaMua = Float.parseFloat(txtGiaMuaSach.getText().trim());
 					int soLuong = Integer.parseInt(txtSoLuongSach.getText().trim());
-					float giaBan = Float.parseFloat(txtGiaBanSach.getText().trim());
+					float giaBan = 0;
 					String nhaXuatBan= txtNhaXuatBan.getText().trim();
 					String tacGia= txtTacGia.getText().trim();
 					int namXuatBan = Integer.parseInt(txtNamXB.getText().trim());
 					int soTrang = Integer.parseInt(txtSoTrang.getText().trim());
 					float thueVAT = Float.parseFloat(txtThueVATSach.getText().trim());
 					DanhMuc dm = new DanhMuc( (String) cbMaDanhMucSach.getSelectedItem());
-					KeHang km = new KeHang( (String) cbMaKeHangSach.getSelectedItem());
-					KhuyenMai khuyenMai = new KhuyenMai( (String) cbMaKhuyenMaiSach.getSelectedItem());
+					KeHang kh = new KeHang( (String) cbMaKeHangSach.getSelectedItem());
+					String maKhuyenMai = (String) cbMaKhuyenMaiSach.getSelectedItem();
+				    KhuyenMai khuyenMai = null;
+				    int ptKhuyenMai = 0;
+				    if (!maKhuyenMai.isEmpty()) {
+				        khuyenMai = new KhuyenMai(maKhuyenMai);
+				        String maKhuyenMaiValue = khuyenMai.getMaKhuyenMai();
+				        if (maKhuyenMaiValue != null) {
+				            KhuyenMai findKhuyenMai = khuyenMai_dao.getKhuyenMaiTheoMa(maKhuyenMaiValue);
+				            if (findKhuyenMai != null) {
+				                ptKhuyenMai = findKhuyenMai.getGiaTriGiamGia();
+				            }
+				        }
+				    }
 					NhaCungCap ncc = new NhaCungCap( (String) cbMaNhaCungCapSach.getSelectedItem());
 					String tinhTrang = (String) cbTinhTrangSach.getSelectedItem();
-					Sach newSach = new Sach(maSach, tenSach, giaMua, soLuong, giaBan, thueVAT, dm, km, khuyenMai, ncc, tinhTrang, tacGia, nhaXuatBan, namXuatBan, soTrang);
+					giaBan = (giaMua * inc) - (giaMua * inc * thueVAT) - (((giaMua * inc) - (giaMua * inc * thueVAT)) * ptKhuyenMai / 100);
+					Sach newSach = new Sach(maSach, tenSach, giaMua, soLuong, giaBan, thueVAT, dm, kh, khuyenMai, ncc, tinhTrang, tacGia, nhaXuatBan, namXuatBan, soTrang);
 				if (!sach_dao.capnhatSach(newSach)) {
-					System.out.println(newSach);
 					JOptionPane.showMessageDialog(this, "Lỗi không thể cập nhật");
 					tblSach.clearSelection();
 				} else {
@@ -871,22 +1011,21 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		txtGiaMuaSach.setText(tblSach.getValueAt(r, 2).toString());
 		txtSoLuongSach.setText(tblSach.getValueAt(r, 3).toString());
 		txtGiaBanSach.setText(tblSach.getValueAt(r, 4).toString());
-		txtNhaXuatBan.setText(tblSach.getValueAt(r, 5).toString());
+		txtNhaXuatBan.setText((tblSach.getValueAt(r, 5) != null) ? tblSach.getValueAt(r, 5).toString() : "");
 		txtTacGia.setText(tblSach.getValueAt(r, 6).toString());
-		txtNamXB.setText(tblSach.getValueAt(r, 7).toString());
-		txtSoTrang.setText(tblSach.getValueAt(r, 8).toString());
+		txtNamXB.setText((tblSach.getValueAt(r, 7) != null) ? tblSach.getValueAt(r, 7).toString() : "");
+		txtSoTrang.setText((tblSach.getValueAt(r, 8) != null) ? tblSach.getValueAt(r, 8).toString() : "");
 		txtThueVATSach.setText(tblSach.getValueAt(r, 9).toString());
 		cbMaDanhMucSach.setSelectedItem(tblSach.getValueAt(r, 10).toString());
 		cbMaKeHangSach.setSelectedItem(tblSach.getValueAt(r, 11).toString());
-		// Check for null before calling toString()
-	    Object maKMObject = tblSach.getValueAt(r, 12);
-	    String maKM = (maKMObject != null) ? maKMObject.toString() : "";
-
-	    if (maKM.isEmpty()) {
-	        cbMaKhuyenMaiSach.setSelectedItem("KM001");
-	    } else {
-	        cbMaKhuyenMaiSach.setSelectedItem(maKM);
-	    }
+		Object maKMObject = tblSach.getValueAt(r, 12);
+		if (maKMObject != null) {
+		    // Giữ nguyên giá trị nếu không phải là null
+		    cbMaKhuyenMaiSach.setSelectedItem(maKMObject.toString());
+		} else {
+		    // Nếu là null, đặt ComboBox thành giá trị rỗng
+		    cbMaKhuyenMaiSach.setSelectedItem("");
+		}
 		cbMaNhaCungCapSach.setSelectedItem(tblSach.getValueAt(r, 13).toString());
 		cbTinhTrangSach.setSelectedItem(tblSach.getValueAt(r, 14).toString());
 	}
@@ -908,6 +1047,218 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		}
 	}
 	
+//	Văn phòng phẩm
+	private void xoaTrangVPP() {
+		txtMaVanPhongPham.setText("");
+		txtTenVanPhongPham.setText("");
+		txtGiaMuaVPP.setText("");
+		txtSoLuongVPP.setText("");
+		txtGiaBanVPP.setText("");
+		txtThuongHieu.setText("");
+		txtXuatXu.setText("");
+		txtMauSac.setText("");
+		txtChatLieu.setText("");
+		txtThueVATVPP.setText("");
+		cbMaDanhMucVPP.setSelectedIndex(0);
+		cbMaKeHangVPP.setSelectedIndex(0);
+		cbMaKhuyenMaiVPP.setSelectedIndex(0);
+		cbMaNhaCungCapVPP.setSelectedIndex(0);
+		cbTinhTrangVPP.setSelectedIndex(0);
+		txtTenVanPhongPham.requestFocus();
+	}
+	
+	private boolean validDateVPP() {
+		String tenVPP = txtTenVanPhongPham.getText().trim();
+		String giaMuaVPPStr = txtGiaMuaVPP.getText().trim();
+		String soLuongVPPStr = txtSoLuongVPP.getText().trim();
+		String thueVATVPPStr = txtThueVATVPP.getText().trim();
+		if(tenVPP.equals("")) {
+			txtMessageVPP.setText("Vui lòng nhập tên văn phòng phẩm.");
+			txtTenVanPhongPham.requestFocus();
+			return false;
+		}
+		if(giaMuaVPPStr.equals("")) {
+			txtMessageVPP.setText("Vui lòng nhập giá mua.");
+			txtGiaMuaVPP.requestFocus();
+			return false;
+		}else {
+			try {
+                float giaMua = Float.parseFloat(giaMuaVPPStr);
+                if (giaMua <= 0) {
+                    txtMessageVPP.setText("Giá mua phải là số lớn hơn 0!!!");
+                    txtGiaMuaVPP.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtGiaMuaVPP.setText("Giá mua không hợp lệ. Vui lòng nhập số lớn hơn 0!!!");
+                return false;
+            }
+		}
+		if(soLuongVPPStr.equals("")) {
+			txtMessageVPP.setText("Vui lòng nhập số lượng văn phòng phẩm.");
+			txtSoLuongVPP.requestFocus();
+			return false;
+		}else {
+			try {
+                int soLuong = Integer.parseInt(soLuongVPPStr);
+                if (soLuong <= 0) {
+                    txtMessageVPP.setText("Số lượng phải là số nguyên lớn hơn 0!!!");
+                    txtSoLuongVPP.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtSoLuongVPP.setText("Số lượng không hợp lệ. Vui lòng nhập số nguyên lớn hơn 0!!!");
+                return false;
+            }
+		}if(thueVATVPPStr.equals("")) {
+			txtMessageVPP.setText("Vui lòng nhập thuế giá trị gia tăng.");
+			txtThueVATVPP.requestFocus();
+			return false;
+		}else {
+			try {
+                float thueVAT = Float.parseFloat(thueVATVPPStr);
+                if (thueVAT < 0||thueVAT>=0.11) {
+                    txtMessageVPP.setText("Giá trị VAT phải phải nằm trong khoảng từ 0 -> 0.1!!!");
+                    txtThueVATVPP.requestFocus();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                txtThueVATVPP.setText("Giá trị VAT không hợp lệ. Vui lòng nhập số nằm trong khoảng từ 0 -> 1!!!");
+                return false;
+            }
+		}
+		return true;
+	}
+	
+	private String phatSinhMaVPP() {
+		String prefix = "VPP";
+    	return prefix + String.format("%04d", modelVPPham.getRowCount()+ 1);
+	}
+	
+	private VanPhongPham revertVPPFromFields() {
+		String maVPP = "";
+		String tenVPP= txtTenVanPhongPham.getText().trim();
+		float giaMua = Float.parseFloat(txtGiaMuaVPP.getText().trim());
+		int soLuong = Integer.parseInt(txtSoLuongVPP.getText().trim());
+		float giaBan = 0;
+		String thuongHieu= txtThuongHieu.getText().trim();
+		String xuatXu= txtXuatXu.getText().trim();
+		String mauSac= txtMauSac.getText().trim();
+		String chatLieu= txtChatLieu.getText().trim();
+		float thueVAT = Float.parseFloat(txtThueVATVPP.getText().trim());
+		DanhMuc dm = new DanhMuc( (String) cbMaDanhMucVPP.getSelectedItem());
+		KeHang km = new KeHang( (String) cbMaKeHangVPP.getSelectedItem());
+		String maKhuyenMai = (String) cbMaKhuyenMaiVPP.getSelectedItem();
+	    KhuyenMai khuyenMai = null;
+	    int ptKhuyenMai = 0;
+	    if (maKhuyenMai != null && !maKhuyenMai.isEmpty()) {
+	        khuyenMai = new KhuyenMai(maKhuyenMai);
+	        String maKhuyenMaiValue = khuyenMai.getMaKhuyenMai();
+	        if (maKhuyenMaiValue != null) {
+	            KhuyenMai findKhuyenMai = khuyenMai_dao.getKhuyenMaiTheoMa(maKhuyenMaiValue);
+	            if (findKhuyenMai != null) {
+	                ptKhuyenMai = findKhuyenMai.getGiaTriGiamGia();
+	            }
+	        }
+	    }
+		NhaCungCap ncc = new NhaCungCap( (String) cbMaNhaCungCapVPP.getSelectedItem());
+		String tinhTrang = (String) cbTinhTrangVPP.getSelectedItem();
+		giaBan = (giaMua * inc) - (giaMua * inc * thueVAT) - (((giaMua * inc) - (giaMua * inc * thueVAT)) * ptKhuyenMai / 100);
+		maVPP = phatSinhMaVPP();
+		VanPhongPham vpp = new VanPhongPham(maVPP, tenVPP, giaMua, soLuong, giaBan, thueVAT, dm, km, khuyenMai, ncc, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu);
+		return vpp;
+	}
+	
+	private void updateVPP() {
+		int r = tblVanPhongPham.getSelectedRow();
+		if (r == -1) {
+			JOptionPane.showMessageDialog(null, "Bạn chưa chọn dòng để cập nhật thông tin");
+		} else {
+			if (validDateVPP()) {
+					String maVPP = txtMaVanPhongPham.getText().trim();
+					String tenVPP= txtTenVanPhongPham.getText().trim();
+					float giaMua = Float.parseFloat(txtGiaMuaVPP.getText().trim());
+					int soLuong = Integer.parseInt(txtSoLuongVPP.getText().trim());
+					float giaBan = 0;
+					String thuongHieu= txtThuongHieu.getText().trim();
+					String xuatXu= txtXuatXu.getText().trim();
+					String mauSac= txtMauSac.getText().trim();
+					String chatLieu= txtChatLieu.getText().trim();
+					float thueVAT = Float.parseFloat(txtThueVATVPP.getText().trim());
+					DanhMuc dm = new DanhMuc( (String) cbMaDanhMucVPP.getSelectedItem());
+					KeHang km = new KeHang( (String) cbMaKeHangVPP.getSelectedItem());
+					String maKhuyenMai = (String) cbMaKhuyenMaiVPP.getSelectedItem();
+				    KhuyenMai khuyenMai = null;
+				    int ptKhuyenMai = 0;
+				    if (maKhuyenMai != null && !maKhuyenMai.isEmpty()) {
+				        khuyenMai = new KhuyenMai(maKhuyenMai);
+				        String maKhuyenMaiValue = khuyenMai.getMaKhuyenMai();
+				        if (maKhuyenMaiValue != null) {
+				            KhuyenMai findKhuyenMai = khuyenMai_dao.getKhuyenMaiTheoMa(maKhuyenMaiValue);
+				            if (findKhuyenMai != null) {
+				                ptKhuyenMai = findKhuyenMai.getGiaTriGiamGia();
+				            }
+				        }
+				    }
+					NhaCungCap ncc = new NhaCungCap( (String) cbMaNhaCungCapVPP.getSelectedItem());
+					String tinhTrang = (String) cbTinhTrangVPP.getSelectedItem();
+					giaBan = (giaMua * inc) - (giaMua * inc * thueVAT) - (((giaMua * inc) - (giaMua * inc * thueVAT)) * ptKhuyenMai / 100);
+					VanPhongPham newVPP = new VanPhongPham(maVPP, tenVPP, giaMua, soLuong, giaBan, thueVAT, dm, km, khuyenMai, ncc, tinhTrang, thuongHieu, xuatXu, mauSac, chatLieu);
+				if (!vanPhongPham_dao.capnhatVPP(newVPP)) {
+					JOptionPane.showMessageDialog(this, "Lỗi không thể cập nhật");
+					tblVanPhongPham.clearSelection();
+				} else {
+					
+					JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+				}
+			}
+		}
+	}
+	
+	public void fillFormVPP(int r) {
+		txtMaVanPhongPham.setText(tblVanPhongPham.getValueAt(r, 0).toString());
+		txtTenVanPhongPham.setText(tblVanPhongPham.getValueAt(r, 1).toString());
+		txtGiaMuaVPP.setText(tblVanPhongPham.getValueAt(r, 2).toString());
+		txtSoLuongVPP.setText(tblVanPhongPham.getValueAt(r, 3).toString());
+		txtGiaBanVPP.setText(tblVanPhongPham.getValueAt(r, 4).toString());
+		txtThuongHieu.setText((tblVanPhongPham.getValueAt(r, 5) != null) ? tblVanPhongPham.getValueAt(r, 5).toString() : "");
+		txtXuatXu.setText((tblVanPhongPham.getValueAt(r, 6) != null) ? tblVanPhongPham.getValueAt(r, 6).toString() : "");
+		txtMauSac.setText((tblVanPhongPham.getValueAt(r, 7) != null) ? tblVanPhongPham.getValueAt(r, 7).toString() : "");
+		txtChatLieu.setText((tblVanPhongPham.getValueAt(r, 8) != null) ? tblVanPhongPham.getValueAt(r, 8).toString() : "");
+		txtThueVATVPP.setText(tblVanPhongPham.getValueAt(r, 9).toString());
+		cbMaDanhMucVPP.setSelectedItem(tblVanPhongPham.getValueAt(r, 10).toString());
+		cbMaKeHangVPP.setSelectedItem(tblVanPhongPham.getValueAt(r, 11).toString());
+		Object maKMObject = tblVanPhongPham.getValueAt(r, 12);
+		if (maKMObject != null) {
+		    // Giữ nguyên giá trị nếu không phải là null
+		    cbMaKhuyenMaiVPP.setSelectedItem(maKMObject.toString());
+		} else {
+		    // Nếu là null, đặt ComboBox thành giá trị rỗng
+		    cbMaKhuyenMaiVPP.setSelectedItem("");
+		}
+		cbMaNhaCungCapVPP.setSelectedItem(tblVanPhongPham.getValueAt(r, 13).toString());
+		cbTinhTrangVPP.setSelectedItem(tblVanPhongPham.getValueAt(r, 14).toString());
+	}
+	
+	public void timVPPTheoTen() {
+		String ten = txtTimKiemVPP.getText().trim();
+
+		if (ten.isEmpty() || ten.trim() == "") {
+			napDuLieuVPPTuCSDL(vanPhongPham_dao.getAllVPP("VPP"));
+			xoaTrangVPP();
+		} else {
+			ArrayList<VanPhongPham> vPPList = vanPhongPham_dao.getListVPPTheoTen(ten);
+			if (vPPList.size() > 0) {
+				napDuLieuVPPTuCSDL(vPPList);
+				xoaTrangVPP();
+			} else {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy!");
+			}
+		}
+	}
+	
+	
+	
 	
 
 
@@ -920,9 +1271,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 				if (!sach_dao.themSach(s)) {
 					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
 				} else {
+					JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công.");
 					napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
 					tblSach.clearSelection();
-//					txtMessage.setText("");
+					txtMessageSach.setText("");
 				}
 			}	
 		}else if(o.equals(btnCapNhatSach)) {
@@ -935,6 +1287,27 @@ public class pnlSanPham extends JPanel implements ActionListener {
 			tblSach.clearSelection();
 		}else if(o.equals(btnTimKiemSach)) {
 			timSachTheoTen();
+		}else if(o.equals(btnThemVPP)) {
+			if (validDateVPP()) {
+				VanPhongPham vpp = revertVPPFromFields();
+				if (!vanPhongPham_dao.themVPP(vpp)) {
+					JOptionPane.showMessageDialog(this, "Thêm thất bại. Đã xảy ra lỗi!!!");
+				} else {
+					napDuLieuVPPTuCSDL(vanPhongPham_dao.getAllVPP("VPP"));
+					tblVanPhongPham.clearSelection();
+					txtMessageVPP.setText("");
+				}
+			}	
+		}else if(o.equals(btnCapNhatVPP)) {
+			updateVPP();
+			napDuLieuVPPTuCSDL(vanPhongPham_dao.getAllVPP("VPP"));
+			tblVanPhongPham.clearSelection();
+		}else if(o.equals(btnLamMoiVPP)) {
+			xoaTrangVPP();
+			napDuLieuVPPTuCSDL(vanPhongPham_dao.getAllVPP("VPP"));
+			tblVanPhongPham.clearSelection();
+		}else if(o.equals(btnTimKiemVPP)) {
+			timVPPTheoTen();
 		}
 	
 	

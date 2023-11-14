@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.DanhMuc;
@@ -45,7 +46,6 @@ public class Dao_Sach implements I_Sach {
 				int namXB = rs.getInt("NAMXUATBAN");
 				int soTrang = rs.getInt("SOTRANG");
 				float thueVAT = rs.getFloat("THUEVAT");
-
 				DanhMuc danhMuc = new DanhMuc(rs.getString("MADANHMUC"));
 				KeHang keHang = new KeHang(rs.getString("MAKEHANG"));
 				KhuyenMai khuyenMai = new KhuyenMai(rs.getString("MAKHUYENMAI"));
@@ -111,9 +111,9 @@ public class Dao_Sach implements I_Sach {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "insert into SANPHAM values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into SANPHAM (MASANPHAM, TENSANPHAM, GIAMUA, SOLUONG, GIABAN, NHAXUATBAN, TACGIA, NAMXUATBAN, SOTRANG, THUEVAT, MADANHMUC, MAKEHANG, MAKHUYENMAI, MANHACUNGCAP, TINHTRANG) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			sta = con.prepareStatement(sql);
-			sta.setString(1,s.getMaSP());
+			sta.setString(1, s.getMaSP());
 			sta.setString(2, s.getTenSP());
 			sta.setFloat(3, s.getGiaMua());
 			sta.setInt(4, s.getSoLuong());
@@ -122,11 +122,19 @@ public class Dao_Sach implements I_Sach {
 			sta.setString(7, s.getTacGia());
 			sta.setInt(8, s.getNamXB());
 			sta.setInt(9, s.getSoTrang());
-			sta.setString(10, s.getDanhMuc().getMaDanhMuc());
-			sta.setString(11, s.getKeHang().getMaKeHang());
-			sta.setString(12, s.getKhuyenMai().getMaKhuyenMai());
-			sta.setString(13, s.getNhaCungCap().getMaNhaCungCap());
-			sta.setString(14, s.getTinhTrang());
+			sta.setFloat(10, s.getThueVAT());
+			sta.setString(11, s.getDanhMuc().getMaDanhMuc());
+			sta.setString(12, s.getKeHang().getMaKeHang());
+
+			// Check if KhuyenMai is not null before setting its value
+			if (s.getKhuyenMai() != null) {
+			    sta.setString(13, s.getKhuyenMai().getMaKhuyenMai());
+			} else {
+			    sta.setNull(13, Types.VARCHAR); // Set as NULL in the database
+			}
+
+			sta.setString(14, s.getNhaCungCap().getMaNhaCungCap());
+			sta.setString(15, s.getTinhTrang());
 			n = sta.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -147,7 +155,7 @@ public class Dao_Sach implements I_Sach {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "update SANPHAM set TENSANPHAM = ?, GIAMUA = ?, SOLUONG = ?, GIABAN = ?, NHAXUATBAN = ?, TACGIA = ?, NAMXUATBAN = ?, SOTRANG = ?, MADANHMUC = ?,"
+			String sql = "update SANPHAM set TENSANPHAM = ?, GIAMUA = ?, SOLUONG = ?, GIABAN = ?, NHAXUATBAN = ?, TACGIA = ?, NAMXUATBAN = ?, SOTRANG = ?, THUEVAT = ?, MADANHMUC = ?,"
 					+ " MAKEHANG = ?, MAKHUYENMAI = ?, MANHACUNGCAP = ?, TINHTRANG = ? where MASANPHAM = ?";
 			sta = con.prepareStatement(sql);
 			sta.setString(1, s.getTenSP());
@@ -158,12 +166,18 @@ public class Dao_Sach implements I_Sach {
 			sta.setString(6, s.getTacGia());
 			sta.setInt(7, s.getNamXB());
 			sta.setInt(8, s.getSoTrang());
-			sta.setString(9, s.getDanhMuc().getMaDanhMuc());
-			sta.setString(10, s.getKeHang().getMaKeHang());
-			sta.setString(11, s.getKhuyenMai().getMaKhuyenMai());
-			sta.setString(12, s.getNhaCungCap().getMaNhaCungCap());
-			sta.setString(13, s.getTinhTrang());
-			sta.setString(14, s.getMaSP());
+			sta.setFloat(9, s.getThueVAT());
+			sta.setString(10, s.getDanhMuc().getMaDanhMuc());
+			sta.setString(11, s.getKeHang().getMaKeHang());
+			// Check if KhuyenMai is not null before setting its value
+	        if (s.getKhuyenMai() != null) {
+	            sta.setString(12, s.getKhuyenMai().getMaKhuyenMai());
+	        } else {
+	            sta.setNull(12, Types.VARCHAR); // Set as NULL in the database
+	        }
+			sta.setString(13, s.getNhaCungCap().getMaNhaCungCap());
+			sta.setString(14, s.getTinhTrang());
+			sta.setString(15, s.getMaSP());
 			n=sta.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();

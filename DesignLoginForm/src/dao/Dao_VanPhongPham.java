@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
@@ -108,7 +109,7 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 			try {
 				ConnectDB.getInstance();
 				Connection con = ConnectDB.getConnection();
-				String sql = "insert into SANPHAM values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				String sql = "insert into SANPHAM (MASANPHAM, TENSANPHAM, GIAMUA, SOLUONG, GIABAN, THUONGHIEU, XUATXU, MAUSAC, CHATLIEU, THUEVAT, MADANHMUC, MAKEHANG, MAKHUYENMAI, MANHACUNGCAP, TINHTRANG) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				sta = con.prepareStatement(sql);
 				sta.setString(1,vpp.getMaSP());
 				sta.setString(2, vpp.getTenSP());
@@ -119,11 +120,17 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				sta.setString(7, vpp.getXuatXu());
 				sta.setString(8, vpp.getMauSac());
 				sta.setString(9, vpp.getChatLieu());
-				sta.setString(10, vpp.getDanhMuc().getMaDanhMuc());
-				sta.setString(11, vpp.getKeHang().getMaKeHang());
-				sta.setString(12, vpp.getKhuyenMai().getMaKhuyenMai());
-				sta.setString(13, vpp.getNhaCungCap().getMaNhaCungCap());
-				sta.setString(14, vpp.getTinhTrang());
+				sta.setFloat(10, vpp.getThueVAT());
+				sta.setString(11, vpp.getDanhMuc().getMaDanhMuc());
+				sta.setString(12, vpp.getKeHang().getMaKeHang());
+				// Check if KhuyenMai is not null before setting its value
+				if (vpp.getKhuyenMai() != null) {
+				    sta.setString(13, vpp.getKhuyenMai().getMaKhuyenMai());
+				} else {
+				    sta.setNull(13, Types.VARCHAR); // Set as NULL in the database
+				}
+				sta.setString(14, vpp.getNhaCungCap().getMaNhaCungCap());
+				sta.setString(15, vpp.getTinhTrang());
 				n = sta.executeUpdate();
 			}catch (SQLException e) {
 				e.printStackTrace();
@@ -144,7 +151,7 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 			try {
 				ConnectDB.getInstance();
 				Connection con = ConnectDB.getConnection();
-				String sql = "update SANPHAM set TENSANPHAM = ?, GIAMUA = ?, SOLUONG = ?, GIABAN = ?, THUONGHIEU = ?, XUATXU = ?, MAUSAC = ?, CHATLIEU = ?, MADANHMUC = ?,"
+				String sql = "update SANPHAM set TENSANPHAM = ?, GIAMUA = ?, SOLUONG = ?, GIABAN = ?, THUONGHIEU = ?, XUATXU = ?, MAUSAC = ?, CHATLIEU = ?, THUEVAT = ?, MADANHMUC = ?,"
 						+ " MAKEHANG = ?, MAKHUYENMAI = ?, MANHACUNGCAP = ?, TINHTRANG = ? where MASANPHAM = ?";
 				sta = con.prepareStatement(sql);
 				sta.setString(1, vpp.getTenSP());
@@ -155,12 +162,18 @@ public class Dao_VanPhongPham implements I_VanPhongPham{
 				sta.setString(6, vpp.getXuatXu());
 				sta.setString(7, vpp.getMauSac());
 				sta.setString(8, vpp.getChatLieu());
-				sta.setString(9, vpp.getDanhMuc().getMaDanhMuc());
-				sta.setString(10, vpp.getKeHang().getMaKeHang());
-				sta.setString(11, vpp.getKhuyenMai().getMaKhuyenMai());
-				sta.setString(12, vpp.getNhaCungCap().getMaNhaCungCap());
-				sta.setString(13, vpp.getTinhTrang());
-				sta.setString(14,vpp.getMaSP());
+				sta.setFloat(9, vpp.getThueVAT());
+				sta.setString(10, vpp.getDanhMuc().getMaDanhMuc());
+				sta.setString(11, vpp.getKeHang().getMaKeHang());
+				// Check if KhuyenMai is not null before setting its value
+				if (vpp.getKhuyenMai() != null) {
+				    sta.setString(12, vpp.getKhuyenMai().getMaKhuyenMai());
+				} else {
+				    sta.setNull(12, Types.VARCHAR); // Set as NULL in the database
+				}
+				sta.setString(13, vpp.getNhaCungCap().getMaNhaCungCap());
+				sta.setString(14, vpp.getTinhTrang());
+				sta.setString(15,vpp.getMaSP());
 				n=sta.executeUpdate();
 			}catch (SQLException e) {
 				e.printStackTrace();
