@@ -39,6 +39,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import javax.swing.JCheckBox;
 
 public class pnlSanPham extends JPanel implements ActionListener {
 	/**
@@ -67,6 +68,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
 	private JComboBox<String> cbMaNhaCungCapVPP;
 	 
 	private JTextField txtTimKiemSach;
+	private JCheckBox chkTimTheoTacGia ;
 	private JTable tblSach;
 	private JTextField txtMaVanPhongPham;
 	private JTextField txtTenVanPhongPham;
@@ -392,6 +394,10 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		pnlChucNang.add(btnTimKiemSach);
 		Image img_iconTimKiem = new ImageIcon(this.getClass().getResource("/find.png")).getImage();
 		btnTimKiemSach.setIcon(new ImageIcon(img_iconTimKiem));
+		
+		chkTimTheoTacGia = new JCheckBox("Tìm kiếm theo tên tác giả");
+		chkTimTheoTacGia.setBounds(441, 128, 188, 21);
+		pnlChucNang.add(chkTimTheoTacGia);
 		
 		JPanel pnlDsSP = new JPanel();
 		pnlDsSP.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EA3n ph\u1EA9m: ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -1334,6 +1340,23 @@ public class pnlSanPham extends JPanel implements ActionListener {
 		}
 	}
 	
+	public void timSachTheoTacGia() {
+		String tentacGia = txtTimKiemSach.getText().trim();
+		
+		if (tentacGia.isEmpty() || tentacGia.trim() == "") {
+			napDuLieuSachTuCSDL(sach_dao.getAllSach("S"));
+			xoaTrangSach();
+		} else {
+			ArrayList<Sach> sachList1 = sach_dao.getListSachTheoTacGia(tentacGia);
+			if ( sachList1.size() > 0) {
+				napDuLieuSachTuCSDL(sachList1);
+				xoaTrangSach();
+			} else {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy!");
+			}
+		}
+	}
+	
 //	Văn phòng phẩm
 	private void xoaTrangVPP() {
 		txtMaVanPhongPham.setText("");
@@ -1808,7 +1831,13 @@ public class pnlSanPham extends JPanel implements ActionListener {
 			tblSach.clearSelection();
 			txtMessageSach.setText("");
 		}else if(o.equals(btnTimKiemSach)) {
-			timSachTheoTen();
+			
+			boolean timtheoTacGia = chkTimTheoTacGia.isSelected();
+			if(timtheoTacGia) {
+				timSachTheoTacGia();
+			} else {
+				timSachTheoTen();
+			}
 		}else if(o.equals(btnThemVPP)) {
 			if (validDateVPP()) {
 				VanPhongPham vpp = revertVPPFromFields();
