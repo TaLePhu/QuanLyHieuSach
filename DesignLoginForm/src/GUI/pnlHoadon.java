@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -71,12 +72,14 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private float thanhTien = 0;
 	DefaultTableModel model;
 	DefaultTableModel modelHD;
+	DefaultTableModel modelCTHD;
 	private JTextField txtMaSP;
 	private JTextField txtTenSP;
 	private JTextField txtGiaBan;
 	private JTextField txtSoLuong;
 	private JTable table;
 	private JTable tableHD;
+	private JTable tableCTHD;
 	private JTextField txtSDTKhachHang;
 	private JTextField txtMaKH;
 	private JTextField txtTenKH;
@@ -117,7 +120,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JButton btnThanhToan;
 	private JButton btnTamIn;
 	private JButton btnTaoMoi;
-	private JButton btnInHoaDon;
 	private JButton btnTimTheoMaHD;
 	private JButton btnXemChiTiet;
 	private JButton btnTaoMoi_N;
@@ -127,6 +129,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JButton btnXuLyTI;
 	private JButton btnInHD_DS;
 	private JButton btnHuyHD;
+	private JPanel pnlCTHD;
 
 	//public static TaiKhoan taiKhoanLogin;
 
@@ -172,80 +175,68 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		JLabel lblMaSP = new JLabel("Mã sản phẩm");
 		lblMaSP.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMaSP.setBounds(10, 20, 100, 20);
+		lblMaSP.setBounds(10, 20, 100, 25);
 		pnlHDBan.add(lblMaSP);
 
 		txtMaSP = new JTextField();
-		txtMaSP.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtMaSP.setBounds(120, 20, 170, 20);
+		txtMaSP.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtMaSP.setBounds(120, 20, 170, 25);
 		pnlHDBan.add(txtMaSP);
 		txtMaSP.setColumns(10);
 
 		JLabel lblTenSP = new JLabel("Tên sản phẩm");
 		lblTenSP.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTenSP.setBounds(390, 20, 100, 20);
+		lblTenSP.setBounds(390, 20, 100, 25);
 		pnlHDBan.add(lblTenSP);
 
 		txtTenSP = new JTextField();
-		txtTenSP.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtTenSP.setEnabled(false);
+		txtTenSP.setEditable(false);
+		txtTenSP.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtTenSP.setColumns(10);
-		txtTenSP.setBounds(510, 20, 250, 20);
+		txtTenSP.setBounds(510, 20, 250, 25);
 		pnlHDBan.add(txtTenSP);
-
-		JLabel lblGiaBan = new JLabel("Giá");
-		lblGiaBan.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblGiaBan.setBounds(10, 45, 100, 20);
-		pnlHDBan.add(lblGiaBan);
-
-		txtGiaBan = new JTextField();
-		txtGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtGiaBan.setEnabled(false);
-		txtGiaBan.setColumns(10);
-		txtGiaBan.setBounds(120, 45, 250, 20);
-		pnlHDBan.add(txtGiaBan);
 
 		JPanel pnlBorderSP = new JPanel();
 		pnlBorderSP.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin sản phẩm", TitledBorder.LEFT, TitledBorder.TOP, null, Color.BLACK));
-		pnlBorderSP.setBounds(0, 0, 770, 130);
+		pnlBorderSP.setBounds(0, 0, 770, 160);
 		pnlHDBan.add(pnlBorderSP);
 		pnlBorderSP.setLayout(null);
 
 		txtSoLuong = new JTextField();
-		txtSoLuong.setBounds(510, 45, 250, 20);
+		txtSoLuong.setBounds(510, 60, 250, 25);
 		pnlBorderSP.add(txtSoLuong);
-		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtSoLuong.setColumns(10);
 
 		JLabel lblSoLuong = new JLabel("Số lượng");
-		lblSoLuong.setBounds(390, 45, 100, 20);
+		lblSoLuong.setBounds(390, 60, 100, 25);
 		pnlBorderSP.add(lblSoLuong);
 		lblSoLuong.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		btnXoaSP = new JButton("Xóa sản phẩm");
-		btnXoaSP.setBounds(560, 70, 200, 50);
+		btnXoaSP.setBounds(560, 100, 200, 50);
 		pnlBorderSP.add(btnXoaSP);
 		btnXoaSP.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		btnThemSP = new JButton("Thêm sản phẩm");
-		btnThemSP.setBounds(80, 70, 200, 50);
+		btnThemSP.setBounds(80, 100, 200, 50);
 		pnlBorderSP.add(btnThemSP);
 		btnThemSP.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		btnSuaSP = new JButton("Sửa sản phẩm");
 		btnSuaSP.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnSuaSP.setBounds(320, 70, 200, 50);
+		btnSuaSP.setBounds(320, 100, 200, 50);
 		pnlBorderSP.add(btnSuaSP);
 
 		btnTimSP = new JButton("Tìm");
 		btnTimSP.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimSP.setBounds(290, 20, 80, 20);
+		btnTimSP.setBounds(290, 20, 80, 25);
 		pnlBorderSP.add(btnTimSP);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 160, 750, 400);
+		scrollPane.setBounds(10, 190, 750, 370);
 		pnlHDBan.add(scrollPane);
 
 		String[] tb = new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng","Giá bán", "%VAT",
@@ -260,122 +251,122 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		JPanel pnlGioHang = new JPanel();
 		pnlGioHang.setBorder(new TitledBorder(null, "Thông tin giỏ hàng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlGioHang.setBounds(0, 140, 770, 440);
+		pnlGioHang.setBounds(0, 170, 770, 410);
 		pnlHDBan.add(pnlGioHang);
 		pnlGioHang.setLayout(null);
 
 		JPanel pnlKhachHang = new JPanel();
 		pnlKhachHang.setBorder(new TitledBorder(null, "Thông tin khách hàng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlKhachHang.setBounds(770, 0, 380, 150);
+		pnlKhachHang.setBounds(770, 0, 380, 170);
 		pnlHDBan.add(pnlKhachHang);
 		pnlKhachHang.setLayout(null);
 
 		JLabel lblSDTKhachHang = new JLabel("Số điện thoại");
 		lblSDTKhachHang.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSDTKhachHang.setBounds(10, 20, 100, 20);
+		lblSDTKhachHang.setBounds(10, 20, 100, 25);
 		pnlKhachHang.add(lblSDTKhachHang);
 
 		txtSDTKhachHang = new JTextField();
 		txtSDTKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtSDTKhachHang.setColumns(10);
-		txtSDTKhachHang.setBounds(120, 20, 170, 20);
+		txtSDTKhachHang.setBounds(120, 20, 170, 25);
 		pnlKhachHang.add(txtSDTKhachHang);
 
 		JLabel lblMaKH = new JLabel("Mã khách hàng");
 		lblMaKH.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMaKH.setBounds(10, 50, 100, 20);
+		lblMaKH.setBounds(10, 55, 100, 25);
 		pnlKhachHang.add(lblMaKH);
 
 		txtMaKH = new JTextField();
-		txtMaKH.setEnabled(false);
+		txtMaKH.setEditable(false);
 		txtMaKH.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMaKH.setColumns(10);
-		txtMaKH.setBounds(120, 50, 250, 20);
+		txtMaKH.setBounds(120, 55, 250, 25);
 		pnlKhachHang.add(txtMaKH);
 
 		txtTenKH = new JTextField();
-		txtTenKH.setEnabled(false);
+		txtTenKH.setEditable(false);
 		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtTenKH.setColumns(10);
-		txtTenKH.setBounds(120, 80, 250, 20);
+		txtTenKH.setBounds(120, 90, 250, 25);
 		pnlKhachHang.add(txtTenKH);
 
 		txtDiaChi = new JTextField();
-		txtDiaChi.setEnabled(false);
+		txtDiaChi.setEditable(false);
 		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDiaChi.setColumns(10);
-		txtDiaChi.setBounds(120, 110, 250, 20);
+		txtDiaChi.setBounds(120, 125, 250, 25);
 		pnlKhachHang.add(txtDiaChi);
 
 		JLabel lblTenKH = new JLabel("Tên khách hàng");
 		lblTenKH.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTenKH.setBounds(10, 80, 100, 20);
+		lblTenKH.setBounds(10, 90, 100, 25);
 		pnlKhachHang.add(lblTenKH);
 
 		JLabel lblDiaChi = new JLabel("Địa chỉ");
 		lblDiaChi.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDiaChi.setBounds(10, 110, 100, 20);
+		lblDiaChi.setBounds(10, 125, 100, 25);
 		pnlKhachHang.add(lblDiaChi);
 
 		btnTimKhachHang = new JButton("Tìm");
 		btnTimKhachHang.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimKhachHang.setBounds(290, 20, 80, 20);
+		btnTimKhachHang.setBounds(290, 20, 80, 25);
 		pnlKhachHang.add(btnTimKhachHang);
 
 		JPanel pnlHoaDon = new JPanel();
 		pnlHoaDon.setLayout(null);
 		pnlHoaDon.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Thông tin hóa đơn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlHoaDon.setBounds(770, 170, 380, 150);
+		pnlHoaDon.setBounds(770, 190, 380, 170);
 		pnlHDBan.add(pnlHoaDon);
 
 		JLabel lblMaHD = new JLabel("Mã hóa đơn");
 		lblMaHD.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMaHD.setBounds(10, 20, 100, 20);
+		lblMaHD.setBounds(10, 20, 100, 25);
 		pnlHoaDon.add(lblMaHD);
 
 		txtMaHD = new JTextField();
-		txtMaHD.setEnabled(false);
+		txtMaHD.setEditable(false);
 		txtMaHD.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMaHD.setColumns(10);
-		txtMaHD.setBounds(120, 20, 250, 20);
+		txtMaHD.setBounds(120, 20, 250, 25);
 		pnlHoaDon.add(txtMaHD);
 
 		JLabel lblNgayLapHD = new JLabel("Ngày lập hóa đơn");
 		lblNgayLapHD.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNgayLapHD.setBounds(10, 50, 112, 20);
+		lblNgayLapHD.setBounds(10, 55, 112, 25);
 		pnlHoaDon.add(lblNgayLapHD);
 
 		txtMaNhanVien = new JTextField();
-		txtMaNhanVien.setEnabled(false);
+		txtMaNhanVien.setEditable(false);
 		txtMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMaNhanVien.setColumns(10);
-		txtMaNhanVien.setBounds(120, 80, 250, 20);
+		txtMaNhanVien.setBounds(120, 90, 250, 25);
 		pnlHoaDon.add(txtMaNhanVien);
 
 		txtTenNV = new JTextField();
-		txtTenNV.setEnabled(false);
+		txtTenNV.setEditable(false);
 		txtTenNV.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtTenNV.setColumns(10);
-		txtTenNV.setBounds(120, 110, 250, 20);
+		txtTenNV.setBounds(120, 124, 250, 25);
 		pnlHoaDon.add(txtTenNV);
 
 		JLabel lblMaNV = new JLabel("Mã nhân viên");
 		lblMaNV.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMaNV.setBounds(10, 80, 100, 20);
+		lblMaNV.setBounds(10, 90, 100, 25);
 		pnlHoaDon.add(lblMaNV);
 
 		JLabel lblTenNV = new JLabel("Tên nhân viên");
 		lblTenNV.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTenNV.setBounds(10, 110, 100, 20);
+		lblTenNV.setBounds(10, 125, 100, 25);
 		pnlHoaDon.add(lblTenNV);
 
 		dcrNgayLap = new JDateChooser();
-		dcrNgayLap.setBounds(120, 50, 250, 20);
+		dcrNgayLap.setBounds(120, 55, 250, 25);
 
 		dcrNgayLap.setLocale(new Locale("vi", "VN"));
 		dcrNgayLap.setDateFormatString("dd/MM/yyyy");
 		dcrNgayLap.setDate(new Date(System.currentTimeMillis()));
-		dcrNgayLap.setEnabled(false); // chi duoc doc
+		dcrNgayLap.setEnabled(false);
 
 		pnlHoaDon.add(dcrNgayLap);
 
@@ -391,8 +382,8 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		pnlThanhToan.add(lblTongTien);
 
 		txtTongTien = new JTextField();
+		txtTongTien.setEditable(false);
 		txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTongTien.setEnabled(false);
 		txtTongTien.setColumns(10);
 		txtTongTien.setBounds(130, 30, 250, 30);
 		pnlThanhToan.add(txtTongTien);
@@ -414,8 +405,8 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		pnlThanhToan.add(lblTienThua);
 
 		txtTienThua = new JTextField();
+		txtTienThua.setEditable(false);
 		txtTienThua.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTienThua.setEnabled(false);
 		txtTienThua.setColumns(10);
 		txtTienThua.setBounds(510, 28, 250, 30);
 		pnlThanhToan.add(txtTienThua);
@@ -426,35 +417,30 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		pnlThanhToan.add(lblKhuyenMai);
 
 		txtKhuyenMai = new JTextField();
+		txtKhuyenMai.setEditable(false);
 		txtKhuyenMai.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtKhuyenMai.setEnabled(false);
 		txtKhuyenMai.setColumns(10);
 		txtKhuyenMai.setBounds(510, 80, 250, 30);
 		pnlThanhToan.add(txtKhuyenMai);
 
 		btnThanhToan = new JButton("Thanh toán");
 		btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnThanhToan.setBounds(810, 600, 310, 110);
+		btnThanhToan.setBounds(810, 570, 310, 70);
 		pnlHDBan.add(btnThanhToan);
 
-		btnTamIn = new JButton("Tạm in");
+		btnTamIn = new JButton("In hóa đơn tạm");
 		btnTamIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnTamIn.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnTamIn.setBounds(810, 430, 310, 70);
+		btnTamIn.setBounds(810, 480, 310, 70);
 		pnlHDBan.add(btnTamIn);
 
 		btnTaoMoi = new JButton("Tạo mới");
 		btnTaoMoi.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnTaoMoi.setBounds(810, 345, 310, 70);
+		btnTaoMoi.setBounds(810, 390, 310, 70);
 		pnlHDBan.add(btnTaoMoi);
-
-		btnInHoaDon = new JButton("In hóa đơn");
-		btnInHoaDon.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnInHoaDon.setBounds(810, 515, 310, 70);
-		pnlHDBan.add(btnInHoaDon);
 
 		JPanel pnlDSHD = new JPanel();
 		pnlDSHD.setLayout(null);
@@ -462,18 +448,18 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		JLabel lblMaHD_T = new JLabel("Mã hóa đơn");
 		lblMaHD_T.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMaHD_T.setBounds(20, 20, 100, 20);
+		lblMaHD_T.setBounds(20, 20, 170, 20);
 		pnlDSHD.add(lblMaHD_T);
 
 		txtMaHD_T = new JTextField();
 		txtMaHD_T.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMaHD_T.setColumns(10);
-		txtMaHD_T.setBounds(130, 20, 250, 20);
+		txtMaHD_T.setBounds(195, 20, 250, 20);
 		pnlDSHD.add(txtMaHD_T);
 
-		JLabel lblTimTheoSDTKH = new JLabel("Tìm theo số điện thoại khách hàng");
+		JLabel lblTimTheoSDTKH = new JLabel("Số điện thoại khách hàng");
 		lblTimTheoSDTKH.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTimTheoSDTKH.setBounds(20, 50, 215, 20);
+		lblTimTheoSDTKH.setBounds(20, 50, 170, 20);
 		pnlDSHD.add(lblTimTheoSDTKH);
 
 		JPanel pnlBorderDSHD = new JPanel();
@@ -485,23 +471,23 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		txtSoLuong_N = new JTextField();
 		txtSoLuong_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtSoLuong_N.setColumns(10);
-		txtSoLuong_N.setBounds(800, 50, 250, 20);
+		txtSoLuong_N.setBounds(735, 50, 250, 20);
 		pnlBorderDSHD.add(txtSoLuong_N);
 
-		JLabel lblTimSDTNV = new JLabel("Tìm theo số điện thoại nhân viên");
+		JLabel lblTimSDTNV = new JLabel("Tên khách hàng");
 		lblTimSDTNV.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTimSDTNV.setBounds(560, 50, 215, 20);
+		lblTimSDTNV.setBounds(570, 50, 127, 20);
 		pnlBorderDSHD.add(lblTimSDTNV);
 
 		btnTimTheoMaHD = new JButton("Tìm");
 		btnTimTheoMaHD.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimTheoMaHD.setBounds(390, 20, 100, 20);
+		btnTimTheoMaHD.setBounds(450, 20, 100, 20);
 		pnlBorderDSHD.add(btnTimTheoMaHD);
 
 		JScrollPane scrollPane_DS = new JScrollPane();
 		scrollPane_DS.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_DS.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_DS.setBounds(10, 225, 1138, 484);
+		scrollPane_DS.setBounds(10, 225, 1138, 230);
 		pnlDSHD.add(scrollPane_DS);
 
 
@@ -513,11 +499,11 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		//table = new JTable();
 		scrollPane_DS.setViewportView(tableHD);
 
-		JPanel pnlGioHang_N = new JPanel();
-		pnlGioHang_N.setLayout(null);
-		pnlGioHang_N.setBorder(new TitledBorder(null, "Thông tin danh sách hóa đơn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlGioHang_N.setBounds(0, 205, 1158, 520);
-		pnlDSHD.add(pnlGioHang_N);
+		JPanel pnlTTDSHD = new JPanel();
+		pnlTTDSHD.setLayout(null);
+		pnlTTDSHD.setBorder(new TitledBorder(null, "Thông tin danh sách hóa đơn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlTTDSHD.setBounds(0, 205, 1158, 260);
+		pnlDSHD.add(pnlTTDSHD);
 
 		//pnlHoaDon.add(dcrNgayLap);
 
@@ -528,24 +514,39 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnTaoMoi.setIcon(new ImageIcon("img/update.png"));
 		btnThanhToan.setIcon(new ImageIcon("img/thanhToan.png"));
 		btnTimSP.setIcon(new ImageIcon("img/find16.png"));
+
+		JLabel lblGiaBan = new JLabel("Giá");
+		lblGiaBan.setBounds(10, 60, 100, 25);
+		pnlBorderSP.add(lblGiaBan);
+		lblGiaBan.setFont(new Font("Tahoma", Font.BOLD, 12));
+
+		txtGiaBan = new JTextField();
+		txtGiaBan.setBounds(120, 60, 250, 25);
+		pnlBorderSP.add(txtGiaBan);
+		txtGiaBan.setEditable(false);
+		txtGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtGiaBan.setColumns(10);
 		btnTimTheoMaHD.setIcon(new ImageIcon("img/find16.png"));
 
 		lblNgayLap = new JLabel("Tìm theo ngày");
 		lblNgayLap.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNgayLap.setBounds(560, 20, 100, 20);
+		lblNgayLap.setBounds(570, 20, 100, 20);
 		pnlBorderDSHD.add(lblNgayLap);
 
 		btnTimTheoNgay = new JButton("Tìm");
 		btnTimTheoNgay.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimTheoNgay.setBounds(950, 20, 100, 20);
+		btnTimTheoNgay.setBounds(990, 20, 100, 20);
 		pnlBorderDSHD.add(btnTimTheoNgay);
 
 		dcrNgayLap_T = new JDateChooser();
-		dcrNgayLap_T.setBounds(680, 20, 250, 20);
+		dcrNgayLap_T.setBounds(735, 20, 250, 20);
 		pnlBorderDSHD.add(dcrNgayLap_T);
+		dcrNgayLap_T.setLocale(new Locale("vi", "VN"));
+		dcrNgayLap_T.setDateFormatString("dd/MM/yyyy");
+		//dcrNgayLap_T.setDate(new Date(System.currentTimeMillis()));
 
 		txtTimSDTKH = new JTextField();
-		txtTimSDTKH.setBounds(240, 50, 250, 20);
+		txtTimSDTKH.setBounds(190, 50, 250, 20);
 		pnlBorderDSHD.add(txtTimSDTKH);
 		txtTimSDTKH.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtTimSDTKH.setColumns(10);
@@ -562,7 +563,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnTaoMoi_N.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnTaoMoi_N.setIcon(new ImageIcon("img/update.png"));
 
-		btnXuLyTI = new JButton("Xử lý tạm in");
+		btnXuLyTI = new JButton("Xử lý hóa đơn tạm");
 		btnXuLyTI.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnXuLyTI.setBounds(20, 100, 200, 60);
 		pnlBorderDSHD.add(btnXuLyTI);
@@ -577,6 +578,35 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnHuyHD.setBounds(930, 100, 200, 60);
 		pnlBorderDSHD.add(btnHuyHD);
 
+		JButton btnTimTheoMaHD_1 = new JButton("Tìm");
+		btnTimTheoMaHD_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnTimTheoMaHD_1.setBounds(450, 51, 100, 20);
+		pnlBorderDSHD.add(btnTimTheoMaHD_1);
+
+		JButton btnTimTheoNgay_1 = new JButton("Tìm");
+		btnTimTheoNgay_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnTimTheoNgay_1.setBounds(990, 51, 100, 20);
+		pnlBorderDSHD.add(btnTimTheoNgay_1);
+
+		pnlCTHD = new JPanel();
+		pnlCTHD.setLayout(null);
+		pnlCTHD.setBorder(new TitledBorder(null, "Thông tin chi tiết hóa đơn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlCTHD.setBounds(0, 470, 1158, 260);
+		pnlDSHD.add(pnlCTHD);
+
+		String[] tb_CT = new String[] { "STT", "Mã hóa đơn", "Tên khách hàng", "Tên nhân viên", "Thời gian lập hóa đơn", "Trạng thái",
+		"Thành tiền" };
+		modelCTHD = new DefaultTableModel(tb_CT, 0);
+		tableCTHD = new JTable(modelCTHD);
+
+		JScrollPane scrollPaneCTHD = new JScrollPane();
+		scrollPaneCTHD.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneCTHD.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPaneCTHD.setBounds(10, 20, 1138, 230);
+		pnlCTHD.add(scrollPaneCTHD);
+
+		scrollPaneCTHD.setViewportView(tableCTHD);
+
 		btnTimKhachHang.setIcon(new ImageIcon("img/find16.png"));
 
 		ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getAllHoaDonBan();
@@ -586,7 +616,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnTaoMoi_N.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 		btnXoaSP.addActionListener(this);
-		btnInHoaDon.addActionListener(this);
 		btnTamIn.addActionListener(this);
 		btnThanhToan.addActionListener(this);
 		btnThemSP.addActionListener(this);
@@ -820,13 +849,19 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	// kiểm tra khuye mai
 	public void kiemTraKM() {
 		float tt = Float.parseFloat(txtTongTien.getText());
-		if(tt < 500000) {
-			txtKhuyenMai.setText(km+"");
+		ArrayList<KhuyenMai> ds = dao_KhuyenMai.getKhuyenMaiTheoTinhTrang("Đang diễn ra","Hóa đơn");
+		for (KhuyenMai khuyenMai : ds) {
+			km = (float) (km+ (khuyenMai.getGiaTriGiamGia()*0.01));
+			if(tt >= 500000) {
+				txtKhuyenMai.setText(km+"");
+			}
+			else {
+				km=0;
+				txtKhuyenMai.setText(km+"");
+			}
 		}
-		else {
-			km = 0.05f;
-			txtKhuyenMai.setText(km+"");
-		}
+
+
 	}
 
 	//	private HoaDonBan createHDB() {
@@ -855,6 +890,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			timKHTheoSDT();
 		}
 		else if(o.equals(btnThanhToan)) {
+
 			int r = tableHD.getSelectedRow();
 			if(r<0) {
 				if(validDataTKD()) {
@@ -863,10 +899,16 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 					int soLuongTon = 0;
 					int soLuongConLai = 0; //sau khi thanh toán
 
+
+					txtKhuyenMai.setText(km+"");
+
+					float tkm = km*tongThanhTien;
+					tongThanhTien += tkm;
+					txtTongTien.setText(tongThanhTien+"");
+
 					float tienKD = Float.parseFloat(txtTienKhachDua.getText());
 					float tienTL = tienKD - tongThanhTien;
 					txtTienThua.setText(tienTL + "");
-					txtKhuyenMai.setText(km+"");
 
 					Date dateNgayLapHD = dcrNgayLap.getDate();
 					Timestamp sqlNgayLapHD = new Timestamp(dateNgayLapHD.getTime());
@@ -911,10 +953,10 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 							}
 							if(flag == 1) {
 								JOptionPane.showMessageDialog(this,"Thanh toán thành công");
-								
+
 							}else {
 								JOptionPane.showMessageDialog(this,"Thanh toán thất bại");
-								
+
 							}
 
 						}
@@ -939,7 +981,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				}else {
 					JOptionPane.showMessageDialog(this,"Thanh toán hóa đơn tạm thất bại");
 				}
-				
+
 			}
 		}
 		else if(o.equals(btnThemSP)) {
@@ -947,6 +989,21 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			if(validDataSLSP()) {
 				String ma = txtMaSP.getText();
 				String soLuong = txtSoLuong.getText();
+				for(int i = 0; i< table.getRowCount();i++) {
+					if (model.getValueAt(i, 1).toString().equals(ma) && stt!=0) {
+						int sl = Integer.parseInt(model.getValueAt(i, 3).toString());
+						int sln = Integer.parseInt(soLuong);
+						float gia = Float.parseFloat(model.getValueAt(i,4).toString());
+						float tc = sl*gia;
+						float tt = (sl+sln)*gia;
+						model.setValueAt(sl+sln, i, 3);
+						model.setValueAt(tt, i, 6);
+						tongThanhTien =tongThanhTien + tt - tc;
+						txtTongTien.setText(tongThanhTien + "");
+						kiemTraKM();
+						return;
+					}
+				}
 				int soL = Integer.parseInt(soLuong);
 				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma);
 				for (SanPham sp : ds) {
@@ -955,7 +1012,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 					model.addRow(new Object[] {++stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),sp.getThueVAT(),thanhTien + ""});
 					txtTongTien.setText(tongThanhTien + "");
 				}
-				txtKhuyenMai.setText("");
 				kiemTraKM();
 			}
 
@@ -974,6 +1030,8 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			txtTienThua.setText("");
 			txtTienKhachDua.setText("");
 			txtKhuyenMai.setText("");
+			tongThanhTien =0;
+			km=0;
 			while (model.getRowCount() != 0) {
 				model.removeRow(0);
 			}
@@ -1003,27 +1061,37 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		else if(o.equals(btnSuaSP)) {
 			int rowu = table.getSelectedRow();
 			if(rowu < 0) {
-				JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm muốn xóa");
+				JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm muốn sửa");
 				return;
 			}
 			String ma = model.getValueAt(rowu,1).toString();
-			if(rowu >0) {
+			if(rowu >=0) {
 				String thanhTienXoa = model.getValueAt(rowu,6).toString();
 				float ttx = Float.parseFloat(thanhTienXoa);
-				float tonngTienXoa = Float.parseFloat(txtTongTien.getText());
-				float TTSX = tonngTienXoa-ttx;
-				model.removeRow(rowu);
-				stt = model.getRowCount();
+				//float tonngTienXoa = Float.parseFloat(txtTongTien.getText());
+				//float TTSX = tonngTienXoa-ttx;
 				String soLuong = txtSoLuong.getText();
-				int soL = Integer.parseInt(soLuong);
-				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma );
-				for (SanPham sp : ds) {
-					thanhTien = (float) (sp.getGiaBan()*soL);
-					tongThanhTien = TTSX +thanhTien;
-					model.addRow(new Object[] {++stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),sp.getThueVAT(),thanhTien + ""});
-					txtTongTien.setText(tongThanhTien + "");
-				}
-				txtKhuyenMai.setText("");
+				//				model.removeRow(rowu);
+				//				stt = model.getRowCount();
+				//				String soLuong = txtSoLuong.getText();
+				//				int soL = Integer.parseInt(soLuong);
+				//				ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma );
+				//				for (SanPham sp : ds) {
+				//					thanhTien = (float) (sp.getGiaBan()*soL);
+				//					tongThanhTien = TTSX +thanhTien;
+				//					model.addRow(new Object[] {stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),sp.getThueVAT(),thanhTien + ""});
+				//					txtTongTien.setText(tongThanhTien + "");
+				//				}
+				//				txtKhuyenMai.setText("");
+				//				kiemTraKM();
+				int sln = Integer.parseInt(soLuong);
+				float gia = Float.parseFloat(model.getValueAt(rowu,4).toString());
+				float tt = (sln)*gia;
+				model.setValueAt(sln, rowu, 3);
+				model.setValueAt(tt, rowu, 6);
+				float tienSua = tt - ttx;
+				tongThanhTien += tienSua;
+				txtTongTien.setText(tongThanhTien + "");
 				kiemTraKM();
 			}
 
@@ -1038,6 +1106,11 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 				Date dateNgayLapHD = dcrNgayLap.getDate();
 				Timestamp sqlNgayLapHD = new Timestamp(dateNgayLapHD.getTime());
+				txtKhuyenMai.setText(km+"");
+
+				float tkm = km*tongThanhTien;
+				tongThanhTien += tkm;
+				txtTongTien.setText(tongThanhTien+"");
 
 				String maHD = txtMaHD.getText();
 				String maNV = txtMaNhanVien.getText();
@@ -1100,6 +1173,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			int r = tableHD.getSelectedRow();
 			int STT=0;
 			tongThanhTien=0;
+			km=0;
 			txtTongTien.setText("");
 
 			if(r < 0 ) {
@@ -1120,9 +1194,23 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 					SanPham sp = dao_SanPham.getTheoMa(maSP);
 					model.addRow(new Object [] {++STT,sp.getMaSP(),sp.getTenSP(),cthd.getSoLuong(),sp.getGiaBan(),sp.getThueVAT(),cthd.getThanhTien()});
 					tongThanhTien +=cthd.getThanhTien();
+					txtTongTien.setText(tongThanhTien+"");
+					kiemTraKM();
 				}
+				txtKhuyenMai.setText(km+"");
+				float tkm = km*tongThanhTien;
+				tongThanhTien += tkm;
 				txtTongTien.setText(tongThanhTien+"");
 				txtMaHD.setText(ma);
+				ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoMa(ma);
+				for (HoaDonBan hd : dsHD) {
+					KhachHang kh = dao_KhachHang.getTheoMaKH(hd.getMaKH().getMaKhachhang());
+					txtSDTKhachHang.setText(kh.getSoDT());
+					txtMaKH.setText(kh.getMaKhachhang());
+					txtTenKH.setText(kh.getTenKhachHang());
+					txtDiaChi.setText(kh.getDiaChi());
+				}
+
 			}
 		}
 		else if(o.equals(btnTimTheoMaHD)) {
@@ -1142,7 +1230,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 			}
 		}
-		
+
 
 	}
 
