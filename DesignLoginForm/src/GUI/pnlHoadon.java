@@ -131,6 +131,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JPanel pnlCTHD;
 	private JButton btnTimTheoSDTKH;
 	private JButton btnTimTenKH;
+	private JTabbedPane tabbedPane;
 
 	//public static TaiKhoan taiKhoanLogin;
 
@@ -166,7 +167,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		dao_NhanVien = new Dao_NhanVien();
 		dao_ChiTietHoaDonBan = new Dao_ChiTietHoaDonBan();
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 1163, 763);
 		add(tabbedPane);
 
@@ -1225,7 +1226,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 					txtTenKH.setText(kh.getTenKhachHang());
 					txtDiaChi.setText(kh.getDiaChi());
 				}
-
+				tabbedPane.setSelectedIndex(0);
 			}
 		}
 		else if(o.equals(btnTimTheoMaHD)) {
