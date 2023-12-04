@@ -92,7 +92,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JTextField txtTienThua;
 	private JTextField txtMaHD_T;
 	private JTextField txtTimSDTKH;
-	private JTextField txtSoLuong_N;
+	private JTextField txtTimTenKH;
 	private JDateChooser dcrNgayLap;
 	private JDateChooser dcrNgayLap_T;
 
@@ -121,7 +121,6 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JButton btnTamIn;
 	private JButton btnTaoMoi;
 	private JButton btnTimTheoMaHD;
-	private JButton btnXemChiTiet;
 	private JButton btnTaoMoi_N;
 	private JTextField txtKhuyenMai;
 	private JLabel lblNgayLap;
@@ -130,6 +129,8 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	private JButton btnInHD_DS;
 	private JButton btnHuyHD;
 	private JPanel pnlCTHD;
+	private JButton btnTimTheoSDTKH;
+	private JButton btnTimTenKH;
 
 	//public static TaiKhoan taiKhoanLogin;
 
@@ -428,7 +429,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnThanhToan.setBounds(810, 570, 310, 70);
 		pnlHDBan.add(btnThanhToan);
 
-		btnTamIn = new JButton("In hóa đơn tạm");
+		btnTamIn = new JButton("Lưu tạm hóa đơn");
 		btnTamIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -454,7 +455,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		txtMaHD_T = new JTextField();
 		txtMaHD_T.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMaHD_T.setColumns(10);
-		txtMaHD_T.setBounds(195, 20, 250, 20);
+		txtMaHD_T.setBounds(190, 20, 250, 20);
 		pnlDSHD.add(txtMaHD_T);
 
 		JLabel lblTimTheoSDTKH = new JLabel("Số điện thoại khách hàng");
@@ -465,14 +466,14 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		JPanel pnlBorderDSHD = new JPanel();
 		pnlBorderDSHD.setLayout(null);
 		pnlBorderDSHD.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tìm hóa đơn", TitledBorder.LEFT, TitledBorder.TOP, null, Color.BLACK));
-		pnlBorderDSHD.setBounds(5, 0, 1148, 195);
+		pnlBorderDSHD.setBounds(0, 0, 1158, 195);
 		pnlDSHD.add(pnlBorderDSHD);
 
-		txtSoLuong_N = new JTextField();
-		txtSoLuong_N.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtSoLuong_N.setColumns(10);
-		txtSoLuong_N.setBounds(735, 50, 250, 20);
-		pnlBorderDSHD.add(txtSoLuong_N);
+		txtTimTenKH = new JTextField();
+		txtTimTenKH.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtTimTenKH.setColumns(10);
+		txtTimTenKH.setBounds(735, 50, 250, 20);
+		pnlBorderDSHD.add(txtTimTenKH);
 
 		JLabel lblTimSDTNV = new JLabel("Tên khách hàng");
 		lblTimSDTNV.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -551,42 +552,36 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		txtTimSDTKH.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtTimSDTKH.setColumns(10);
 
-		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setBounds(470, 100, 200, 60);
-		pnlBorderDSHD.add(btnXemChiTiet);
-		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnXemChiTiet.setIcon(new ImageIcon("img/thanhToan.png"));
-
 		btnTaoMoi_N = new JButton("Tạo mới");
-		btnTaoMoi_N.setBounds(700, 100, 200, 60);
+		btnTaoMoi_N.setBounds(610, 100, 200, 60);
 		pnlBorderDSHD.add(btnTaoMoi_N);
 		btnTaoMoi_N.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnTaoMoi_N.setIcon(new ImageIcon("img/update.png"));
 
 		btnXuLyTI = new JButton("Xử lý hóa đơn tạm");
 		btnXuLyTI.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnXuLyTI.setBounds(20, 100, 200, 60);
+		btnXuLyTI.setBounds(70, 100, 200, 60);
 		pnlBorderDSHD.add(btnXuLyTI);
 
 		btnInHD_DS = new JButton("In hóa đơn");
 		btnInHD_DS.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnInHD_DS.setBounds(240, 100, 200, 60);
+		btnInHD_DS.setBounds(340, 100, 200, 60);
 		pnlBorderDSHD.add(btnInHD_DS);
 
 		btnHuyHD = new JButton("Hủy hóa đơn");
 		btnHuyHD.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnHuyHD.setBounds(930, 100, 200, 60);
+		btnHuyHD.setBounds(880, 100, 200, 60);
 		pnlBorderDSHD.add(btnHuyHD);
 
-		JButton btnTimTheoMaHD_1 = new JButton("Tìm");
-		btnTimTheoMaHD_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimTheoMaHD_1.setBounds(450, 51, 100, 20);
-		pnlBorderDSHD.add(btnTimTheoMaHD_1);
+		btnTimTheoSDTKH = new JButton("Tìm");
+		btnTimTheoSDTKH.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnTimTheoSDTKH.setBounds(450, 51, 100, 20);
+		pnlBorderDSHD.add(btnTimTheoSDTKH);
 
-		JButton btnTimTheoNgay_1 = new JButton("Tìm");
-		btnTimTheoNgay_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTimTheoNgay_1.setBounds(990, 51, 100, 20);
-		pnlBorderDSHD.add(btnTimTheoNgay_1);
+		btnTimTenKH = new JButton("Tìm");
+		btnTimTenKH.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnTimTenKH.setBounds(990, 51, 100, 20);
+		pnlBorderDSHD.add(btnTimTenKH);
 
 		pnlCTHD = new JPanel();
 		pnlCTHD.setLayout(null);
@@ -594,7 +589,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		pnlCTHD.setBounds(0, 470, 1158, 260);
 		pnlDSHD.add(pnlCTHD);
 
-		String[] tb_CT = new String[] { "STT", "Mã hóa đơn", "Tên khách hàng", "Tên nhân viên", "Thời gian lập hóa đơn", "Trạng thái",
+		String[] tb_CT = new String[] { "STT", "Mã hóa đơn", "Mã sản phẩm","Tên sản phẩm","Số lượng", "%VAT",
 		"Thành tiền" };
 		modelCTHD = new DefaultTableModel(tb_CT, 0);
 		tableCTHD = new JTable(modelCTHD);
@@ -609,12 +604,10 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 		btnTimKhachHang.setIcon(new ImageIcon("img/find16.png"));
 
-		ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getAllHoaDonBan();
-		napDuLieuHDTuCSDL(dsHD);
+		
 
 		// add event
 		btnTaoMoi_N.addActionListener(this);
-		btnXemChiTiet.addActionListener(this);
 		btnXoaSP.addActionListener(this);
 		btnTamIn.addActionListener(this);
 		btnThanhToan.addActionListener(this);
@@ -626,10 +619,12 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		btnSuaSP.addActionListener(this);
 		btnXuLyTI.addActionListener(this);
 		btnHuyHD.addActionListener(this);
-		btnXemChiTiet.addActionListener(this);
 		btnInHD_DS.addActionListener(this);
 		btnTimTheoNgay.addActionListener(this);
+		btnTimTheoSDTKH.addActionListener(this);
+		btnTimTenKH.addActionListener(this);
 		table.addMouseListener(this);
+		tableHD.addMouseListener(this);
 
 		//txtMaSP.getDocument().addDocumentListener(this);
 		//txtMaSP_N.getDocument().addDocumentListener(this);
@@ -657,7 +652,19 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			JOptionPane.showMessageDialog(this, "Lỗi ngoại lệ.");
 		}
 
-		//Khuyen mai
+		//Lay du lieu hoa don cua nhan vien dang nhap vao
+		
+		
+		NhanVien nvph = dao_NhanVien.getTheoMaNV(txtMaNhanVien.getText());
+		
+		if("Nhân viên bán hàng".equals(nvph.getChucVu())) {
+			ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoNgayHT_PH(txtMaNhanVien.getText());
+			napDuLieuHDTuCSDL(dsHD);
+			
+		}else {
+			ArrayList<HoaDonBan> dsHD1 = dao_HoaDonBan.getHDTheoNgayHT_PH_NVQL();
+			napDuLieuHDTuCSDL(dsHD1);
+		}
 
 
 	}
@@ -846,7 +853,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		}
 		return true;
 	}
-	// kiểm tra khuye mai
+	// kiểm tra khuyen mai
 	public void kiemTraKM() {
 		float tt = Float.parseFloat(txtTongTien.getText());
 		ArrayList<KhuyenMai> ds = dao_KhuyenMai.getKhuyenMaiTheoTinhTrang("Đang diễn ra","Hóa đơn");
@@ -1166,8 +1173,16 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			}
 		}
 		else if(o.equals(btnTaoMoi_N)) {
-			ArrayList<HoaDonBan> ds = dao_HoaDonBan.getAllHoaDonBan();
-			napDuLieuHDTuCSDL(ds);
+			NhanVien nvph = dao_NhanVien.getTheoMaNV(txtMaNhanVien.getText());
+			
+			if("Nhân viên bán hàng".equals(nvph.getChucVu())) {
+				ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoNgayHT_PH(txtMaNhanVien.getText());
+				napDuLieuHDTuCSDL(dsHD);
+				
+			}else {
+				ArrayList<HoaDonBan> dsHD1 = dao_HoaDonBan.getHDTheoNgayHT_PH_NVQL();
+				napDuLieuHDTuCSDL(dsHD1);
+			}
 		}
 		else if(o.equals(btnXuLyTI)) {
 			int r = tableHD.getSelectedRow();
@@ -1220,17 +1235,138 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 
 			} 
 			else {
-				ArrayList<HoaDonBan> ds = dao_HoaDonBan.getHDTheoMa(maTim);
-				if (ds.size()==0) {
-					JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+				NhanVien nvph = dao_NhanVien.getTheoMaNV(txtMaNhanVien.getText());
+				if("Nhân viên bán hàng".equals(nvph.getChucVu())) {
+					ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoMa_NVBH(maTim,txtMaNhanVien.getText());
+					if (dsHD.size()==0) {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+					}
+					else {
+						napDuLieuHDTuCSDL(dsHD);
+					}
+					
+				}else {
+					ArrayList<HoaDonBan> dsHD1 = dao_HoaDonBan.getHDTheoMa(maTim);
+					if (dsHD1.size()==0) {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+					}
+					else {
+						napDuLieuHDTuCSDL(dsHD1);
+					}
 				}
-				else {
-					napDuLieuHDTuCSDL(ds);
-				}
+				
 
 			}
 		}
+		else if(o.equals(btnTimTheoSDTKH)) {
+			String maTim = txtTimSDTKH.getText();
+			
+			if (maTim.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại khách hàng muốn tìm");	
 
+			} 
+			else {
+				KhachHang khT = dao_KhachHang.getTheoSDT(maTim);
+				if(khT == null) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy số điện thoại khách hàng");
+				}
+				else {
+					NhanVien nvph = dao_NhanVien.getTheoMaNV(txtMaNhanVien.getText());
+					if("Nhân viên bán hàng".equals(nvph.getChucVu())) {
+						ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoMAKH_NVBH(khT.getMaKhachhang(),txtMaNhanVien.getText());
+						if (dsHD.size()==0) {
+							JOptionPane.showMessageDialog(this, "Không tìm thấy số điện thoại khách hàng");
+						}
+						else {
+							napDuLieuHDTuCSDL(dsHD);
+						}
+						
+					}else {
+						ArrayList<HoaDonBan> dsHD1 = dao_HoaDonBan.getHDTheoMAKH(khT.getMaKhachhang());
+						if (dsHD1.size()==0) {
+							JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+						}
+						else {
+							napDuLieuHDTuCSDL(dsHD1);
+						}
+					}
+				}
+				
+				
+
+			}
+		}
+		else if(o.equals(btnTimTenKH)) {
+			String maTim = txtTimTenKH.getText();
+			
+			if (maTim.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên khách hàng muốn tìm");	
+
+			} 
+			else {
+				ArrayList<KhachHang> khT = dao_KhachHang.getKHTheoHoTen(maTim);
+				if(khT.size()==0) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy họ tên khách hàng");
+				}
+				else {
+					NhanVien nvph = dao_NhanVien.getTheoMaNV(txtMaNhanVien.getText());
+					if("Nhân viên bán hàng".equals(nvph.getChucVu())) {
+						for (KhachHang khachHang : khT) {
+							ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoMAKH_NVBH(khachHang.getMaKhachhang(),txtMaNhanVien.getText());
+							if (dsHD.size()==0) {
+								JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+							}
+							else {
+								napDuLieuHDTuCSDL(dsHD);
+							}
+						}		
+					}else {
+						for (KhachHang khachHang : khT) {
+							ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoMAKH(khachHang.getMaKhachhang());
+							if (dsHD.size()==0) {
+								JOptionPane.showMessageDialog(this, "Không tìm thấy mã hóa đơn");
+							}
+							else {
+								napDuLieuHDTuCSDL(dsHD);
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(o.equals(btnTimTheoNgay)) {
+			Date currentDate = dcrNgayLap_T.getDate();
+			
+			if (currentDate == null) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập ngày lập hóa đơn muốn tìm");	
+
+			} 
+			else {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+	            String currentDateStr = dateFormat.format(currentDate);
+				NhanVien nvph = dao_NhanVien.getTheoMaNV(txtMaNhanVien.getText());
+				if("Nhân viên bán hàng".equals(nvph.getChucVu())) {
+					ArrayList<HoaDonBan> dsHD = dao_HoaDonBan.getHDTheoNgay_NVBH(currentDateStr,txtMaNhanVien.getText());
+					if (dsHD.size()==0) {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy ngày lập hóa đơn");
+					}
+					else {
+						napDuLieuHDTuCSDL(dsHD);
+					}
+					
+				}else {
+					ArrayList<HoaDonBan> dsHD1 = dao_HoaDonBan.getHDTheoNgay(currentDateStr);
+					if (dsHD1.size()==0) {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy ngày lập hóa đơn");
+					}
+					else {
+						napDuLieuHDTuCSDL(dsHD1);
+					}
+				}
+				
+
+			}
+		}
 
 	}
 
@@ -1259,11 +1395,31 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int row = table.getSelectedRow();
-		txtMaSP.setText(model.getValueAt(row,1).toString());
-		txtTenSP.setText(model.getValueAt(row,2).toString());
-		txtSoLuong.setText(model.getValueAt(row,3).toString());
-		txtGiaBan.setText(model.getValueAt(row,4).toString());
+		if (row<0) {
+			while (modelCTHD.getRowCount() != 0) {
+				modelCTHD.removeRow(0);
+			}
+			int STT = 0;
+			int r = tableHD.getSelectedRow();
+			String maHD = modelHD.getValueAt(r, 1).toString();
+			ArrayList<ChiTietHoaDonBan> ct = dao_ChiTietHoaDonBan.getCTHoaDonBanTheoMa(maHD);
+			for (ChiTietHoaDonBan dsct : ct) {
+				SanPham sp = dao_SanPham.getTheoMa(dsct.getSanPham().getMaSP());
+					modelCTHD.addRow(new Object[] {++STT,maHD,sp.getMaSP(),sp.getTenSP(),dsct.getSoLuong(),sp.getThueVAT(),sp.getGiaBan()*dsct.getSoLuong()});
+			}	
+		}
+		else {
+			txtMaSP.setText(model.getValueAt(row,1).toString());
+			txtTenSP.setText(model.getValueAt(row,2).toString());
+			txtSoLuong.setText(model.getValueAt(row,3).toString());
+			txtGiaBan.setText(model.getValueAt(row,4).toString());
+		}
+		
+		
+		
+		
 	}
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {

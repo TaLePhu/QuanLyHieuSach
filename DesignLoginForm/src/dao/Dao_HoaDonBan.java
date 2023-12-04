@@ -134,15 +134,92 @@ public class Dao_HoaDonBan {
 	}
 	
 	// tìm hóa đơn theo mã nhân viên
-	public ArrayList<HoaDonBan> getKHTheoSDT(String ma) {
+	public ArrayList<HoaDonBan> getHDTheoMANV(String ma) {
 		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
 		PreparedStatement sta = null;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Select * from HOA where MANHANVIEN = ?";
+			String sql = "Select * from HOADONBAN where MANHANVIEN = ?";
 			sta = con.prepareStatement(sql);
 			sta.setString(1,ma);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maHD = rs.getString("MAHOADONBAN");
+				Timestamp ngay = rs.getTimestamp("NGAYGIAODICH");
+				String maKH = rs.getString("MAKHACHHANG");
+				String maNV = rs.getString("MANHANVIEN");
+				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
+				String trangThai = rs.getString("TRANGTHAI");
+				String maKM = rs.getString("MAKHUYENMAI");
+				KhachHang kh = new KhachHang(maKH);
+				NhanVien nv = new NhanVien(maNV);
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
+				dsHD.add(hd);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsHD;
+	}
+	
+	public ArrayList<HoaDonBan> getHDTheoMAKH(String ma) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from HOADONBAN where MAKHACHHANG = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1,ma);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maHD = rs.getString("MAHOADONBAN");
+				Timestamp ngay = rs.getTimestamp("NGAYGIAODICH");
+				String maKH = rs.getString("MAKHACHHANG");
+				String maNV = rs.getString("MANHANVIEN");
+				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
+				String trangThai = rs.getString("TRANGTHAI");
+				String maKM = rs.getString("MAKHUYENMAI");
+				KhachHang kh = new KhachHang(maKH);
+				NhanVien nv = new NhanVien(maNV);
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
+				dsHD.add(hd);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsHD;
+	}
+	
+	public ArrayList<HoaDonBan> getHDTheoMAKH_NVBH(String ma, String nvbh) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from HOADONBAN where MAKHACHHANG = ? and MANHANVIEN = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1,ma);
+			sta.setString(2,nvbh);
 
 			ResultSet rs = sta.executeQuery();
 
@@ -211,6 +288,46 @@ public class Dao_HoaDonBan {
 		return dsHD;
 	}
 	
+	// theo ma cau nhan vien ban hang
+	public ArrayList<HoaDonBan> getHDTheoMa_NVBH(String ma, String nvbh) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from HOADONBAN where MAHOADONBAN = ? and MANHANVIEN = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1,ma);
+			sta.setString(2,nvbh);
+
+			ResultSet rs = sta.executeQuery();
+
+			while (rs.next()) {
+				String maHD = rs.getString("MAHOADONBAN");
+				Timestamp ngay = rs.getTimestamp("NGAYGIAODICH");
+				String maKH = rs.getString("MAKHACHHANG");
+				String maNV = rs.getString("MANHANVIEN");
+				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
+				String trangThai = rs.getString("TRANGTHAI");
+				String maKM = rs.getString("MAKHUYENMAI");
+				KhachHang kh = new KhachHang(maKH);
+				NhanVien nv = new NhanVien(maNV);
+				KhuyenMai km = new KhuyenMai(maKM);
+				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngay, trangThai, tongThanhTien); 
+				dsHD.add(hd);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsHD;
+	}
+	
 	public boolean capNhat(String ma,String trangT) {
 		PreparedStatement sta = null;
 		int n=0;
@@ -235,41 +352,161 @@ public class Dao_HoaDonBan {
 		return n>0;
 	}
 	
-	public ArrayList<HoaDonBan> getHDTheoNgay(Timestamp ngay) {
+	public ArrayList<HoaDonBan> getHDTheoNgay(String ngay) {
 		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
-		PreparedStatement sta = null;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Select * from HOADONBAN where NGAYGIAODICH = ?";
-			sta = con.prepareStatement(sql);
-			sta.setTimestamp(1, ngay);
-
-			ResultSet rs = sta.executeQuery();
-
-			while (rs.next()) {
-				String maHD = rs.getString("MAHOADONBAN");
-				Timestamp ngayGD = rs.getTimestamp("NGAYGIAODICH");
-				String maKH = rs.getString("MAKHACHHANG");
-				String maNV = rs.getString("MANHANVIEN");
-				float tongThanhTien = rs.getFloat("TONGTHANHTIEN");
-				String trangThai = rs.getString("TRANGTHAI");
-				String maKM = rs.getString("MAKHUYENMAI");
-				KhachHang kh = new KhachHang(maKH);
-				NhanVien nv = new NhanVien(maNV);
-				KhuyenMai km = new KhuyenMai(maKM);
-				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngayGD, trangThai, tongThanhTien); 
-				dsHD.add(hd);
+			//LocalDateTime currentDate = LocalDateTime.now();
+			Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+            String currentDateStr = dateFormat.format(currentDate);
+            String sql = "SELECT * FROM HOADONBAN WHERE SUBSTRING(MAHOADONBAN, 3, 6) = ?";
+            
+            try (PreparedStatement statement = con.prepareStatement(sql)) {
+                // Đặt tham số cho truy vấn
+                statement.setString(1,ngay);
+                // Thực hiện truy vấn
+                try (ResultSet resultSet = statement.executeQuery()) {
+                	while(resultSet.next()) {
+                		String maHD = resultSet.getString("MAHOADONBAN");
+        				Timestamp ngayGD = resultSet.getTimestamp("NGAYGIAODICH");
+        				String maKH = resultSet.getString("MAKHACHHANG");
+        				String maNV = resultSet.getString("MANHANVIEN");
+        				float tongThanhTien = resultSet.getFloat("TONGTHANHTIEN");
+        				String trangThai = resultSet.getString("TRANGTHAI");
+        				String maKM = resultSet.getString("MAKHUYENMAI");
+        				KhachHang kh = new KhachHang(maKH);
+        				NhanVien nv = new NhanVien(maNV);
+        				KhuyenMai km = new KhuyenMai(maKM);
+        				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngayGD, trangThai, tongThanhTien); 
+        				dsHD.add(hd);
+                	}
+                    
+                }
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				sta.close();
-			} catch (Exception e) {
-				e.printStackTrace();
+		} 
+		return dsHD;
+	}
+	
+	public ArrayList<HoaDonBan> getHDTheoNgay_NVBH(String ngay, String nvbh) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			//LocalDateTime currentDate = LocalDateTime.now();
+			Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+            String currentDateStr = dateFormat.format(currentDate);
+            String sql = "SELECT * FROM HOADONBAN WHERE SUBSTRING(MAHOADONBAN, 3, 6) = ? and MANHANVIEN = ?";
+            
+            try (PreparedStatement statement = con.prepareStatement(sql)) {
+                // Đặt tham số cho truy vấn
+                statement.setString(1,ngay);
+                statement.setString(2,nvbh);
+                // Thực hiện truy vấn
+                try (ResultSet resultSet = statement.executeQuery()) {
+                	while(resultSet.next()) {
+                		String maHD = resultSet.getString("MAHOADONBAN");
+        				Timestamp ngayGD = resultSet.getTimestamp("NGAYGIAODICH");
+        				String maKH = resultSet.getString("MAKHACHHANG");
+        				String maNV = resultSet.getString("MANHANVIEN");
+        				float tongThanhTien = resultSet.getFloat("TONGTHANHTIEN");
+        				String trangThai = resultSet.getString("TRANGTHAI");
+        				String maKM = resultSet.getString("MAKHUYENMAI");
+        				KhachHang kh = new KhachHang(maKH);
+        				NhanVien nv = new NhanVien(maNV);
+        				KhuyenMai km = new KhuyenMai(maKM);
+        				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngayGD, trangThai, tongThanhTien); 
+        				dsHD.add(hd);
+                	}
+                    
+                }
 			}
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return dsHD;
+	}
+	
+	public ArrayList<HoaDonBan> getHDTheoNgayHT_PH(String ma) {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			//LocalDateTime currentDate = LocalDateTime.now();
+			Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+            String currentDateStr = dateFormat.format(currentDate);
+            String sql = "SELECT * FROM HOADONBAN WHERE SUBSTRING(MAHOADONBAN, 3, 6) = ? and MANHANVIEN = ?";
+            
+            try (PreparedStatement statement = con.prepareStatement(sql)) {
+                // Đặt tham số cho truy vấn
+                statement.setString(1,currentDateStr);
+                statement.setString(2, ma);
+                // Thực hiện truy vấn
+                try (ResultSet resultSet = statement.executeQuery()) {
+                	while(resultSet.next()) {
+                		String maHD = resultSet.getString("MAHOADONBAN");
+        				Timestamp ngayGD = resultSet.getTimestamp("NGAYGIAODICH");
+        				String maKH = resultSet.getString("MAKHACHHANG");
+        				String maNV = resultSet.getString("MANHANVIEN");
+        				float tongThanhTien = resultSet.getFloat("TONGTHANHTIEN");
+        				String trangThai = resultSet.getString("TRANGTHAI");
+        				String maKM = resultSet.getString("MAKHUYENMAI");
+        				KhachHang kh = new KhachHang(maKH);
+        				NhanVien nv = new NhanVien(maNV);
+        				KhuyenMai km = new KhuyenMai(maKM);
+        				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngayGD, trangThai, tongThanhTien); 
+        				dsHD.add(hd);
+                	}
+                    
+                }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return dsHD;
+	}
+	
+	public ArrayList<HoaDonBan> getHDTheoNgayHT_PH_NVQL() {
+		ArrayList<HoaDonBan> dsHD = new ArrayList<HoaDonBan>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			//LocalDateTime currentDate = LocalDateTime.now();
+			Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+            String currentDateStr = dateFormat.format(currentDate);
+            String sql = "SELECT * FROM HOADONBAN WHERE SUBSTRING(MAHOADONBAN, 3, 6) = ?";
+            
+            try (PreparedStatement statement = con.prepareStatement(sql)) {
+                // Đặt tham số cho truy vấn
+                statement.setString(1,currentDateStr);
+                // Thực hiện truy vấn
+                try (ResultSet resultSet = statement.executeQuery()) {
+                	while(resultSet.next()) {
+                		String maHD = resultSet.getString("MAHOADONBAN");
+        				Timestamp ngayGD = resultSet.getTimestamp("NGAYGIAODICH");
+        				String maKH = resultSet.getString("MAKHACHHANG");
+        				String maNV = resultSet.getString("MANHANVIEN");
+        				float tongThanhTien = resultSet.getFloat("TONGTHANHTIEN");
+        				String trangThai = resultSet.getString("TRANGTHAI");
+        				String maKM = resultSet.getString("MAKHUYENMAI");
+        				KhachHang kh = new KhachHang(maKH);
+        				NhanVien nv = new NhanVien(maNV);
+        				KhuyenMai km = new KhuyenMai(maKM);
+        				HoaDonBan hd = new HoaDonBan(maHD, nv, kh, km, ngayGD, trangThai, tongThanhTien); 
+        				dsHD.add(hd);
+                	}
+                    
+                }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 		return dsHD;
 	}
 }
