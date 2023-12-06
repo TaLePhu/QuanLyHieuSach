@@ -83,7 +83,7 @@ public class Dao_HoaDonBan {
 		return n > 0;
 	}
 	
-	public boolean xoaHoaDonBanTheoMa(HoaDonBan hd) throws SQLException {
+	public boolean xoaHoaDonBanTheoMa(String hd) throws SQLException {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stmt = null;
@@ -91,7 +91,7 @@ public class Dao_HoaDonBan {
 		try {
 			String sql = "delete from HOADONBAN where MAHOADONBAN = ?";
 			stmt = con.prepareStatement(sql);
-			stmt.setString(1, hd.getMaHDBan());
+			stmt.setString(1, hd);
 			n = stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
