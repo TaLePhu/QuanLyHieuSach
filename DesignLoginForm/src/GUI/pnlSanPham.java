@@ -1433,7 +1433,7 @@ public class pnlSanPham extends JPanel implements ActionListener {
                     return false;
                 }
             } catch (NumberFormatException e) {
-                txtThueVATVPP.setText("Giá trị VAT không hợp lệ. Vui lòng nhập số nằm trong khoảng từ 0 -> 1!!!");
+                txtThueVATVPP.setText("Giá trị VAT không hợp lệ. Vui lòng nhập số nằm trong khoảng từ 0 -> 0.1!!!");
                 return false;
             }
 		}

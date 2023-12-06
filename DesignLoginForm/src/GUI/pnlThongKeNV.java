@@ -61,6 +61,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 	private JMenuItem itXemChiTiet;
 	private NhanVien nvLogin;
 	private Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
+	private Date fromDate, toDate;
 
 	public pnlThongKeNV() {
 		setBackground(new Color(255, 255, 255));
@@ -225,6 +226,13 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		tinhSoHoaDon();
 		setMinMaxTotal();
 		
+		Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2023);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        fromDate = cal.getTime();
+        toDate = new Date();
+		
 		itXemChiTiet.addActionListener(this);
 		btnHienThiBieuDo.addActionListener(this);
 		btnXuatBaoCao.addActionListener(this);
@@ -312,94 +320,54 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 			getHDByNVBW(nvLogin, csTu.getDate(), csDen.getDate());
 		}else if(o.equals(cbLoc)) {
 			String selectedOption = cbLoc.getSelectedItem().toString();
+			fromDate = csTu.getDate();
+			toDate= csDen.getDate();
 			if(selectedOption.equals("Tuần trước")) {
 				Calendar cal = Calendar.getInstance();
 		        cal.add(Calendar.WEEK_OF_YEAR, -1);
 		        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		        Date fromDate = (Date) cal.getTime();
+		        fromDate = (Date) cal.getTime();
 		        cal.add(Calendar.DAY_OF_WEEK, 6);
-		        Date toDate = (Date) cal.getTime();
+		        toDate = (Date) cal.getTime();
 		        getHDByNVBW(nvLogin, fromDate, toDate);
 			}else if(selectedOption.equals("Tháng trước")) {
 				Calendar cal = Calendar.getInstance();
-			    cal.add(Calendar.MONTH, -1); // Move the calendar back by one month
-
-			    // Set the calendar to the first day of the month
+			    cal.add(Calendar.MONTH, -1);
 			    cal.set(Calendar.DAY_OF_MONTH, 1);
-			    Date fromDate = cal.getTime();
-
-			    // Set the calendar to the last day of the month
+			    fromDate = cal.getTime();
 			    cal.add(Calendar.MONTH, 1);
 			    cal.add(Calendar.DAY_OF_MONTH, -1);
-			    Date toDate = cal.getTime();
-
+			    toDate = cal.getTime();
 			    getHDByNVBW(nvLogin, fromDate, toDate);
 			}
 			else if(selectedOption.equals("Quý trước")) {
 				Calendar cal = Calendar.getInstance();
-
-			    // Move the calendar back by one quarter
 			    cal.add(Calendar.MONTH, -3);
 			    int previousQuarter = (cal.get(Calendar.MONTH) / 3) + 1;
-
-			    // Set the calendar to the first day of the previous quarter
 			    cal.set(Calendar.MONTH, (previousQuarter - 1) * 3);
 			    cal.set(Calendar.DAY_OF_MONTH, 1);
-			    Date fromDate = cal.getTime();
-
-			    // Set the calendar to the last day of the previous quarter
+			    fromDate = cal.getTime();
 			    cal.add(Calendar.MONTH, 3);
 			    cal.add(Calendar.DAY_OF_MONTH, -1);
-			    Date toDate = cal.getTime();
+			    toDate = cal.getTime();
 
 			    getHDByNVBW(nvLogin, fromDate, toDate);
 			}else if(selectedOption.equals("Tất cả")) {
+				Calendar cal = Calendar.getInstance();
+	            cal.set(Calendar.YEAR, 2023);
+	            cal.set(Calendar.MONTH, Calendar.JANUARY);
+	            cal.set(Calendar.DAY_OF_MONTH, 1);
+	            fromDate = cal.getTime();
+	            toDate = new Date();
+	            modelHD.setRowCount(0);
 				getHDByNV(nvLogin);
+				
 			}
 		}else if(o.equals(btnXuatBaoCao)) {
 			try {
-		        String selectedOption = cbLoc.getSelectedItem().toString();
-
 				NhanVien findNVLogin = nhanVien_dao.getTheoMaNV(nvLogin.getMaNhanVien());
-		        Date fromDate = null;
-		        Date toDate = null;
-
-		        if (selectedOption.equals("Tuần trước")) {
-		            Calendar cal = Calendar.getInstance();
-		            cal.add(Calendar.WEEK_OF_YEAR, -1);
-		            cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		            fromDate = cal.getTime();
-		            cal.add(Calendar.DAY_OF_WEEK, 6);
-		            toDate = cal.getTime();
-		        } else if (selectedOption.equals("Tháng trước")) {
-		            Calendar cal = Calendar.getInstance();
-		            cal.add(Calendar.MONTH, -1);
-		            cal.set(Calendar.DAY_OF_MONTH, 1);
-		            fromDate = cal.getTime();
-		            cal.add(Calendar.MONTH, 1);
-		            cal.add(Calendar.DAY_OF_MONTH, -1);
-		            toDate = cal.getTime();
-		        } else if (selectedOption.equals("Quý trước")) {
-		            Calendar cal = Calendar.getInstance();
-		            cal.add(Calendar.MONTH, -3);
-		            cal.set(Calendar.DAY_OF_MONTH, 1);
-		            fromDate = cal.getTime();
-		            cal.add(Calendar.MONTH, 3);
-		            cal.add(Calendar.DAY_OF_MONTH, -1);
-		            toDate = cal.getTime();
-		        } else if (selectedOption.equals("Tất cả")) {
-		        	Calendar cal = Calendar.getInstance();
-		            cal.set(Calendar.YEAR, 2023);
-		            cal.set(Calendar.MONTH, Calendar.JANUARY);
-		            cal.set(Calendar.DAY_OF_MONTH, 1);
-		            fromDate = cal.getTime();
-
-		            // Set toDate to the current date
-		            toDate = new Date();
-		        }
-
 		        JOptionPane.showMessageDialog(null, "Đã xuất dữ liệu ra file excel thành công.");
-		        excelExport.ExcelExporter.exportTable(tblHD, fromDate, toDate, findNVLogin.getHoTenNhanVien(), "report.xls");
+		        excelExport.ExcelExporter.exportTable(tblHD, fromDate, toDate, findNVLogin.getHoTenNhanVien(), "report.xls", txtCaoNhat.getText(), txtThapNhat.getText(), txtSoHD.getText(),txtTongDoanhThu.getText());
 
 		    } catch (IOException ex) {
 		        ex.printStackTrace();

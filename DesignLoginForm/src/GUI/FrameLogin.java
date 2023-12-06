@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -15,6 +17,7 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 
 import crypto.AESCrypto;
 import dao.Dao_NhanVien;
@@ -24,6 +27,8 @@ import entity.TaiKhoan;
 
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -37,7 +42,6 @@ public class FrameLogin extends JFrame {
     private Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
 	private JTextField txtTenDangNhap;
 	private JPasswordField txtMatKhau;
-
 	/**
 	 * Launch the application.
 	 */
@@ -106,11 +110,11 @@ public class FrameLogin extends JFrame {
 		JButton btnLogin = new JButton();
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					checkLogin();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				 try {
+                     checkLogin();
+                 } catch (Exception ex) {
+                     ex.printStackTrace();
+                 }    
 			}
 		});
 		btnLogin.setForeground(new Color(255, 255, 255));
