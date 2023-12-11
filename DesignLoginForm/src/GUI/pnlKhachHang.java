@@ -64,6 +64,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 	private JButton btnThem, btnSua, btnLammoi;
 	private Dao_KhachHang khachHang_dao;
 	private DefaultTableModel modelKH;
+	private JTextField txtSoKH;
 
 	/**
 	 * Create the panel.
@@ -222,7 +223,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		Image img_iconLammoi = new ImageIcon(this.getClass().getResource("/icon_lammoi_s.png")).getImage();
 
 		JPanel pnlTimKiem = new JPanel();
-		pnlTimKiem.setBounds(22, 116, 787, 78);
+		pnlTimKiem.setBounds(22, 94, 787, 68);
 		pnlChucNang.add(pnlTimKiem);
 		pnlTimKiem.setLayout(null);
 
@@ -256,21 +257,31 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		// nút thêm khách hàng
 		btnThem = new JButton("Thêm khách hàng");
 		btnThem.setFont(new Font("Arial", Font.BOLD, 15));
-		btnThem.setBounds(22, 21, 228, 63);
+		btnThem.setBounds(60, 31, 228, 63);
 		btnThem.setIcon(new ImageIcon(img_iconAdd));
 		pnlChucNang.add(btnThem);
 
 		btnSua = new JButton("Sửa khách hàng");
 		btnSua.setFont(new Font("Arial", Font.BOLD, 15));
-		btnSua.setBounds(283, 21, 228, 63);
+		btnSua.setBounds(338, 31, 228, 63);
 		btnSua.setIcon(new ImageIcon(img_iconUpdate));
 		pnlChucNang.add(btnSua);
 
 		btnLammoi = new JButton("Làm mới");
 		btnLammoi.setFont(new Font("Arial", Font.BOLD, 15));
-		btnLammoi.setBounds(549, 21, 228, 63);
+		btnLammoi.setBounds(625, 31, 228, 63);
 		btnLammoi.setIcon(new ImageIcon(img_iconLammoi));
 		pnlChucNang.add(btnLammoi);
+		
+		JLabel lblSoluongKH = new JLabel("Tổng số khách hàng:");
+		lblSoluongKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSoluongKH.setBounds(32, 172, 199, 35);
+		pnlChucNang.add(lblSoluongKH);
+		
+		txtSoKH = new JTextField();
+		txtSoKH.setBounds(230, 179, 96, 30);
+		pnlChucNang.add(txtSoKH);
+		txtSoKH.setColumns(10);
 
 		JPanel pnlDSKH = new JPanel();
 		pnlDSKH.setBorder(new TitledBorder(null, "Danh s\u00E1ch kh\u00E1ch h\u00E0ng", TitledBorder.LEADING,
@@ -293,6 +304,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 		// goi ham do data on table
 		DoDataOnTable();
+		soLuongKhachHang();
 
 		setVisible(true);
 
@@ -411,7 +423,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 		int pos = table.getSelectedRow();
 
 		if (pos == -1) {
-			JOptionPane.showMessageDialog(null, "vui long chon dong can sua");
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng cấn sửa");
 			return;
 		}
 
@@ -430,7 +442,7 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			khachHang_dao.update(kh);
 			clearDataOnTalbe();
 			DoDataOnTable();
-			JOptionPane.showMessageDialog(this, "sua thanh con");
+			JOptionPane.showMessageDialog(this, "Sửa thành công");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -517,10 +529,6 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 		if (sdt.length() > 0) {
 			try {
-//				int sdtInt = Integer.parseInt(sdt);
-//				if (sdtInt < 0) {
-//					JOptionPane.showMessageDialog(this, "số điện thoại có định dạng là số nguyên là 10 chữ số!!");
-//					return false;
 				if (!Pattern.matches("^\\d{10}$", sdt)) {
 					JOptionPane.showMessageDialog(this, "số điện thoại có định dạng là số nguyên là 10 chữ số!!");
 					return false;
@@ -577,22 +585,25 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 
 	}
 
-	// su kien nghe
+	// xử lý sự kiện nghe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
+		//làm mới
 		if (o.equals(btnLammoi)) {
 			clearTextField();
 		}
-
+		
+		//Sửa
 		if (o.equals(btnSua)) {
 			replaceID();
 		}
 
+		//Thêm
 		if (o.equals(btnThem)) {
 			if (!txtMaKH.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "dang trong che do chinh sua !!!");
+				JOptionPane.showMessageDialog(null, "đang trong chế độ chỉnh sửa, vui lòng làm mới !!!");
 				return;
 			}
 
@@ -600,13 +611,13 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 				KhachHang kh = genarateOBJKH();
 				try {
 					if (!khachHang_dao.createKhachHang(kh)) {
-						JOptionPane.showInternalMessageDialog(null, "trung ma");
+						JOptionPane.showInternalMessageDialog(null, "Trùng mã, kiểm tra lại!!!");
 						return;
 					} else {
 						clearTextField();
 						clearDataOnTalbe();
 						DoDataOnTable();
-						JOptionPane.showMessageDialog(this, "them khach hang thanh cong");
+						JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!!!");
 					}
 				} catch (Exception e21) {
 					JOptionPane.showMessageDialog(null, e21.getMessage());
@@ -662,5 +673,21 @@ public class pnlKhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		}
 	}
-
+	
+	//Hàm lấy tổng số khách hàng
+	public void soLuongKhachHang() {
+		int soKhachHang = 0;
+		soKhachHang = modelKH.getRowCount();
+		txtSoKH.setText(String.valueOf(soKhachHang));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
