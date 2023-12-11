@@ -242,7 +242,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		scrollPane.setBounds(10, 190, 750, 370);
 		pnlHDBan.add(scrollPane);
 
-		String[] tb = new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng","Giá bán", "%VAT",
+		String[] tb = new String[] { "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng","Giá bán",
 		"Thành tiền" };
 		model = new DefaultTableModel(tb, 0);
 		table = new JTable(model);
@@ -529,7 +529,8 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		txtGiaBan.setEditable(false);
 		txtGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtGiaBan.setColumns(10);
-		btnTimTheoMaHD.setIcon(new ImageIcon("img/find16.png"));
+		
+		
 
 		lblNgayLap = new JLabel("Tìm theo ngày");
 		lblNgayLap.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -605,6 +606,15 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		scrollPaneCTHD.setViewportView(tableCTHD);
 
 		btnTimKhachHang.setIcon(new ImageIcon("img/find16.png"));
+		btnTimTheoMaHD.setIcon(new ImageIcon("img/find16.png"));
+		//btnTimKhachHang.setIcon(new ImageIcon("img/find16.png"));
+		btnTimTenKH.setIcon(new ImageIcon("img/find16.png"));
+		btnTimTheoNgay.setIcon(new ImageIcon("img/find16.png"));
+		btnTimTheoSDTKH.setIcon(new ImageIcon("img/find16.png"));
+		btnTimTenKH.setIcon(new ImageIcon("img/find16.png"));
+		btnTamIn.setIcon(new ImageIcon("img/cart48.png"));
+		btnHuyHD.setIcon(new ImageIcon("img/delete.png"));
+		btnInHD_DS.setIcon(new ImageIcon("img/in48.png"));
 
 		
 
@@ -817,10 +827,26 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		}
 		return true;
 	}
+	
+	// kiemr tra lưu tạm
+	public boolean validDataLT() {
+		String maKH = txtMaKH.getText().trim();
+		if(model.getRowCount() ==0) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập sản phẩm khách hàng mua");
+			return false;
+		}
+		if(txtSDTKhachHang.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại để tìm thông tin khách hàng");
+			return false;
+		}
+		
+		return true;
+	}
 	// kiểm tra số lượng sản phẩm muốn bán
 	public boolean validDataSLSP() {
 		String soLuong = txtSoLuong.getText().trim();
 		String ma = txtMaSP.getText().trim();
+		int soLC = Integer.parseInt(soLuong);
 		ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma);
 		if(ma.length() > 0) {
 			if(ds.size() <= 0) {
@@ -832,7 +858,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sản phẩm");
 			return false;
 		}
-		if(soLuong.length() > 0) {
+		if(soLuong.length() > 0 && soLC >0) {
 			try {
 				int soL = Integer.parseInt(soLuong);
 
@@ -850,7 +876,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				JOptionPane.showMessageDialog(this,"Số lượng nhập vào phải là kiểu số");
 			}
 		} else {
-			JOptionPane.showMessageDialog(this,"Vui lòng nhập số lượng sản phẩm");
+			JOptionPane.showMessageDialog(this,"Vui lòng nhập số lượng sản phẩm và số lượng sản phẩm là số nguyên dương");
 			return false;
 		}
 		return true;
@@ -910,7 +936,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 					tongThanhTien =0;
 					int rowCount = table.getRowCount();
 					for (int row = 0; row < rowCount; row++) {
-						tongThanhTien += Float.parseFloat(model.getValueAt(row,6).toString());
+						tongThanhTien += Float.parseFloat(model.getValueAt(row,5).toString());
 					}
 					txtTongTien.setText(tongThanhTien+"");
 					phatsinhma();
@@ -935,6 +961,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 						else {
 							km=0;
 							txtKhuyenMai.setText(km+"");
+							maKM = null ;
 						}
 					}
 					
@@ -969,7 +996,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 								//String soLB = model.getValueAt(i, 3).toString();
 								//String thanhTien = model.getValueAt(i, 6).toString();
 								int soL = Integer.parseInt(model.getValueAt(i, 3).toString());
-								float TT = Float.parseFloat(model.getValueAt(i, 6).toString());
+								float TT = Float.parseFloat(model.getValueAt(i, 5).toString());
 								SanPham sp = new SanPham(maSP);
 								ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
 								for (SanPham sanPham : ds) {
@@ -1044,7 +1071,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 						float tc = sl*gia;
 						float tt = (sl+sln)*gia;
 						model.setValueAt(sl+sln, i, 3);
-						model.setValueAt(tt, i, 6);
+						model.setValueAt(tt, i, 5);
 						tongThanhTien =tongThanhTien + tt - tc;
 						txtTongTien.setText(tongThanhTien + "");
 						kiemTraKM();
@@ -1056,7 +1083,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				for (SanPham sp : ds) {
 					thanhTien = (float) (sp.getGiaBan()*soL);
 					tongThanhTien += thanhTien;
-					model.addRow(new Object[] {++stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),sp.getThueVAT(),thanhTien + ""});
+					model.addRow(new Object[] {++stt,ma,sp.getTenSP(),soL,sp.getGiaBan(),thanhTien + ""});
 					txtTongTien.setText(tongThanhTien + "");
 				}
 				kiemTraKM();
@@ -1091,7 +1118,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			}
 			String ma = model.getValueAt(row,1).toString();
 			if(JOptionPane.showConfirmDialog(this,"Bạn có muốn xóa sản phẩm có mã: " + ma, "Cảnh báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				String thanhTienXoa = model.getValueAt(row,6).toString();
+				String thanhTienXoa = model.getValueAt(row,5).toString();
 				float ttx = Float.parseFloat(thanhTienXoa);
 				float tonngTienXoa = Float.parseFloat(txtTongTien.getText());
 				float TTSX = tonngTienXoa-ttx;
@@ -1113,7 +1140,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			}
 			String ma = model.getValueAt(rowu,1).toString();
 			if(rowu >=0) {
-				String thanhTienXoa = model.getValueAt(rowu,6).toString();
+				String thanhTienXoa = model.getValueAt(rowu,5).toString();
 				float ttx = Float.parseFloat(thanhTienXoa);
 				//float tonngTienXoa = Float.parseFloat(txtTongTien.getText());
 				//float TTSX = tonngTienXoa-ttx;
@@ -1135,7 +1162,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				float gia = Float.parseFloat(model.getValueAt(rowu,4).toString());
 				float tt = (sln)*gia;
 				model.setValueAt(sln, rowu, 3);
-				model.setValueAt(tt, rowu, 6);
+				model.setValueAt(tt, rowu, 5);
 				float tienSua = tt - ttx;
 				tongThanhTien += tienSua;
 				txtTongTien.setText(tongThanhTien + "");
@@ -1145,11 +1172,11 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 		}
 		else if(o.equals(btnTamIn)) {
 			phatsinhma();
-			if(true) {
+			if(validDataLT()) {
 				tongThanhTien =0;
 				int rowCount = table.getRowCount();
 				for (int row = 0; row < rowCount; row++) {
-					tongThanhTien += Float.parseFloat(model.getValueAt(row,6).toString());
+					tongThanhTien += Float.parseFloat(model.getValueAt(row,5).toString());
 				}
 				txtTongTien.setText(tongThanhTien+"");
 				String trangThai = "Tạm in";
@@ -1176,6 +1203,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 					else {
 						km=0;
 						txtKhuyenMai.setText(km+"");
+						maKM = null ;
 					}
 				}
 				
@@ -1203,7 +1231,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 							//String soLB = model.getValueAt(i, 3).toString();
 							//String thanhTien = model.getValueAt(i, 6).toString();
 							int soL = Integer.parseInt(model.getValueAt(i, 3).toString());
-							float TT = Float.parseFloat(model.getValueAt(i, 6).toString());
+							float TT = Float.parseFloat(model.getValueAt(i, 5).toString());
 							SanPham sp = new SanPham(maSP);
 							ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(maSP);
 							for (SanPham sanPham : ds) {
@@ -1275,7 +1303,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				for (ChiTietHoaDonBan cthd : ct) {
 					String maSP = cthd.getSanPham().getMaSP();
 					SanPham sp = dao_SanPham.getTheoMa(maSP);
-					model.addRow(new Object [] {++STT,sp.getMaSP(),sp.getTenSP(),cthd.getSoLuong(),sp.getGiaBan(),sp.getThueVAT(),cthd.getThanhTien()});
+					model.addRow(new Object [] {++STT,sp.getMaSP(),sp.getTenSP(),cthd.getSoLuong(),sp.getGiaBan(),cthd.getThanhTien()});
 					tongThanhTien +=cthd.getThanhTien();
 					txtTongTien.setText(tongThanhTien+"");
 					kiemTraKM();
