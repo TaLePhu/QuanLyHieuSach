@@ -18,13 +18,14 @@ import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-
-
+import javax.swing.tree.TreePath;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class pnlTroGiup extends JPanel {
+
+	private JPanel panel;
 
 	/**
 	 * Create the panel.
@@ -35,7 +36,7 @@ public class pnlTroGiup extends JPanel {
 		setBounds(0,0, 1163,763);
 		setLayout(null);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(0, 0, 1163, 763);
 		add(panel);
 		panel.setLayout(null);
@@ -151,6 +152,7 @@ public class pnlTroGiup extends JPanel {
 		panel_HDB.setBounds(290, 0, 873, 763);
 		panel.add(panel_HDB);
 		panel_HDB.setLayout(null);
+		panel_2.setBackground(Color.white);
 		//JLabel l = new JLabel("sai r em ơi");
 		//l.setBounds(412, 5, 49, 13);
 		//panel_HDB.add(l);
@@ -168,6 +170,7 @@ public class pnlTroGiup extends JPanel {
 		panel_3.setBounds(0, 0, 853, 763);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.Y_AXIS));
 		add(panel_3);
+		panel_3.setBackground(Color.white);
 		
 		JLabel lblDSHD = new JLabel("");
 		lblDSHD.setBounds(10, 10, 853, 266);
@@ -194,24 +197,123 @@ public class pnlTroGiup extends JPanel {
 		panel_QLKH.setBounds(290, 0, 873, 763);
 		panel.add(panel_QLKH);
 		panel_QLKH.setLayout(null);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(0, 0, 853, 763);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
+		add(panel_4);
+		panel_4.setBackground(Color.white);
+		
+		JLabel lblKH = new JLabel("");
+		lblKH.setBounds(10, 10, 853, 266);
+		lblKH.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_4.add(lblKH);
+		Image imgKH = new ImageIcon(this.getClass().getResource("/KH.png")).getImage();
+		lblKH.setIcon(new ImageIcon(imgKH));
+		
+		JLabel lblHDKH = new JLabel("");
+		lblHDKH.setBounds(10, 276, 853, 452);
+		lblHDKH.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_4.add(lblHDKH);
+		Image imgHDKH = new ImageIcon(this.getClass().getResource("/HDKH.png")).getImage();
+		lblHDKH.setIcon(new ImageIcon(imgHDKH));
+		
+		JScrollPane scrollPane_DSKH = new JScrollPane();
+		scrollPane_DSKH.setBounds(0, 0, 873, 763);
+		
+		panel_QLKH.add(scrollPane_DSKH);
+		scrollPane_DSKH.setViewportView(panel_4);
 
 		// quản lý nhân viên
 		JPanel panel_NV = new JPanel();
 		panel_NV.setBounds(290, 0, 873, 763);
 		panel.add(panel_NV);
 		panel_NV.setLayout(null);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBounds(0, 0, 853, 763);
+		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.Y_AXIS));
+		add(panel_5);
+		panel_5.setBackground(Color.white);
+		
+		JLabel lblNV = new JLabel("");
+		lblNV.setBounds(10, 10, 853, 266);
+		lblNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_5.add(lblNV);
+		Image imgNV = new ImageIcon(this.getClass().getResource("/NV.png")).getImage();
+		lblNV.setIcon(new ImageIcon(imgNV));
+		
+		JLabel lblHDNV = new JLabel("");
+		lblHDNV.setBounds(10, 276, 853, 452);
+		lblHDNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_5.add(lblHDNV);
+		Image imgHDNV = new ImageIcon(this.getClass().getResource("/HDNV1.png")).getImage();
+		lblHDNV.setIcon(new ImageIcon(imgHDNV));
+		
+		JLabel lblHDNV2 = new JLabel("");
+		lblHDNV2.setBounds(10, 730, 853, 452);
+		lblHDNV2.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_5.add(lblHDNV2);
+		Image imgHDNV2 = new ImageIcon(this.getClass().getResource("/HDNV2.png")).getImage();
+		lblHDNV2.setIcon(new ImageIcon(imgHDNV2));
+		
+		JScrollPane scrollPane_DSNV = new JScrollPane();
+		scrollPane_DSNV.setBounds(0, 0, 873, 763);
+		
+		panel_NV.add(scrollPane_DSNV);
+		scrollPane_DSNV.setViewportView(panel_5);
 
 		//quản lý tài khoản
 		JPanel panel_TaiKhoan = new JPanel();
 		panel_TaiKhoan .setBounds(290, 0, 873, 763);
 		panel.add(panel_TaiKhoan);
 		panel_TaiKhoan.setLayout(null);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBounds(0, 0, 853, 763);
+		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.Y_AXIS));
+		add(panel_6);
+		panel_6.setBackground(Color.white);
+		
+		JLabel lblTaiK = new JLabel("");
+		lblTaiK.setBounds(10, 10, 853, 266);
+		lblTaiK.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_6.add(lblTaiK);
+		Image imgTaiK = new ImageIcon(this.getClass().getResource("/TaiK.png")).getImage();
+		lblTaiK.setIcon(new ImageIcon(imgTaiK));
+		
+		JLabel lblHDTaiK = new JLabel("");
+		lblHDTaiK.setBounds(10, 276, 853, 452);
+		lblHDTaiK.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_6.add(lblHDTaiK);
+		Image imgHDTaiK = new ImageIcon(this.getClass().getResource("/HDTaiK1.png")).getImage();
+		lblHDTaiK.setIcon(new ImageIcon(imgHDTaiK));
+		
+		JLabel lblHDTaiK2 = new JLabel("");
+		lblHDTaiK2.setBounds(10, 730, 853, 452);
+		lblHDTaiK2.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_6.add(lblHDTaiK2);
+		Image imgHDTaiK2 = new ImageIcon(this.getClass().getResource("/HDTaiK2.png")).getImage();
+		lblHDTaiK2.setIcon(new ImageIcon(imgHDTaiK2));
+		
+		JScrollPane scrollPane_DSTaiK = new JScrollPane();
+		scrollPane_DSTaiK.setBounds(0, 0, 873, 763);
+		
+		panel_TaiKhoan.add(scrollPane_DSTaiK);
+		scrollPane_DSTaiK.setViewportView(panel_6);
 
 		//quản lý Sách
 		JPanel panel_S = new JPanel();
-		panel_S .setBounds(290, 0, 873, 763);
+		panel_S.setBounds(290, 0, 873, 763);
 		panel.add(panel_S);
 		panel_S.setLayout(null);
+		
+		
+		Image imgS = new ImageIcon(this.getClass().getResource("/S.png")).getImage();
+		Image imgHDS = new ImageIcon(this.getClass().getResource("/HDS.png")).getImage();
+		Image imgS2 = new ImageIcon(this.getClass().getResource("")).getImage();
+		vietHuongDan(imgS, imgHDS, imgS2,panel_S);
+		
 		
 		//quản lý văn phòng phẩm
 		JPanel panel_VPP = new JPanel();
@@ -219,11 +321,22 @@ public class pnlTroGiup extends JPanel {
 		panel.add(panel_VPP);
 		panel_VPP.setLayout(null);
 		
+		Image imgVPP = new ImageIcon(this.getClass().getResource("/VPP.png")).getImage();
+		Image imgHDVPP = new ImageIcon(this.getClass().getResource("/HDVPP.png")).getImage();
+		Image imgVPP1 = new ImageIcon(this.getClass().getResource("")).getImage();
+		vietHuongDan(imgVPP, imgHDVPP, imgVPP1,panel_VPP);
+		
+		
 		//quản lý ke hang
 		JPanel panel_keHang = new JPanel();
 		panel_keHang.setBounds(290, 0, 873, 763);
 		panel.add(panel_keHang);
 		panel_keHang.setLayout(null);
+		
+		Image imgKeH = new ImageIcon(this.getClass().getResource("/KeHang.png")).getImage();
+		Image imgHDKeH = new ImageIcon(this.getClass().getResource("/HDKeHang.png")).getImage();
+		Image imgHDKeH1 = new ImageIcon(this.getClass().getResource("")).getImage();
+		vietHuongDan(imgKeH, imgHDKeH, imgHDKeH1,panel_keHang);
 		
 		//quản lý danh muc
 		JPanel panel_dm = new JPanel();
@@ -231,11 +344,21 @@ public class pnlTroGiup extends JPanel {
 		panel.add(panel_dm);
 		panel_dm.setLayout(null);
 		
+		Image imgdm = new ImageIcon(this.getClass().getResource("/DM.png")).getImage();
+		Image imgHDdm = new ImageIcon(this.getClass().getResource("/HDDM.png")).getImage();
+		Image imgHDdm1 = new ImageIcon(this.getClass().getResource("")).getImage();
+		vietHuongDan(imgdm, imgHDdm, imgHDdm1,panel_dm);
+		
 		//quản lý ncc
 		JPanel panel_ncc = new JPanel();
 		panel_ncc.setBounds(290, 0, 873, 763);
 		panel.add(panel_ncc);
 		panel_ncc.setLayout(null);
+		
+		Image imgNCC = new ImageIcon(this.getClass().getResource("/NCC.png")).getImage();
+		Image imgHDNCC1 = new ImageIcon(this.getClass().getResource("/HDNCC1.png")).getImage();
+		Image imgHDNCC2 = new ImageIcon(this.getClass().getResource("/HDNCC2.png")).getImage();
+		vietHuongDan(imgNCC, imgHDNCC1, imgHDNCC2,panel_ncc);
 		
 		//quản lý km
 		JPanel panel_km = new JPanel();
@@ -243,11 +366,18 @@ public class pnlTroGiup extends JPanel {
 		panel.add(panel_km);
 		panel_km.setLayout(null);
 		
+		Image imgkm = new ImageIcon(this.getClass().getResource("/KM.png")).getImage();
+		Image imgHDkm1 = new ImageIcon(this.getClass().getResource("/HDKM1.png")).getImage();
+		Image imgHDkm2 = new ImageIcon(this.getClass().getResource("/HDKM2.png")).getImage();
+		vietHuongDan(imgkm, imgHDkm1, imgHDkm2,panel_km);
+		
 		//quản lý tk
 		JPanel panel_tk = new JPanel();
 		panel_tk.setBounds(290, 0, 873, 763);
 		panel.add(panel_tk);
 		panel_tk.setLayout(null);
+		
+		
 		
 		//quản lý dmk
 		JPanel panel_dmk = new JPanel();
@@ -255,11 +385,16 @@ public class pnlTroGiup extends JPanel {
 		panel.add(panel_dmk);
 		panel_dmk.setLayout(null);
 		
-		//quản lý qmk
-		JPanel panel_qmk = new JPanel();
-		panel_qmk.setBounds(290, 0, 873, 763);
-		panel.add(panel_qmk);
-		panel_qmk.setLayout(null);
+		Image imgdmk = new ImageIcon(this.getClass().getResource("/DKM.png")).getImage();
+		Image imgHDdmk = new ImageIcon(this.getClass().getResource("/HDDMK.png")).getImage();
+		Image imgDMK1 = new ImageIcon(this.getClass().getResource("")).getImage();
+		vietHuongDan(imgdmk, imgHDdmk, imgDMK1,panel_dmk);
+		
+//		//quản lý qmk
+//		JPanel panel_qmk = new JPanel();
+//		panel_qmk.setBounds(290, 0, 873, 763);
+//		panel.add(panel_qmk);
+//		panel_qmk.setLayout(null);
 
 
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Hướng dẫn sử dụng");
@@ -275,7 +410,7 @@ public class pnlTroGiup extends JPanel {
 		DefaultMutableTreeNode taiKhoan = new DefaultMutableTreeNode("Tài khoản");
 
 		DefaultMutableTreeNode QLSP = new DefaultMutableTreeNode("Quản lý sản phẩn");
-		DefaultMutableTreeNode S = new DefaultMutableTreeNode("Sản phẩm");
+		DefaultMutableTreeNode S = new DefaultMutableTreeNode("Sách");
 		DefaultMutableTreeNode VPP = new DefaultMutableTreeNode("Văn phòng phẩm");
 		DefaultMutableTreeNode KH = new DefaultMutableTreeNode("Kệ hàng");
 		DefaultMutableTreeNode DM = new DefaultMutableTreeNode("Danh mục");
@@ -284,7 +419,7 @@ public class pnlTroGiup extends JPanel {
 		DefaultMutableTreeNode QLKM = new DefaultMutableTreeNode("Quản lý khuyến mãi");
 		DefaultMutableTreeNode TK = new DefaultMutableTreeNode("Thống kê");
 		DefaultMutableTreeNode DMK = new DefaultMutableTreeNode("Đổi mật khẩu");
-		DefaultMutableTreeNode QMK = new DefaultMutableTreeNode("Quên mật khẩu");
+		//DefaultMutableTreeNode QMK = new DefaultMutableTreeNode("Quên mật khẩu");
 
 
 		QLHD.add(HDB);
@@ -306,54 +441,261 @@ public class pnlTroGiup extends JPanel {
 		rootNode.add(QLKM);
 		rootNode.add(TK);
 		rootNode.add(DMK);
-		rootNode.add(QMK);
+		//rootNode.add(QMK);
 
 		JTree tree = new JTree(rootNode);
 		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				DefaultMutableTreeNode courses = new DefaultMutableTreeNode();
-
-				courses = (DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent();
-				if(courses == null) {
+				TreePath selectionPath = tree.getSelectionPath();
+				//courses = (DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+				if(selectionPath != null) {
+					courses = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
+					String select = courses.getUserObject().toString();
+					if(select.equals("Hóa đơn bán")){
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(true);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+						
+					}
+					else if(select.equals("Danh sách hóa đơn")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(true);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Quản lý khách hàng")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(true);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Nhân viên")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(true);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Tài khoản")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(true);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Sách")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(true);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Văn phòng phẩm")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(true);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Kệ hàng")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(true);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Danh mục")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(true);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Quản lý nhà cung cấp")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(true);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Quản lý khuyến mãi")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(true);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Thống kê")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(true);
+						panel_dmk.setVisible(false);
+						//panel_qmk.setVisible(false);
+					}
+					else if(select.equals("Đổi mật khẩu")) {
+						panel_1.setVisible(false);
+						panel_HDB.setVisible(false);
+						panel_DSHD.setVisible(false);
+						panel_QLKH.setVisible(false);
+						panel_NV.setVisible(false);
+						panel_TaiKhoan.setVisible(false);
+						panel_S.setVisible(false);
+						panel_VPP.setVisible(false);
+						panel_keHang.setVisible(false);
+						panel_dm.setVisible(false);
+						panel_ncc.setVisible(false);
+						panel_km.setVisible(false);
+						panel_tk.setVisible(false);
+						panel_dmk.setVisible(true);
+						//panel_qmk.setVisible(false);
+					}
+//					else if(select.equals("Quên mật khẩu")) {
+//						panel_1.setVisible(false);
+//						panel_HDB.setVisible(false);
+//						panel_DSHD.setVisible(false);
+//						panel_QLKH.setVisible(false);
+//						panel_NV.setVisible(false);
+//						panel_TaiKhoan.setVisible(false);
+//						panel_S.setVisible(false);
+//						panel_VPP.setVisible(false);
+//						panel_keHang.setVisible(false);
+//						panel_dm.setVisible(false);
+//						panel_ncc.setVisible(false);
+//						panel_km.setVisible(false);
+//						panel_tk.setVisible(false);
+//						panel_dmk.setVisible(false);
+//						//panel_qmk.setVisible(true);
+//					}
+				}else {
 					return;
 				}
-				String select = courses.getUserObject().toString();
-				if(select.equals("Hóa đơn bán")){
-					panel_1.setVisible(false);
-					panel_HDB.setVisible(true);
-					panel_DSHD.setVisible(false);
-					panel_QLKH.setVisible(false);
-					panel_NV.setVisible(false);
-					panel_TaiKhoan.setVisible(false);
-					panel_S.setVisible(false);
-					panel_VPP.setVisible(false);
-					panel_keHang.setVisible(false);
-					panel_dm.setVisible(false);
-					panel_ncc.setVisible(false);
-					panel_km.setVisible(false);
-					panel_tk.setVisible(false);
-					panel_dmk.setVisible(false);
-					panel_qmk.setVisible(false);
-					
-				}
-				else if(select.equals("Danh sách hóa đơn")) {
-					panel_1.setVisible(false);
-					panel_HDB.setVisible(false);
-					panel_DSHD.setVisible(true);
-					panel_QLKH.setVisible(false);
-					panel_NV.setVisible(false);
-					panel_TaiKhoan.setVisible(false);
-					panel_S.setVisible(false);
-					panel_VPP.setVisible(false);
-					panel_keHang.setVisible(false);
-					panel_dm.setVisible(false);
-					panel_ncc.setVisible(false);
-					panel_km.setVisible(false);
-					panel_tk.setVisible(false);
-					panel_dmk.setVisible(false);
-					panel_qmk.setVisible(false);
-				}
+				
 			}
 		});
 		tree.setVisibleRowCount(50);
@@ -373,5 +715,42 @@ public class pnlTroGiup extends JPanel {
 		//        tree.setCellRenderer(renderer);
 
 
+	}
+	
+	void vietHuongDan(Image img1,Image img2,Image img3, JPanel pnl ) {
+		
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setBounds(0, 0, 853, 763);
+		panel_8.setLayout(new BoxLayout(panel_8, BoxLayout.Y_AXIS));
+		add(panel_8);
+		
+		JLabel lbl8 = new JLabel("");
+		lbl8.setBounds(10, 10, 853, 266);
+		lbl8.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_8.add(lbl8);
+		//Image imgS = new ImageIcon(this.getClass().getResource("/DSHD1.png")).getImage();
+		lbl8.setIcon(new ImageIcon(img1));
+		
+		JLabel lblHD8 = new JLabel("");
+		lblHD8.setBounds(10, 276, 853, 452);
+		lblHD8.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_8.add(lblHD8);
+		//Image imgHD8 = new ImageIcon(this.getClass().getResource("/HDDSHD.png")).getImage();
+		lblHD8.setIcon(new ImageIcon(img2));
+		
+		JLabel lblHD82 = new JLabel("");
+		lblHD82.setBounds(10, 730, 853, 452);
+		lblHD82.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		panel_8.add(lblHD82);
+		//Image imgHD8 = new ImageIcon(this.getClass().getResource("/HDDSHD.png")).getImage();
+		lblHD82.setIcon(new ImageIcon(img3));
+		
+		JScrollPane scrollPane_DS8 = new JScrollPane();
+		scrollPane_DS8.setBounds(0, 0, 873, 763);
+		
+		pnl.add(scrollPane_DS8);
+		panel_8.setBackground(Color.white);
+		scrollPane_DS8.setViewportView(panel_8);
 	}
 }
