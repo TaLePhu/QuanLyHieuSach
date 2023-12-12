@@ -61,21 +61,21 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		tabbedPane.addTab("Thống Kê Doanh Thu", null, pnlTKDoanhThu, null);
 		pnlTKDoanhThu.setLayout(null);
 		
-		JLabel lblTKDT = new JLabel("THỐNG KÊ DOANH THU");
-		lblTKDT.setFont(new Font("Arial", Font.BOLD, 20));
-		lblTKDT.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTKDT.setBounds(277, 10, 467, 39);
-		pnlTKDoanhThu.add(lblTKDT);
+		JLabel lblTitle = new JLabel("THỐNG KÊ DOANH THU");
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 25));
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(277, 10, 467, 39);
+		pnlTKDoanhThu.add(lblTitle);
 		
 		JLabel lblNgayBD = new JLabel("Từ ngày:");
-		lblNgayBD.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblNgayBD.setFont(new Font("Arial", Font.PLAIN, 20));
 		lblNgayBD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNgayBD.setBounds(70, 59, 96, 39);
 		pnlTKDoanhThu.add(lblNgayBD);
 		
 		JLabel lblnNgy = new JLabel("Đến ngày:");
 		lblnNgy.setHorizontalAlignment(SwingConstants.CENTER);
-		lblnNgy.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblnNgy.setFont(new Font("Arial", Font.PLAIN, 20));
 		lblnNgy.setBounds(70, 176, 96, 29);
 		pnlTKDoanhThu.add(lblnNgy);
 		
@@ -90,19 +90,19 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		btnInThongKe.setBounds(169, 304, 136, 39);
 		pnlTKDoanhThu.add(btnInThongKe);
 		
-		JLabel lblSoLuongHD = new JLabel("Số lượng hóa đơn bán được:");
-		lblSoLuongHD.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblSoLuongHD.setBounds(10, 423, 206, 39);
+		JLabel lblSoLuongHD = new JLabel("Tổng hóa đơn bán được:");
+		lblSoLuongHD.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblSoLuongHD.setBounds(10, 423, 212, 39);
 		pnlTKDoanhThu.add(lblSoLuongHD);
 		
 		txtSoLuong = new JTextField();
-		txtSoLuong.setBounds(230, 434, 96, 30);
+		txtSoLuong.setBounds(230, 431, 96, 30);
 		pnlTKDoanhThu.add(txtSoLuong);
 		txtSoLuong.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Doanh Thu:");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblNewLabel.setBounds(70, 501, 108, 29);
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblNewLabel.setBounds(118, 500, 96, 29);
 		pnlTKDoanhThu.add(lblNewLabel);
 		
 		txtDoanhThu = new JTextField();
@@ -122,16 +122,16 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		pnlTKDoanhThu.add(cstuN);
 		
 		JPanel pnlThongKe = new JPanel();
-		pnlThongKe.setBounds(336, 59, 780, 647);
+		pnlThongKe.setBounds(336, 71, 780, 645);
 		pnlTKDoanhThu.add(pnlThongKe);
 		pnlThongKe.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 760, 627);
+		scrollPane.setBounds(10, 10, 760, 637);
 		pnlThongKe.add(scrollPane);
 		
 		//create table
-		String[] cols = new String[] {"Mã hóa đơn" , "Tên khách hàng", "Tên Nhân Viên","Ngày tạo","Tổng thành tiên"};
+		String[] cols = new String[] {"Mã hóa đơn" , "Tên khách hàng", "Tên nhân viên","Ngày tạo","Tổng thành tiên"};
 		modelTK = new DefaultTableModel(cols, 0);
 		
 		table = new JTable(modelTK);
@@ -201,41 +201,67 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	}
 	
 	//lấy tất cả hóa đơn
+//	public void getAllHD() {
+//		try {
+//			ConnectDB.getInstance();
+//			Connection con = ConnectDB.getConnection();
+//			String sql = "SELECT hd.MAHOADONBAN, kh.HOTENKHACHHANG,hd.MANHANVIEN, hd.NGAYGIAODICH, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN "
+//					+ "FROM HOADONBAN AS hd "
+//					+ "JOIN KHACHHANG AS kh ON hd.MAKHACHHANG = kh.MAKHACHHANG "
+//					+ "JOIN NHANVIEN AS nv ON hd.MANHANVIEN = nv.MANHANVIEN "
+//					+ "GROUP BY hd.MAHOADONBAN, kh.HOTENKHACHHANG, hd.NGAYGIAODICH, hd.MANHANVIEN ";
+//			PreparedStatement pst = con.prepareStatement(sql);
+//			ResultSet rs = pst.executeQuery();
+//			Object obj[] = new Object[15];
+//			while(rs.next()) {
+//				obj[0] = rs.getString(1);
+//				obj[1] = rs.getString(2);
+//				obj[2] = rs.getString(3);
+//				obj[3] =rs.getDate(4);
+//				obj[4] = rs.getDouble(5);
+//				modelTK.addRow(obj);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
 	public void getAllHD() {
-		try {
-			ConnectDB.getInstance();
-			Connection con = ConnectDB.getConnection();
-			String sql = "SELECT hd.MAHOADONBAN, kh.HOTENKHACHHANG,hd.MANHANVIEN, hd.NGAYGIAODICH, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN "
-					+ "FROM HOADONBAN AS hd "
-					+ "JOIN KHACHHANG AS kh ON hd.MAKHACHHANG = kh.MAKHACHHANG "
-					+ "JOIN NHANVIEN AS nv ON hd.MANHANVIEN = nv.MANHANVIEN "
-					+ "GROUP BY hd.MAHOADONBAN, kh.HOTENKHACHHANG, hd.NGAYGIAODICH, hd.MANHANVIEN ";
-			PreparedStatement pst = con.prepareStatement(sql);
-			ResultSet rs = pst.executeQuery();
-			Object obj[] = new Object[15];
-			while(rs.next()) {
-				obj[0] = rs.getString(1);
-				obj[1] = rs.getString(2);
-				obj[2] = rs.getString(3);
-				obj[3] =rs.getDate(4);
-				obj[4] = rs.getDouble(5);
-				modelTK.addRow(obj);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	try {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "SELECT hd.MAHOADONBAN, kh.HOTENKHACHHANG,nv.HOTENNHANVIEN, hd.NGAYGIAODICH, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN "
+				+ "FROM HOADONBAN AS hd "
+				+ "JOIN KHACHHANG AS kh ON hd.MAKHACHHANG = kh.MAKHACHHANG "
+				+ "JOIN NHANVIEN AS nv ON hd.MANHANVIEN = nv.MANHANVIEN "
+				+ "GROUP BY hd.MAHOADONBAN, kh.HOTENKHACHHANG, hd.NGAYGIAODICH, nv.HOTENNHANVIEN ";
+		PreparedStatement pst = con.prepareStatement(sql);
+		ResultSet rs = pst.executeQuery();
+		Object obj[] = new Object[15];
+		while(rs.next()) {
+			obj[0] = rs.getString(1);
+			obj[1] = rs.getString(2);
+			obj[2] = rs.getString(3);
+			obj[3] =rs.getDate(4);
+			obj[4] = rs.getDouble(5);
+			modelTK.addRow(obj);
 		}
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
+}
+	
 	
 	public void getHDTheoDate(Date fromDate, Date toDate) {
 	    try {
 	        ConnectDB.getInstance();
 	        Connection con = ConnectDB.getConnection();
-	        String sql = "SELECT hd.MAHOADONBAN, kh.HOTENKHACHHANG,hd.MANHANVIEN, hd.NGAYGIAODICH, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN " +
+	        String sql = "SELECT hd.MAHOADONBAN, kh.HOTENKHACHHANG,nv.HOTENNHANVIEN, hd.NGAYGIAODICH, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN " +
 	                "FROM HOADONBAN AS hd " +
 	                "JOIN KHACHHANG AS kh ON hd.MAKHACHHANG = kh.MAKHACHHANG " +
 	                "JOIN NHANVIEN AS nv ON hd.MANHANVIEN = nv.MANHANVIEN " +
 	                "WHERE hd.NGAYGIAODICH BETWEEN ? AND ? " +
-	                "GROUP BY hd.MAHOADONBAN, kh.HOTENKHACHHANG, hd.NGAYGIAODICH,hd.MANHANVIEN ";
+	                "GROUP BY hd.MAHOADONBAN, kh.HOTENKHACHHANG, hd.NGAYGIAODICH,nv.HOTENNHANVIEN ";
 	        
 	        PreparedStatement pst = con.prepareStatement(sql);
 	        pst.setDate(1, new java.sql.Date(fromDate.getTime()));
