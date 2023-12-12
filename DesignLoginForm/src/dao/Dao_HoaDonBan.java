@@ -113,7 +113,7 @@ public class Dao_HoaDonBan {
 			Date currentDate = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
             String currentDateStr = dateFormat.format(currentDate);
-            String sql = "SELECT COUNT(*) AS COUNT_HOADON FROM HOADONBAN WHERE SUBSTRING(MAHOADONBAN, 3, 6) = ?";
+            String sql = "SELECT Max(SUBSTRING(MAHOADONBAN, 9, 4)) AS COUNT_HOADON FROM HOADONBAN WHERE SUBSTRING(MAHOADONBAN, 3, 6) = ?";
             
             try (PreparedStatement statement = con.prepareStatement(sql)) {
                 // Đặt tham số cho truy vấn
