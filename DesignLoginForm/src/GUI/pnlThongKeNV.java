@@ -376,7 +376,6 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 				NhanVien findNVLogin = nhanVien_dao.getTheoMaNV(nvLogin.getMaNhanVien());
 		        JOptionPane.showMessageDialog(null, "Đã xuất dữ liệu ra file excel thành công.");
 		        excelExport.ExcelExporter.exportTable(tblHD, fromDate, toDate, findNVLogin.getHoTenNhanVien(), "report.xls", txtCaoNhat.getText(), txtThapNhat.getText(), txtSoHD.getText(),txtTongDoanhThu.getText());
-
 		    } catch (IOException ex) {
 		        ex.printStackTrace();
 		    }

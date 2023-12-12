@@ -26,13 +26,16 @@ import dao.Dao_NhanVien;
 import dao.Dao_TaiKhoan;
 import entity.NhanVien;
 import entity.TaiKhoan;
-
+import entity.VerificationCode;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 public class FrameLogin extends JFrame {
@@ -40,6 +43,7 @@ public class FrameLogin extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Map<String, VerificationCode> verificationCodes = new HashMap<>();
     private Dao_TaiKhoan taiKhoan_dao = new Dao_TaiKhoan();
     private Dao_NhanVien nhanVien_dao = new Dao_NhanVien();
 	private JTextField txtTenDangNhap;
@@ -108,6 +112,15 @@ public class FrameLogin extends JFrame {
 		btnForgotPassword.setBorder(null);
 		btnForgotPassword.setBounds(425, 232, 125, 28);
 		panel.add(btnForgotPassword);
+		btnForgotPassword.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            try {
+	                sendVerificationCode();
+	            } catch (Exception ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	    });
 		
 		JButton btnLogin = new JButton();
 		btnLogin.addActionListener(new ActionListener() {
@@ -131,7 +144,6 @@ public class FrameLogin extends JFrame {
 		txtMatKhau.setBounds(207, 186, 343, 29);
 		txtMatKhau.setBackground(new Color(255, 255, 255));
 		txtMatKhau.setBounds(207, 189, 343, 26);
-		txtMatKhau.setText("MatKhau123");
 		panel.add(txtMatKhau);
 		
 		JLabel bg = new JLabel("");
@@ -140,7 +152,7 @@ public class FrameLogin extends JFrame {
 		Image img_iconUpdate = new ImageIcon(this.getClass().getResource("/BGLogin2.png")).getImage();
 		bg.setIcon(new ImageIcon(img_iconUpdate));
 		
-		txtTenDangNhap.setText("Admin");
+		txtTenDangNhap.setText("NV101");
 		txtMatKhau.setText("MatKhau123");
 	}
 	
@@ -195,4 +207,77 @@ public class FrameLogin extends JFrame {
 		txtTenDangNhap.requestFocus();
 		return false;
 	}
+	
+	private void sendVerificationCode() {
+	    String userEmail = JOptionPane.showInputDialog(this, "Nhập email của bạn:");
+
+	    if (userEmail != null) {
+	        try {
+	            String verificationCode = generateVerificationCode();
+	            
+	         // Store the verification code and associated VerificationCode object in the map
+	            VerificationCode codeObject = new VerificationCode(verificationCode);
+	            verificationCodes.put(userEmail, codeObject);
+
+	            // Send email with verification code
+	            EmailSender.sendVerificationEmail(userEmail, verificationCode);
+	            System.out.println(verificationCode);
+
+	            // Prompt user to enter the verification code
+	            String enteredCode = JOptionPane.showInputDialog(this, "Kiểm tra email của bạn để lấy mã đăng nhập:");
+
+	            // Verify the entered code
+	            if (verifyCode(userEmail, enteredCode)) {
+	                resetPassword(userEmail);
+	            } else {
+	                JOptionPane.showMessageDialog(this, "Mã đăng nhập không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	            }
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	}
+	
+	private String generateVerificationCode() {
+        SecureRandom random = new SecureRandom();
+        // Generate a random alphanumeric code (you can customize this)
+        return String.format("%04d", random.nextInt(10000));
+    }
+    private boolean verifyCode(String userEmail, String enteredCode) {
+        VerificationCode storedCode = verificationCodes.get(userEmail);
+        if (storedCode != null && storedCode.getCode().equals(enteredCode) && System.currentTimeMillis() < storedCode.getExpiryTime()) {
+            verificationCodes.remove(userEmail);  // Remove the code after successful verification
+            return true;
+        }
+        return false;
+    }
+    private void resetPassword(String userEmail) {
+        String matKhauMoi = JOptionPane.showInputDialog(this, "Nhập mật khẩu mới");
+        if (matKhauMoi != null) {  // Check if the user entered a new password
+            int confirmResult = JOptionPane.showConfirmDialog(this, "Bạn muốn đổi mật khẩu mới?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (confirmResult == JOptionPane.YES_OPTION) {
+                // Get the user's existing account information
+                ArrayList<TaiKhoan> tkList = taiKhoan_dao.getTKTheoEmailNV(userEmail);
+
+                if (!tkList.isEmpty()) {
+                    TaiKhoan existingTaiKhoan = tkList.get(0);
+                    TaiKhoan tkMoi = null;
+					try {
+						tkMoi = new TaiKhoan(existingTaiKhoan.getMaTaiKhoan(),AESCrypto.encrypt(matKhauMoi),existingTaiKhoan.getTenTaiKhoan(), existingTaiKhoan.getNhanVien());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					taiKhoan_dao.capNhat(tkMoi);
+					JOptionPane.showMessageDialog(this, "Cập nhật mật khẩu mới thành công");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản với email này");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+            }
+        }
+    }
+
+
+	
 }
