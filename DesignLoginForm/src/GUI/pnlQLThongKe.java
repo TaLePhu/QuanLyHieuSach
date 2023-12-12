@@ -33,6 +33,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.poi.hpsf.Decimal;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 import java.awt.Rectangle;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -56,7 +62,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	private JTextField txtTongTien;
 	private JTextField txtTongSP;
 
-	private JButton btnXemTK, btnLoadTable,btnInThongKe ;
+	private JButton btnXemTK, btnLoadTable,btnInThongKe, btnXemBieuDo ;
 
 		
 	/**
@@ -111,21 +117,21 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		
 		JLabel lblSoLuongHD = new JLabel("Tổng hóa đơn bán được:");
 		lblSoLuongHD.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblSoLuongHD.setBounds(10, 423, 212, 39);
+		lblSoLuongHD.setBounds(8, 547, 212, 39);
 		pnlTKDoanhThu.add(lblSoLuongHD);
 		
 		txtSoLuong = new JTextField();
-		txtSoLuong.setBounds(230, 431, 96, 30);
+		txtSoLuong.setBounds(230, 554, 96, 30);
 		pnlTKDoanhThu.add(txtSoLuong);
 		txtSoLuong.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Doanh Thu:");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel.setBounds(118, 500, 96, 29);
+		lblNewLabel.setBounds(95, 610, 96, 29);
 		pnlTKDoanhThu.add(lblNewLabel);
 		
 		txtDoanhThu = new JTextField();
-		txtDoanhThu.setBounds(230, 502, 96, 30);
+		txtDoanhThu.setBounds(230, 612, 96, 30);
 		pnlTKDoanhThu.add(txtDoanhThu);
 		txtDoanhThu.setColumns(10);
 		
@@ -156,15 +162,17 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		table = new JTable(modelTK);
 		scrollPane.setViewportView(table);
 		
-		//btn làm mới
+		//btn Load Table
 		btnLoadTable = new JButton("Làm mới");
-//		btnLamMoi.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//			}
-//		});
+
 		btnLoadTable.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnLoadTable.setBounds(176, 304, 136, 39);
 		pnlTKDoanhThu.add(btnLoadTable);
+		
+		btnXemBieuDo = new JButton("Xem Biểu đồ doanh thu theo tháng");
+		btnXemBieuDo.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnXemBieuDo.setBounds(24, 455, 288, 39);
+		pnlTKDoanhThu.add(btnXemBieuDo);
 		
 		modelTK.addTableModelListener(new TableModelListener() {
 			
@@ -265,7 +273,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		    public void tableChanged(TableModelEvent e) {
 		        if (e.getType() == TableModelEvent.UPDATE || e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE) {
 		            // Gọi các phương thức 
-		            tongTienSP();
+//		            tongTienSP();
 		            tongSPBan();
 		        }
 		    }
@@ -305,6 +313,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		btnXemTK.addActionListener(this);
 		btnLoadTable.addActionListener(this);
 		btnInThongKe.addActionListener(this);
+		btnXemBieuDo.addActionListener(this);
 	}
 	
 
@@ -342,6 +351,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		
 		if(o.equals(btnXemTK)) {
 			if(cstuN.getDate() == null) {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn Ngày bắt đầu");
@@ -372,6 +382,10 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
+		}
+		
+		if(o.equals(btnXemBieuDo)) {
+			dataModalDoanhThu();
 		}
 	}
 	//lấy tất cả hóa đơn
@@ -505,6 +519,45 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	public void deleteTable() {
 		while(modelTK.getRowCount()>0) {
 			modelTK.removeRow(0);
+		}
+	}
+	
+//	biểu đồ
+	public void dataModalDoanhThu() {
+		try {
+		    ConnectDB.getInstance();
+		    Connection con = ConnectDB.getConnection();
+
+		    // Create a dataset for all months
+		    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		    for (int month = 1; month <= 12; month++) {
+		        dataset.addValue(0.0, "Tổng tiền", "Tháng " + month);
+		    }
+
+		    String sql = "SELECT MONTH(hd.NGAYGIAODICH) AS THANG, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN " +
+		            "FROM HOADONBAN AS hd " +
+		            "GROUP BY MONTH(hd.NGAYGIAODICH)";
+		    PreparedStatement sta = con.prepareStatement(sql);
+//		    sta.setString(1, nvLogin.getMaNhanVien());
+		    ResultSet rs = sta.executeQuery();
+
+		    // Update values for months with invoices
+		    while (rs.next()) {
+		        int thang = rs.getInt("THANG");
+		        double tongTien = rs.getDouble("TONGTHANHTIEN");
+		        dataset.setValue(tongTien, "Tổng tiền", "Tháng " + thang);
+		    }
+
+		    // Táº¡o biá»ƒu Ä‘á»“ cá»™t tá»« dataset
+		    JFreeChart chart = ChartFactory.createBarChart("Tổng tiền từng tháng", "Tháng", "Tổng tiền",
+		                dataset, PlotOrientation.VERTICAL, false, true, false);
+
+		    // Hiá»ƒn thá»‹ biá»ƒu Ä‘á»“ cá»™t trong cá»­a sá»• má»›i
+		    ChartFrame chartFrame = new ChartFrame("Biểu đồ doanh thu theo tháng", chart);
+		    chartFrame.pack();
+		    chartFrame.setVisible(true);
+		} catch (SQLException ex) {
+		    ex.printStackTrace();
 		}
 	}
 	
