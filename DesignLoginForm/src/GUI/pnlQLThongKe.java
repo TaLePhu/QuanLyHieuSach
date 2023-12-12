@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -48,10 +50,14 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	private DefaultTableModel modelTK, modelSP;
 	private	JTable table;
 	private JDateChooser csDenN, cstuN;
-	private JButton btnXemTK;
+
+
 	private JTable table_1;
 	private JTextField txtTongTien;
 	private JTextField txtTongSP;
+
+	private JButton btnXemTK, btnLoadTable,btnInThongKe ;
+
 		
 	/**
 	 * Create the panel.
@@ -94,9 +100,13 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		btnXemTK.setBounds(10, 304, 136, 39);
 		pnlTKDoanhThu.add(btnXemTK);
 		
-		JButton btnInThongKe = new JButton("In thống kê");
+		btnInThongKe = new JButton("In thống kê");
+		btnInThongKe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnInThongKe.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnInThongKe.setBounds(169, 304, 136, 39);
+		btnInThongKe.setBounds(10, 358, 136, 39);
 		pnlTKDoanhThu.add(btnInThongKe);
 		
 		JLabel lblSoLuongHD = new JLabel("Tổng hóa đơn bán được:");
@@ -145,6 +155,16 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		
 		table = new JTable(modelTK);
 		scrollPane.setViewportView(table);
+		
+		//btn làm mới
+		btnLoadTable = new JButton("Làm mới");
+//		btnLamMoi.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
+		btnLoadTable.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnLoadTable.setBounds(176, 304, 136, 39);
+		pnlTKDoanhThu.add(btnLoadTable);
 		
 		modelTK.addTableModelListener(new TableModelListener() {
 			
@@ -283,6 +303,8 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		
 		//đăng ký sự kiện
 		btnXemTK.addActionListener(this);
+		btnLoadTable.addActionListener(this);
+		btnInThongKe.addActionListener(this);
 	}
 	
 
@@ -321,7 +343,35 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnXemTK)) {
+			if(cstuN.getDate() == null) {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn Ngày bắt đầu");
+				cstuN.requestFocus();
+				return ;
+			}
+			if(csDenN.getDate() == null) {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn Ngày kết thúc");
+				cstuN.requestFocus();
+				return ;
+			}
+			//gọi hàm lấy hóa đơn theo ngày
 			getHDTheoDate(cstuN.getDate(), csDenN.getDate());
+		}
+		
+		if(o.equals(btnLoadTable)) {
+			cstuN.setDate(null);
+			csDenN.setDate(null);
+			deleteTable();
+			getAllHD();
+		}
+		
+		if(o.equals(btnInThongKe)) {
+			
+			try {
+				JOptionPane.showMessageDialog(null, "da in file thanh cong");
+				excelExport.ExcelExporterTKDT.exportTable(table, cstuN.getDate(), csDenN.getDate(), "reportDT.xls", txtSoLuong.getText(), txtDoanhThu.getText());
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	//lấy tất cả hóa đơn
@@ -428,6 +478,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		txtSoLuong.setText(String.valueOf(soHD));
 	}
 	
+
 	// Tính tổng tiền
 	public void tongTienSP() {
 	    double tongTien = 0;
@@ -449,4 +500,22 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	    }
 	    txtTongSP.setText(String.valueOf(totalQuantity));
 	}
+
+//	delete table
+	public void deleteTable() {
+		while(modelTK.getRowCount()>0) {
+			modelTK.removeRow(0);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }
