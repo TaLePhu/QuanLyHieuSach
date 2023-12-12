@@ -1052,6 +1052,17 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 				txtKhuyenMai.setText(km+"");
 				if(dao_HoaDonBan.capNhat(ma, "Đã thanh toán")) {
 					JOptionPane.showMessageDialog(this,"Thanh toán hóa đơn tạm thành công");
+					if(JOptionPane.showConfirmDialog(this,"Bạn có muốn in hóa đơn không ?", "Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						String maNV = txtMaNhanVien.getText();
+						NhanVien nvIn = dao_NhanVien.getTheoMaNV(maNV);
+						String maKH = txtMaKH.getText();
+						KhachHang khIn = dao_KhachHang.getTheoMaKH(maKH);
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			            String currentDateStr = dateFormat.format(dcrNgayLap.getDate());
+			            //String date = dcrNgayLap.getDate().toString();
+						inHoaDon in = new inHoaDon(ma,currentDateStr, nvIn.getMaNhanVien(), khIn.getTenKhachHang(), khIn.getSoDT(), khIn.getDiaChi());
+						in.setVisible(true);
+					}
 				}else {
 					JOptionPane.showMessageDialog(this,"Thanh toán hóa đơn tạm thất bại");
 				}
