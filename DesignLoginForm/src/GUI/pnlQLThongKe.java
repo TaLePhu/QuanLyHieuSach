@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.awt.Color;
@@ -26,6 +27,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
+import dao.Dao_SanPham;
 import entity.NhanVien;
 
 import javax.swing.JScrollPane;
@@ -58,11 +60,15 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	private JDateChooser csDenN, cstuN;
 
 
-	private JTable table_1;
-	private JTextField txtTongTien;
+	private JTable tableSP;
+	private JTextField txtDangBan;
 	private JTextField txtTongSP;
+	private JComboBox<String> cbLoc;
 
 	private JButton btnXemTK, btnLoadTable,btnInThongKe, btnXemBieuDo ;
+	private JTextField txtNgungBan;
+	private Dao_SanPham sanPham_dao = new Dao_SanPham();
+	
 
 		
 	/**
@@ -203,7 +209,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		pnlTKSanPham.add(lblNewLabel_1);
 		
 		JPanel pnlNgay = new JPanel();
-		pnlNgay.setBounds(10, 59, 401, 103);
+		pnlNgay.setBounds(10, 59, 354, 103);
 		pnlTKSanPham.add(pnlNgay);
 		pnlNgay.setLayout(null);
 		
@@ -215,7 +221,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		
 		JDateChooser csNgayBD = new JDateChooser();
 		csNgayBD.setDateFormatString("dd/MM/yyyy");
-		csNgayBD.setBounds(132, 20, 252, 30);
+		csNgayBD.setBounds(132, 20, 200, 30);
 		pnlNgay.add(csNgayBD);
 		
 		JLabel lblNgayKT_1 = new JLabel("Đến ngày:");
@@ -226,30 +232,30 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		
 		JDateChooser csNgayKT = new JDateChooser();
 		csNgayKT.setDateFormatString("dd/MM/yyyy");
-		csNgayKT.setBounds(132, 63, 252, 30);
+		csNgayKT.setBounds(132, 63, 200, 30);
 		pnlNgay.add(csNgayKT);
 		
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setLayout(null);
-		pnlChucNang.setBounds(421, 59, 695, 103);
+		pnlChucNang.setBounds(371, 59, 745, 103);
 		pnlTKSanPham.add(pnlChucNang);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Sản phẩm bán nhiều nhất", "Sản phẩm có doanh thu cao nhất"}));
-		comboBox.setBounds(10, 20, 247, 55);
-		pnlChucNang.add(comboBox);
+		cbLoc = new JComboBox();
+		cbLoc.setFont(new Font("Tahoma", Font.BOLD, 14));
+		cbLoc.setModel(new DefaultComboBoxModel(new String[] {"Top 10 sản phẩm bán chạy nhất", "Top 10 sản phẩm bán ít nhất", "Các sản phẩm chưa bán được"}));
+		cbLoc.setBounds(10, 20, 297, 55);
+		pnlChucNang.add(cbLoc);
 		
 		JButton btnXemThongKe = new JButton("Xem thống kê");
 		btnXemThongKe.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnXemThongKe.setBounds(267, 20, 204, 55);
+		btnXemThongKe.setBounds(317, 20, 204, 55);
 		pnlChucNang.add(btnXemThongKe);
 		Image img_iconXemThongKe = new ImageIcon(this.getClass().getResource("/icon_customers_s.png")).getImage();
 		btnXemThongKe.setIcon(new ImageIcon(img_iconXemThongKe));
 		
 		JButton btnLamMoi = new JButton("Làm mới");
 		btnLamMoi.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnLamMoi.setBounds(481, 20, 204, 55);
+		btnLamMoi.setBounds(531, 20, 204, 55);
 		pnlChucNang.add(btnLamMoi);
 		Image img_iconLamMoi = new ImageIcon(this.getClass().getResource("/update.png")).getImage();
 		btnLamMoi.setIcon(new ImageIcon(img_iconLamMoi));
@@ -263,57 +269,61 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		scrollPane_1.setBounds(0, 0, 1106, 456);
 		pnlThongTinChiTiet.add(scrollPane_1);
 		
-		String[] cols_1 = new String[] {"Mã sản phẩm" , "Tên sản phẩm", "Số lượng bán", "Giá bán", "Thành tiền"};
-		modelSP = new DefaultTableModel(cols_1, 0);
-		table_1 = new JTable(modelSP);
-		scrollPane_1.setViewportView(table_1);
+		
+		String[] tb_SP = new String[] { "Mã sản phẩm", "Tên sản phẩm", "Số lượng đã bán"};
+		modelSP = new DefaultTableModel(tb_SP, 0);
+		tableSP = new JTable(modelSP);
+		scrollPane_1.setViewportView(tableSP);
 
-		modelSP.addTableModelListener(new TableModelListener() {
-		    @Override
-		    public void tableChanged(TableModelEvent e) {
-		        if (e.getType() == TableModelEvent.UPDATE || e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE) {
-		            // Gọi các phương thức 
-//		            tongTienSP();
-		            tongSPBan();
-		        }
-		    }
-		});
-
-		// Gọi dữ liệu lên thống kê sản phẩm
-		getAllSP();
+		
 		
 		JPanel pnlThongSo = new JPanel();
 		pnlThongSo.setBounds(10, 648, 1106, 58);
 		pnlTKSanPham.add(pnlThongSo);
 		pnlThongSo.setLayout(null);
 		
-		JLabel lblTongTien = new JLabel("Tổng tiền: ");
-		lblTongTien.setBounds(167, 14, 110, 30);
+		JLabel lblTongTien = new JLabel("Đang bán: ");
+		lblTongTien.setBounds(25, 18, 110, 30);
 		lblTongTien.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTongTien.setFont(new Font("Arial", Font.PLAIN, 20));
 		pnlThongSo.add(lblTongTien);
 		
-		JLabel lblTongSP = new JLabel("Tổng số lượng sản phẩm đã bán: ");
+		JLabel lblTongSP = new JLabel("Tổng số sản phẩm:");
 		lblTongSP.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTongSP.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblTongSP.setBounds(578, 14, 342, 30);
+		lblTongSP.setBounds(666, 14, 222, 30);
 		pnlThongSo.add(lblTongSP);
 		
-		txtTongTien = new JTextField();
-		txtTongTien.setBounds(280, 14, 247, 30);
-		pnlThongSo.add(txtTongTien);
-		txtTongTien.setColumns(10);
+		txtDangBan = new JTextField();
+		txtDangBan.setBounds(149, 18, 124, 30);
+		pnlThongSo.add(txtDangBan);
+		txtDangBan.setColumns(10);
+		txtDangBan.setText(String.valueOf(sanPham_dao.getSPTheoTinhTrang("Đang bán").size()));
 		
 		txtTongSP = new JTextField();
 		txtTongSP.setColumns(10);
 		txtTongSP.setBounds(898, 14, 186, 30);
 		pnlThongSo.add(txtTongSP);
+		txtTongSP.setText(String.valueOf(setTotalProductCount()));
+		
+		JLabel lblNgngBn = new JLabel("Ngưng bán:");
+		lblNgngBn.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNgngBn.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblNgngBn.setBounds(327, 18, 110, 30);
+		pnlThongSo.add(lblNgngBn);
+		
+		txtNgungBan = new JTextField();
+		txtNgungBan.setColumns(10);
+		txtNgungBan.setBounds(458, 18, 124, 30);
+		pnlThongSo.add(txtNgungBan);
+		txtNgungBan.setText(String.valueOf(sanPham_dao.getSPTheoTinhTrang("Ngưng bán").size()));
 		
 		//đăng ký sự kiện
 		btnXemTK.addActionListener(this);
 		btnLoadTable.addActionListener(this);
 		btnInThongKe.addActionListener(this);
 		btnXemBieuDo.addActionListener(this);
+		cbLoc.addActionListener(this);
 	}
 	
 
@@ -387,6 +397,19 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		if(o.equals(btnXemBieuDo)) {
 			dataModalDoanhThu();
 		}
+		if(o.equals(cbLoc)) {
+			String selectedOption = cbLoc.getSelectedItem().toString();
+			if(selectedOption.equals("Top 10 sản phẩm bán chạy nhất")) {
+				modelSP.setRowCount(0);
+				getTop10Selling();
+			}else if(selectedOption.equals("Top 10 sản phẩm bán ít nhất")) {
+				modelSP.setRowCount(0);
+				getTop10Leasting();
+			}else {
+				modelSP.setRowCount(0);
+				getNotSelling();
+			}
+		}
 	}
 	//lấy tất cả hóa đơn
 	public void getAllHD() {
@@ -447,26 +470,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	    }
 	}
 	
-	public void getAllSP() {
-	try {
-		ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "SELECT sp.MASANPHAM, sp.TENSANPHAM, sp.SOLUONG, sp.GIABAN, sp.SOLUONG * sp.GIABAN AS THANHTIEN FROM SANPHAM AS sp";
-		PreparedStatement pst = con.prepareStatement(sql);
-		ResultSet rs = pst.executeQuery();
-		Object obj[] = new Object[10];
-		while(rs.next()) {
-			obj[0] = rs.getString(1);
-			obj[1] = rs.getString(2);
-			obj[2] = rs.getInt(3);
-			obj[3] =rs.getFloat(4);
-			obj[4] = rs.getDouble(5);
-			modelSP.addRow(obj);
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-}
+	
 
 	//
 	public String formatTien(double tien) {
@@ -493,27 +497,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	}
 	
 
-	// Tính tổng tiền
-	public void tongTienSP() {
-	    double tongTien = 0;
-	    for (int i = 0; i < modelSP.getRowCount(); i++) {
-	        double thanhTien = Double.parseDouble(modelSP.getValueAt(i, 4).toString());
-	        tongTien += thanhTien;
-	    }
-	    txtTongTien.setText(formatTien(tongTien));
-	}
-
-	// Tính tổng sản phẩm
-	public void tongSPBan() {
-	    int rowCount = modelSP.getRowCount();
-	    int totalQuantity = 0;
-
-	    for (int i = 0; i < rowCount; i++) {
-	        int quantity = (int) modelSP.getValueAt(i, 2);
-	        totalQuantity += quantity;
-	    }
-	    txtTongSP.setText(String.valueOf(totalQuantity));
-	}
+	
 
 //	delete table
 	public void deleteTable() {
@@ -561,14 +545,97 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		}
 	}
 	
+//	Thống kê sản phẩm
+	public void getTop10Selling() {
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT TOP 10 SANPHAM.MASANPHAM, SANPHAM.TENSANPHAM, SUM(CHITIETHOADONBAN.SOLUONG) AS TONGSOLUONGBAN " +
+	                     "FROM SANPHAM " +
+	                     "JOIN CHITIETHOADONBAN ON SANPHAM.MASANPHAM = CHITIETHOADONBAN.MASANPHAM " +
+	                     "GROUP BY SANPHAM.MASANPHAM, SANPHAM.TENSANPHAM " +
+	                     "ORDER BY TONGSOLUONGBAN DESC;";
+	        Statement sta = con.createStatement();
+	        ResultSet rs = sta.executeQuery(sql);
+	        Object obj[] = new Object[3];
+	        while (rs.next()) {
+	            obj[0] = rs.getString(1);
+	            obj[1] = rs.getString(2);
+	            obj[2] = rs.getInt(3);
+	            modelSP.addRow(obj);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
+	public void getTop10Leasting() {
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT TOP 10 SANPHAM.MASANPHAM, SANPHAM.TENSANPHAM, SUM(CHITIETHOADONBAN.SOLUONG) AS TONGSOLUONGBAN " +
+	                     "FROM SANPHAM " +
+	                     "JOIN CHITIETHOADONBAN ON SANPHAM.MASANPHAM = CHITIETHOADONBAN.MASANPHAM " +
+	                     "GROUP BY SANPHAM.MASANPHAM, SANPHAM.TENSANPHAM " +
+	                     "ORDER BY TONGSOLUONGBAN ASC;";
+	        Statement sta = con.createStatement();
+	        ResultSet rs = sta.executeQuery(sql);
+	        Object obj[] = new Object[3];
+	        while (rs.next()) {
+	            obj[0] = rs.getString(1);
+	            obj[1] = rs.getString(2);
+	            obj[2] = rs.getInt(3);
+	            modelSP.addRow(obj);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
+	public void getNotSelling() {
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT SANPHAM.MASANPHAM, SANPHAM.TENSANPHAM FROM SANPHAM " +
+                    "WHERE SANPHAM.MASANPHAM NOT IN (SELECT DISTINCT MASANPHAM FROM CHITIETHOADONBAN);";
+	        Statement sta = con.createStatement();
+	        ResultSet rs = sta.executeQuery(sql);
+	        Object obj[] = new Object[3];
+	        while (rs.next()) {
+	            obj[0] = rs.getString(1);
+	            obj[1] = rs.getString(2);
+	            obj[2] = 0;
+	            modelSP.addRow(obj);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
-	
-	
-	
-	
-	
+	public int setTotalProductCount() {
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT COUNT(*) AS TongSoLuongSanPham FROM SANPHAM;";
+            Statement sta = con.createStatement();
+            ResultSet rs = sta.executeQuery(sql);
+
+            // Đảm bảo ResultSet chỉ có một dòng kết quả
+            if (rs.next()) {
+                int tongSoLuongSanPham = rs.getInt("TongSoLuongSanPham");
+
+                return tongSoLuongSanPham;
+                // Đặt giá trị vào JTextField
+//                txtTongSP.setText(String.valueOf(tongSoLuongSanPham));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return 0;
+    }
 	
 
+
+	
+	
 }

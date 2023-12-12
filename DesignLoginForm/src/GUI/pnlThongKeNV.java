@@ -78,13 +78,13 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		setLayout(null);
 		
 		JPanel pnNorth = new JPanel();
-		pnNorth.setBorder(new TitledBorder(null, "Ch\u1EE9c n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnNorth.setBorder(new TitledBorder(null, "Chức năng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnNorth.setLayout(null);
 		pnNorth.setPreferredSize(new Dimension(900, 170));
 		pnNorth.setBounds(10, 10, 1129, 158);
 		add(pnNorth);
 		
-		JLabel lblTu = new JLabel("Tá»« ngÃ y:");
+		JLabel lblTu = new JLabel("Từ ngày:");
 		lblTu.setFont(new Font("Arial", Font.BOLD, 14));
 		lblTu.setBounds(20, 20, 83, 30);
 		pnNorth.add(lblTu);
@@ -94,7 +94,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		csTu.setBounds(142, 20, 150, 30);
 		pnNorth.add(csTu);
 		
-		JLabel lblDen = new JLabel("Ä�áº¿n ngÃ y:");
+		JLabel lblDen = new JLabel("Đến ngày:");
 		lblDen.setFont(new Font("Arial", Font.BOLD, 14));
 		lblDen.setBounds(20, 70, 83, 30);
 		pnNorth.add(lblDen);
@@ -104,26 +104,26 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		csDen.setBounds(142, 70, 150, 30);
 		pnNorth.add(csDen);
 		
-		JLabel lblLocTheo = new JLabel("Lá»�c theo:");
+		JLabel lblLocTheo = new JLabel("Lọc theo:");
 		lblLocTheo.setFont(new Font("Arial", Font.BOLD, 14));
 		lblLocTheo.setBounds(20, 118, 83, 30);
 		pnNorth.add(lblLocTheo);
 		
 		cbLoc = new JComboBox<String>();
-		cbLoc.setModel(new DefaultComboBoxModel(new String[] {"Táº¥t cáº£", "Tuáº§n trÆ°á»›c", "ThÃ¡ng trÆ°á»›c", "QuÃ½ trÆ°á»›c"}));
+		cbLoc.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Tuần trước", "Tháng trước", "Quý trước"}));
 		cbLoc.setPreferredSize(new Dimension(150, 30));
 		cbLoc.setBounds(142, 119, 150, 30);
 		pnNorth.add(cbLoc);
 		
-		btnLoc = new JButton("Lá»�c");
+		btnLoc = new JButton("Lọc");
 		btnLoc.setBounds(319, 70, 60, 30);
 		pnNorth.add(btnLoc);
 		
-		btnHienThiBieuDo = new JButton("Hiá»ƒn thá»‹ biá»ƒu Ä‘á»“ doanh thu theo thÃ¡ng");
+		btnHienThiBieuDo = new JButton("Hiển thị biểu đồ doanh thu theo tháng");
 		btnHienThiBieuDo.setBounds(549, 119, 250, 30);
 		pnNorth.add(btnHienThiBieuDo);
 		
-		btnXuatBaoCao = new JButton("Xuáº¥t bÃ¡o cÃ¡o");
+		btnXuatBaoCao = new JButton("Xuất báo cáo Excel");
 		btnXuatBaoCao.setBounds(819, 119, 150, 30);
 		pnNorth.add(btnXuatBaoCao);
 		
@@ -138,7 +138,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		scrollPane.setBounds(10, 22, 1109, 263);
 		panel.add(scrollPane);
 		
-		String[] tb_N = new String[] { "MÃ£ hÃ³a Ä‘Æ¡n", "TÃªn khÃ¡ch hÃ ng", "NgÃ y giao dá»‹ch", "Tá»•ng tiá»�n"};
+		String[] tb_N = new String[] { "Mã hóa đơn", "Tên khách hàng", "Ngày giao dịch", "Tổng tiền"};
 		modelHD = new DefaultTableModel(tb_N, 0);
 		tblHD = new JTable(modelHD);		
 		scrollPane.setViewportView(tblHD);
@@ -166,14 +166,14 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		scrollPane_1.setBounds(10, 18, 1109, 143);
 		panel_1.add(scrollPane_1);
 		
-		String[] tb_CT = new String[] { "STT", "TÃªn sáº£n pháº©m", "GiÃ¡ bÃ¡n", "Sá»‘ lÆ°á»£ng", "ThÃ nh tiá»�n"};
+		String[] tb_CT = new String[] { "STT", "Tên sản phẩm", "Giá bán", "Số lượng", "Thành tiền"};
 		modelCTHD = new DefaultTableModel(tb_CT, 0);
 		tblCTHD = new JTable(modelCTHD);		
 		scrollPane_1.setViewportView(tblCTHD);
 		
 		
 		
-		JLabel lblNewLabel = new JLabel("Cao nháº¥t:");
+		JLabel lblNewLabel = new JLabel("Cao nhất:");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 14));
 		lblNewLabel.setBounds(20, 708, 67, 26);
 		add(lblNewLabel);
@@ -183,7 +183,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		add(txtCaoNhat);
 		txtCaoNhat.setColumns(10);
 		
-		JLabel lblThpNht = new JLabel("Tháº¥p nháº¥t:");
+		JLabel lblThpNht = new JLabel("Thấp nhất:");
 		lblThpNht.setFont(new Font("Arial", Font.BOLD, 14));
 		lblThpNht.setBounds(228, 708, 85, 26);
 		add(lblThpNht);
@@ -193,7 +193,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		txtThapNhat.setBounds(310, 713, 116, 19);
 		add(txtThapNhat);
 		
-		JLabel lblTngSHa = new JLabel("Tá»•ng sá»‘ hÃ³a Ä‘Æ¡n:");
+		JLabel lblTngSHa = new JLabel("Tổng số hóa đơn:");
 		lblTngSHa.setFont(new Font("Arial", Font.BOLD, 14));
 		lblTngSHa.setBounds(568, 708, 123, 26);
 		add(lblTngSHa);
@@ -204,7 +204,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		add(txtSoHD);
 		
 		
-		JLabel lblTngDoanhThu = new JLabel("Tá»•ng doanh thu:");
+		JLabel lblTngDoanhThu = new JLabel("Tổng doanh thu:");
 		lblTngDoanhThu.setFont(new Font("Arial", Font.BOLD, 14));
 		lblTngDoanhThu.setBounds(834, 708, 123, 26);
 		add(lblTngDoanhThu);
@@ -216,7 +216,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		add(txtTongDoanhThu);
 		
 		popupMenu=new JPopupMenu();
-		itXemChiTiet=new JMenuItem("Xem chi tiáº¿t hÃ³a Ä‘Æ¡n");
+		itXemChiTiet=new JMenuItem("Xem chi tiết hóa đơn bán");
 		popupMenu.add(itXemChiTiet);
 		
 		// láº¥y thÃ´ng tin nhÃ¢n viÃªn
@@ -330,7 +330,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 			String selectedOption = cbLoc.getSelectedItem().toString();
 			fromDate = csTu.getDate();
 			toDate= csDen.getDate();
-			if(selectedOption.equals("Tuáº§n trÆ°á»›c")) {
+			if(selectedOption.equals("Tuần trước")) {
 				Calendar cal = Calendar.getInstance();
 		        cal.add(Calendar.WEEK_OF_YEAR, -1);
 		        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
@@ -338,7 +338,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		        cal.add(Calendar.DAY_OF_WEEK, 6);
 		        toDate = (Date) cal.getTime();
 		        getHDByNVBW(nvLogin, fromDate, toDate);
-			}else if(selectedOption.equals("ThÃ¡ng trÆ°á»›c")) {
+			}else if(selectedOption.equals("Tháng trước")) {
 				Calendar cal = Calendar.getInstance();
 			    cal.add(Calendar.MONTH, -1);
 			    cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -348,7 +348,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 			    toDate = cal.getTime();
 			    getHDByNVBW(nvLogin, fromDate, toDate);
 			}
-			else if(selectedOption.equals("QuÃ½ trÆ°á»›c")) {
+			else if(selectedOption.equals("Quý trước")) {
 				Calendar cal = Calendar.getInstance();
 			    cal.add(Calendar.MONTH, -3);
 			    int previousQuarter = (cal.get(Calendar.MONTH) / 3) + 1;
@@ -360,7 +360,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 			    toDate = cal.getTime();
 
 			    getHDByNVBW(nvLogin, fromDate, toDate);
-			}else if(selectedOption.equals("Táº¥t cáº£")) {
+			}else if(selectedOption.equals("Tất cả")) {
 				Calendar cal = Calendar.getInstance();
 	            cal.set(Calendar.YEAR, 2023);
 	            cal.set(Calendar.MONTH, Calendar.JANUARY);
@@ -374,7 +374,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		}else if(o.equals(btnXuatBaoCao)) {
 			try {
 				NhanVien findNVLogin = nhanVien_dao.getTheoMaNV(nvLogin.getMaNhanVien());
-		        JOptionPane.showMessageDialog(null, "Ä�Ã£ xuáº¥t dá»¯ liá»‡u ra file excel thÃ nh cÃ´ng.");
+		        JOptionPane.showMessageDialog(null, "Đã xuất dữ liệu ra file excel thành công.");
 		        excelExport.ExcelExporter.exportTable(tblHD, fromDate, toDate, findNVLogin.getHoTenNhanVien(), "report.xls", txtCaoNhat.getText(), txtThapNhat.getText(), txtSoHD.getText(),txtTongDoanhThu.getText());
 		    } catch (IOException ex) {
 		        ex.printStackTrace();
@@ -387,7 +387,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 			    // Create a dataset for all months
 			    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 			    for (int month = 1; month <= 12; month++) {
-			        dataset.addValue(0.0, "Tá»•ng tiá»�n", "ThÃ¡ng " + month);
+			        dataset.addValue(0.0, "Tổng tiền", "Tháng " + month);
 			    }
 
 			    String sql = "SELECT MONTH(hd.NGAYGIAODICH) AS THANG, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN " +
@@ -403,15 +403,15 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 			    while (rs.next()) {
 			        int thang = rs.getInt("THANG");
 			        double tongTien = rs.getDouble("TONGTHANHTIEN");
-			        dataset.setValue(tongTien, "Tá»•ng tiá»�n", "ThÃ¡ng " + thang);
+			        dataset.setValue(tongTien, "Tổng tiền", "Tháng " + thang);
 			    }
 
 			    // Táº¡o biá»ƒu Ä‘á»“ cá»™t tá»« dataset
-			    JFreeChart chart = ChartFactory.createBarChart("Tá»•ng tiá»�n tá»«ng thÃ¡ng", "ThÃ¡ng", "Tá»•ng tiá»�n",
+			    JFreeChart chart = ChartFactory.createBarChart("Tổng tiền theo tháng", "Tháng", "Tổng tiền",
 			                dataset, PlotOrientation.VERTICAL, false, true, false);
 
 			    // Hiá»ƒn thá»‹ biá»ƒu Ä‘á»“ cá»™t trong cá»­a sá»• má»›i
-			    ChartFrame chartFrame = new ChartFrame("Biá»ƒu Ä‘á»“ doanh thu theo thÃ¡ng", chart);
+			    ChartFrame chartFrame = new ChartFrame("Biểu đồ doanh thu theo tháng", chart);
 			    chartFrame.pack();
 			    chartFrame.setVisible(true);
 			} catch (SQLException ex) {

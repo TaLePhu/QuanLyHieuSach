@@ -132,4 +132,47 @@ public class Dao_SanPham {
 		}
 		return sp;
 	}
+	
+	public ArrayList<SanPham> getSPTheoTinhTrang(String tt) {
+		ArrayList<SanPham> dsSP = new ArrayList<SanPham>();
+		PreparedStatement sta = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select * from SANPHAM where TINHTRANG = ?";
+			sta = con.prepareStatement(sql);
+			sta.setString(1, tt);
+
+			ResultSet rs = sta.executeQuery();
+			while (rs.next()) {
+				String maSanPham = rs.getString("MASANPHAM");
+				String tenSanPham = rs.getString("TENSANPHAM");
+				float giaMua = rs.getFloat("GIAMUA");
+				int soLuong = rs.getInt("SOLUONG");
+				float giaBan = rs.getFloat("GIABAN");
+				float thueVAT = rs.getFloat("THUEVAT");
+				String maDanhMuc = rs.getString("MADANHMUC");
+				String maKeHang = rs.getString("MAKEHANG");
+				String maKhuyenMai = rs.getString("MAKHUYENMAI");
+				String maNhaCungCap = rs.getString("MANHACUNGCAP");
+				DanhMuc maDM = new DanhMuc(maDanhMuc);
+				KeHang maKH = new KeHang(maKeHang);
+				KhuyenMai maKM = new KhuyenMai(maKhuyenMai);
+				NhaCungCap nCC = new NhaCungCap(maNhaCungCap);
+				String tinhTrang = rs.getString("TINHTRANG");
+				
+				SanPham sp = new SanPham(maSanPham, tenSanPham, giaMua, soLuong, giaBan, thueVAT, maDM, maKH, maKM, nCC, tinhTrang);
+				dsSP.add(sp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sta.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dsSP;
+	}
 }
