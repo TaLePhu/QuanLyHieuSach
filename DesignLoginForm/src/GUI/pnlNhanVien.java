@@ -522,7 +522,7 @@ public class pnlNhanVien extends JPanel implements ActionListener{
     	String chucVu = (String) cbChucVu.getSelectedItem();
     	String tinhTrang = (String) cbTinhTrang.getSelectedItem();
     	maNV = phatSinhMaNV(chucVu);
-    	NhanVien nv = new NhanVien(maNV, hoTen, ngaySinh, diaChi, sdt, email, gioiTinh, tinhTrang, chucVu);
+    	NhanVien nv = new NhanVien(maNV, hoTen, ngaySinh, diaChi, sdt, email, gioiTinh, chucVu, tinhTrang);
 		return nv;
     }
     

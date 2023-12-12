@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +39,13 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.DefaultComboBoxModel;
@@ -111,7 +119,7 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		btnLoc.setBounds(319, 70, 60, 30);
 		pnNorth.add(btnLoc);
 		
-		btnHienThiBieuDo = new JButton("Hiển thị dưới dạng biểu đồ");
+		btnHienThiBieuDo = new JButton("Hiển thị biểu đồ doanh thu theo tháng");
 		btnHienThiBieuDo.setBounds(549, 119, 250, 30);
 		pnNorth.add(btnHienThiBieuDo);
 		
@@ -372,8 +380,46 @@ public class pnlThongKeNV extends JPanel implements ActionListener, MouseListene
 		    } catch (IOException ex) {
 		        ex.printStackTrace();
 		    }
+		}else if(o.equals(btnHienThiBieuDo)){
+			try {
+			    ConnectDB.getInstance();
+			    Connection con = ConnectDB.getConnection();
+
+			    // Create a dataset for all months
+			    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+			    for (int month = 1; month <= 12; month++) {
+			        dataset.addValue(0.0, "Tổng tiền", "Tháng " + month);
+			    }
+
+			    String sql = "SELECT MONTH(hd.NGAYGIAODICH) AS THANG, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN " +
+			            "FROM HOADONBAN AS hd " +
+			            "JOIN NHANVIEN AS nv ON hd.MANHANVIEN = nv.MANHANVIEN " +
+			            "WHERE nv.MANHANVIEN = ? " +
+			            "GROUP BY MONTH(hd.NGAYGIAODICH)";
+			    PreparedStatement sta = con.prepareStatement(sql);
+			    sta.setString(1, nvLogin.getMaNhanVien());
+			    ResultSet rs = sta.executeQuery();
+
+			    // Update values for months with invoices
+			    while (rs.next()) {
+			        int thang = rs.getInt("THANG");
+			        double tongTien = rs.getDouble("TONGTHANHTIEN");
+			        dataset.setValue(tongTien, "Tổng tiền", "Tháng " + thang);
+			    }
+
+			    // Tạo biểu đồ cột từ dataset
+			    JFreeChart chart = ChartFactory.createBarChart("Tổng tiền từng tháng", "Tháng", "Tổng tiền",
+			                dataset, PlotOrientation.VERTICAL, false, true, false);
+
+			    // Hiển thị biểu đồ cột trong cửa sổ mới
+			    ChartFrame chartFrame = new ChartFrame("Biểu đồ doanh thu theo tháng", chart);
+			    chartFrame.pack();
+			    chartFrame.setVisible(true);
+			} catch (SQLException ex) {
+			    ex.printStackTrace();
+			}
+
 		}
-		
 	}
 	
 	public void getHDByNV(NhanVien nv) {
