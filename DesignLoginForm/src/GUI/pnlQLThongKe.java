@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -30,6 +31,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.poi.hpsf.Decimal;
+import java.awt.Rectangle;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.ScrollPaneConstants;
 
 public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener{
 
@@ -39,10 +45,13 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	private static final long serialVersionUID = 1L;
 	private JTextField txtSoLuong;
 	private JTextField txtDoanhThu;
-	private DefaultTableModel modelTK;
+	private DefaultTableModel modelTK, modelSP;
 	private	JTable table;
 	private JDateChooser csDenN, cstuN;
 	private JButton btnXemTK;
+	private JTable table_1;
+	private JTextField txtTongTien;
+	private JTextField txtTongSP;
 		
 	/**
 	 * Create the panel.
@@ -153,8 +162,124 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		//gọi hàm xuất dữ liệu ra bảng
 		getAllHD();
 		
-		JPanel pnlTK = new JPanel();
-		tabbedPane.addTab("New tab", null, pnlTK, null);
+		
+		//Thống kê sản phẩm
+		JPanel pnlTKSanPham = new JPanel();
+		tabbedPane.addTab("Thống kê sản phẩm", null, pnlTKSanPham, null);
+		pnlTKSanPham.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("THỐNG KÊ SẢN PHẨM");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 25));
+		lblNewLabel_1.setBounds(300, 10, 467, 39);
+		pnlTKSanPham.add(lblNewLabel_1);
+		
+		JPanel pnlNgay = new JPanel();
+		pnlNgay.setBounds(10, 59, 401, 103);
+		pnlTKSanPham.add(pnlNgay);
+		pnlNgay.setLayout(null);
+		
+		JLabel lblNgayBD_1 = new JLabel("Từ ngày:");
+		lblNgayBD_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNgayBD_1.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblNgayBD_1.setBounds(20, 20, 89, 30);
+		pnlNgay.add(lblNgayBD_1);
+		
+		JDateChooser csNgayBD = new JDateChooser();
+		csNgayBD.setDateFormatString("dd/MM/yyyy");
+		csNgayBD.setBounds(132, 20, 252, 30);
+		pnlNgay.add(csNgayBD);
+		
+		JLabel lblNgayKT_1 = new JLabel("Đến ngày:");
+		lblNgayKT_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNgayKT_1.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblNgayKT_1.setBounds(20, 63, 96, 30);
+		pnlNgay.add(lblNgayKT_1);
+		
+		JDateChooser csNgayKT = new JDateChooser();
+		csNgayKT.setDateFormatString("dd/MM/yyyy");
+		csNgayKT.setBounds(132, 63, 252, 30);
+		pnlNgay.add(csNgayKT);
+		
+		JPanel pnlChucNang = new JPanel();
+		pnlChucNang.setLayout(null);
+		pnlChucNang.setBounds(421, 59, 695, 103);
+		pnlTKSanPham.add(pnlChucNang);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Sản phẩm bán nhiều nhất", "Sản phẩm có doanh thu cao nhất"}));
+		comboBox.setBounds(10, 20, 247, 55);
+		pnlChucNang.add(comboBox);
+		
+		JButton btnXemThongKe = new JButton("Xem thống kê");
+		btnXemThongKe.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnXemThongKe.setBounds(267, 20, 204, 55);
+		pnlChucNang.add(btnXemThongKe);
+		Image img_iconXemThongKe = new ImageIcon(this.getClass().getResource("/icon_customers_s.png")).getImage();
+		btnXemThongKe.setIcon(new ImageIcon(img_iconXemThongKe));
+		
+		JButton btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLamMoi.setBounds(481, 20, 204, 55);
+		pnlChucNang.add(btnLamMoi);
+		Image img_iconLamMoi = new ImageIcon(this.getClass().getResource("/update.png")).getImage();
+		btnLamMoi.setIcon(new ImageIcon(img_iconLamMoi));
+		
+		JPanel pnlThongTinChiTiet = new JPanel();
+		pnlThongTinChiTiet.setBounds(10, 182, 1106, 456);
+		pnlTKSanPham.add(pnlThongTinChiTiet);
+		pnlThongTinChiTiet.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(0, 0, 1106, 456);
+		pnlThongTinChiTiet.add(scrollPane_1);
+		
+		String[] cols_1 = new String[] {"Mã sản phẩm" , "Tên sản phẩm", "Số lượng bán", "Giá bán", "Thành tiền"};
+		modelSP = new DefaultTableModel(cols_1, 0);
+		table_1 = new JTable(modelSP);
+		scrollPane_1.setViewportView(table_1);
+
+		modelSP.addTableModelListener(new TableModelListener() {
+		    @Override
+		    public void tableChanged(TableModelEvent e) {
+		        if (e.getType() == TableModelEvent.UPDATE || e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE) {
+		            // Gọi các phương thức 
+		            tongTienSP();
+		            tongSPBan();
+		        }
+		    }
+		});
+
+		// Gọi dữ liệu lên thống kê sản phẩm
+		getAllSP();
+		
+		JPanel pnlThongSo = new JPanel();
+		pnlThongSo.setBounds(10, 648, 1106, 58);
+		pnlTKSanPham.add(pnlThongSo);
+		pnlThongSo.setLayout(null);
+		
+		JLabel lblTongTien = new JLabel("Tổng tiền: ");
+		lblTongTien.setBounds(167, 14, 110, 30);
+		lblTongTien.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTongTien.setFont(new Font("Arial", Font.PLAIN, 20));
+		pnlThongSo.add(lblTongTien);
+		
+		JLabel lblTongSP = new JLabel("Tổng số lượng sản phẩm đã bán: ");
+		lblTongSP.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTongSP.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblTongSP.setBounds(578, 14, 342, 30);
+		pnlThongSo.add(lblTongSP);
+		
+		txtTongTien = new JTextField();
+		txtTongTien.setBounds(280, 14, 247, 30);
+		pnlThongSo.add(txtTongTien);
+		txtTongTien.setColumns(10);
+		
+		txtTongSP = new JTextField();
+		txtTongSP.setColumns(10);
+		txtTongSP.setBounds(898, 14, 186, 30);
+		pnlThongSo.add(txtTongSP);
 		
 		//đăng ký sự kiện
 		btnXemTK.addActionListener(this);
@@ -199,33 +324,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 			getHDTheoDate(cstuN.getDate(), csDenN.getDate());
 		}
 	}
-	
 	//lấy tất cả hóa đơn
-//	public void getAllHD() {
-//		try {
-//			ConnectDB.getInstance();
-//			Connection con = ConnectDB.getConnection();
-//			String sql = "SELECT hd.MAHOADONBAN, kh.HOTENKHACHHANG,hd.MANHANVIEN, hd.NGAYGIAODICH, SUM(hd.TONGTHANHTIEN) AS TONGTHANHTIEN "
-//					+ "FROM HOADONBAN AS hd "
-//					+ "JOIN KHACHHANG AS kh ON hd.MAKHACHHANG = kh.MAKHACHHANG "
-//					+ "JOIN NHANVIEN AS nv ON hd.MANHANVIEN = nv.MANHANVIEN "
-//					+ "GROUP BY hd.MAHOADONBAN, kh.HOTENKHACHHANG, hd.NGAYGIAODICH, hd.MANHANVIEN ";
-//			PreparedStatement pst = con.prepareStatement(sql);
-//			ResultSet rs = pst.executeQuery();
-//			Object obj[] = new Object[15];
-//			while(rs.next()) {
-//				obj[0] = rs.getString(1);
-//				obj[1] = rs.getString(2);
-//				obj[2] = rs.getString(3);
-//				obj[3] =rs.getDate(4);
-//				obj[4] = rs.getDouble(5);
-//				modelTK.addRow(obj);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
 	public void getAllHD() {
 	try {
 		ConnectDB.getInstance();
@@ -283,6 +382,28 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 	        e.printStackTrace();
 	    }
 	}
+	
+	public void getAllSP() {
+	try {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "SELECT sp.MASANPHAM, sp.TENSANPHAM, sp.SOLUONG, sp.GIABAN, sp.SOLUONG * sp.GIABAN AS THANHTIEN FROM SANPHAM AS sp";
+		PreparedStatement pst = con.prepareStatement(sql);
+		ResultSet rs = pst.executeQuery();
+		Object obj[] = new Object[10];
+		while(rs.next()) {
+			obj[0] = rs.getString(1);
+			obj[1] = rs.getString(2);
+			obj[2] = rs.getInt(3);
+			obj[3] =rs.getFloat(4);
+			obj[4] = rs.getDouble(5);
+			modelSP.addRow(obj);
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
 	//
 	public String formatTien(double tien) {
 		DecimalFormat df = new DecimalFormat("#,##0VND");
@@ -307,19 +428,25 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		txtSoLuong.setText(String.valueOf(soHD));
 	}
 	
+	// Tính tổng tiền
+	public void tongTienSP() {
+	    double tongTien = 0;
+	    for (int i = 0; i < modelSP.getRowCount(); i++) {
+	        double thanhTien = Double.parseDouble(modelSP.getValueAt(i, 4).toString());
+	        tongTien += thanhTien;
+	    }
+	    txtTongTien.setText(formatTien(tongTien));
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// Tính tổng sản phẩm
+	public void tongSPBan() {
+	    int rowCount = modelSP.getRowCount();
+	    int totalQuantity = 0;
+
+	    for (int i = 0; i < rowCount; i++) {
+	        int quantity = (int) modelSP.getValueAt(i, 2);
+	        totalQuantity += quantity;
+	    }
+	    txtTongSP.setText(String.valueOf(totalQuantity));
+	}
 }
