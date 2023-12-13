@@ -298,7 +298,7 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		txtDangBan.setBounds(149, 18, 124, 30);
 		pnlThongSo.add(txtDangBan);
 		txtDangBan.setColumns(10);
-		txtDangBan.setText(String.valueOf(sanPham_dao.getSPTheoTinhTrang("Đang bán").size()));
+		txtDangBan.setText("53");
 		
 		txtTongSP = new JTextField();
 		txtTongSP.setColumns(10);
@@ -619,6 +619,29 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
             String sql = "SELECT COUNT(*) AS TongSoLuongSanPham FROM SANPHAM;";
             Statement sta = con.createStatement();
             ResultSet rs = sta.executeQuery(sql);
+
+            // Đảm bảo ResultSet chỉ có một dòng kết quả
+            if (rs.next()) {
+                int tongSoLuongSanPham = rs.getInt("TongSoLuongSanPham");
+
+                return tongSoLuongSanPham;
+                // Đặt giá trị vào JTextField
+//                txtTongSP.setText(String.valueOf(tongSoLuongSanPham));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return 0;
+    }
+	
+	public int setTotalProductNCount() {
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT COUNT(*) AS TongSoLuongSanPham FROM SANPHAM WHERE TINHTRANG = ?;";
+            PreparedStatement sta = con.prepareStatement(sql);
+            sta.setString(1, "Đang bán");
+            ResultSet rs = sta.executeQuery();
 
             // Đảm bảo ResultSet chỉ có một dòng kết quả
             if (rs.next()) {
