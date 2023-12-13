@@ -846,7 +846,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 	public boolean validDataSLSP() {
 		String soLuong = txtSoLuong.getText().trim();
 		String ma = txtMaSP.getText().trim();
-		int soLC = Integer.parseInt(soLuong);
+		//int soLC = Integer.parseInt(soLuong);
 		ArrayList<SanPham> ds = dao_SanPham.getSPTheoMa(ma);
 		if(ma.length() > 0) {
 			if(ds.size() <= 0) {
@@ -858,7 +858,7 @@ public class pnlHoadon extends JPanel implements ActionListener,DocumentListener
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sản phẩm");
 			return false;
 		}
-		if(soLuong.length() > 0 && soLC >0) {
+		if(soLuong.length() > 0 && Integer.parseInt(soLuong) >0) {
 			try {
 				int soL = Integer.parseInt(soLuong);
 

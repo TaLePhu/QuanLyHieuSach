@@ -175,9 +175,12 @@ public class pnlQLThongKe extends JPanel implements ActionListener,MouseListener
 		btnLoadTable.setBounds(176, 304, 136, 39);
 		pnlTKDoanhThu.add(btnLoadTable);
 		
+		//btn biểu đồ
 		btnXemBieuDo = new JButton("Xem Biểu đồ doanh thu theo tháng");
 		btnXemBieuDo.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnXemBieuDo.setBounds(24, 455, 288, 39);
+		btnXemBieuDo.setBounds(10, 457, 316, 57);
+		Image img_BieuDo = new ImageIcon(this.getClass().getResource("/icon_thongke_s.png")).getImage();
+		btnXemBieuDo.setIcon(new ImageIcon(img_BieuDo));
 		pnlTKDoanhThu.add(btnXemBieuDo);
 		
 		modelTK.addTableModelListener(new TableModelListener() {
